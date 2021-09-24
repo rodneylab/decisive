@@ -22,7 +22,7 @@
   const { galleries } = data.galleries;
 </script>
 
-<pre>{JSON.stringify(data, null, 2)}</pre>
+<!-- <pre>{JSON.stringify(data, null, 2)}</pre> -->
 <h1>Galleries</h1>
 <ul>
   {#each galleries as { name, address, openingTimes, website }}
