@@ -8,7 +8,8 @@
     "graphql",
     "blog",
     "svelte",
-    "api"
+    "api",
+    "typescript"
   ],
   "scripts": {
     "dev": "svelte-kit dev -p 3030",
@@ -29,14 +30,14 @@
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-svelte3": "^3.2.1",
+    "husky": "^7.0.0",
     "prettier": "^2.4.1",
     "prettier-plugin-svelte": "^2.4.0",
     "svelte": "^3.42.6",
     "svelte-check": "^2.2.6",
     "svelte-preprocess": "^4.9.4",
     "tslib": "^2.3.1",
-    "typescript": "^4.4.3",
-    "husky": "^7.0.0"
+    "typescript": "^4.4.3"
   },
   "repository": {
     "type": "git",
@@ -45,5 +46,8 @@
   "bugs": {
     "url": "https://github.com/rodneylab/decisive/issues"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "graphql-tag": "^2.12.5"
+  }
 }
