@@ -1,4 +1,3 @@
-import tubeStationStore from '$lib/shared/stores/tubeStations';
 import type { Request } from '@sveltejs/kit';
 
 export async function post(
@@ -35,9 +34,7 @@ export async function post(
       })
     });
 
-    const { tubeStations } = await response.json();
-    console.log('tubeStations: ', tubeStations);
-    tubeStationStore.set(tubeStations);
+    const data = await response.json();
 
     return {
       body: JSON.stringify({ ...data })

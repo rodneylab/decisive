@@ -12,7 +12,7 @@
         props: { ...(await response.json()) }
       };
     } catch (error) {
-      console.error(`Error in load function for /gallery: ${error}`);
+      console.error(`Error in load function for /tube-station: ${error}`);
     }
   };
 </script>
