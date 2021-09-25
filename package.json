@@ -23,6 +23,7 @@
     "prepare": "husky install"
   },
   "devDependencies": {
+    "@fontsource/lato": "^4.5.0",
     "@sveltejs/kit": "next",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",

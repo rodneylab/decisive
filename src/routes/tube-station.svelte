@@ -1,5 +1,5 @@
 <script context="module">
-  export const load = async ({ fetch }) => {
+  export const load = async ({ fetch, page }) => {
     try {
       const response = await fetch('/query/tube-station.json', {
         method: 'POST',
@@ -8,8 +8,9 @@
           'Content-Type': 'application/json'
         }
       });
+      const { slug } = page.params;
       return {
-        props: { ...(await response.json()) }
+        props: { ...(await response.json()), slug }
       };
     } catch (error) {
       console.error(`Error in load function for /tube-station: ${error}`);
@@ -18,9 +19,11 @@
 </script>
 
 <script lang="ts">
+  import SEO from '$lib/components/SEO/index.svelte';
   import { tubeStations } from '$lib/shared/stores/tubeStations';
 
   export let data;
+  export let slug;
   $: submitting = false;
 
   tubeStations.set(data.tubeStations);
@@ -70,6 +73,7 @@
   }
 </script>
 
+<SEO title="Tube Stations" {slug} metadescription="Tube Stations" />
 <!-- <pre>{JSON.stringify(data, null, 2)}</pre>
 <pre>{JSON.stringify($tubeStations, null, 2)}</pre> -->
 <h1>Tube Stations</h1>
