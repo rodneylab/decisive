@@ -21,6 +21,7 @@
 <script lang="ts">
   import SEO from '$lib/components/SEO/index.svelte';
   import { tubeStations } from '$lib/shared/stores/tubeStations';
+  import { mapErrorsToFields } from '$lib/utilities/form';
 
   export let data;
   export let slug;
@@ -33,19 +34,6 @@
   $: errors = { name: undefined };
 
   $: mapErrorsToFields;
-
-  function mapErrorsToFields(formErrors) {
-    const result = formErrors.reduce((accumulator, currentValue) => {
-      const key = currentValue.field;
-      if (!accumulator[key]) {
-        accumulator[key] = {};
-      }
-      accumulator[key] = currentValue.message;
-      return accumulator;
-    }, {});
-    errors = { ...result };
-    return result;
-  }
 
   async function handleSubmit() {
     try {
@@ -98,7 +86,13 @@
     type="text"
   />
   {#if errors?.name}
-    <small>{errors.name} </small>
+    <small class="error-text">{errors.name} </small>
   {/if}
   <button type="submit" disabled={submitting}>Create new station</button>
 </form>
+
+<style>
+  .error-text {
+    color: #c42021;
+  }
+</style>
