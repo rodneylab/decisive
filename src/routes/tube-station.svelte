@@ -37,7 +37,7 @@
 
   $: mapErrorsToFields;
 
-  async function handleDelete(id) {
+  async function handleDelete(id: number) {
     try {
       const response = await fetch('/query/delete/tube-station.json', {
         method: 'POST',
@@ -48,7 +48,6 @@
         body: JSON.stringify({ id })
       });
       const responseData = await response.json();
-      result = responseData;
       const { deleteTubeStation: deleted } = responseData.data.data;
       console.log('Deleted? : ', deleted);
       const index = $tubeStations.findIndex((element) => element.id === id);
@@ -102,7 +101,7 @@
   {/each}
 </ul>
 
-<h2>Add a new Station</h2>
+<h2>Add a New Station</h2>
 <form on:submit|preventDefault={handleSubmit}>
   <span class="screen-reader-text"><label for="create-station-name">Name</label></span>
   <input

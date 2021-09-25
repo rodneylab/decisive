@@ -6,13 +6,13 @@ export async function post(
   try {
     const { id } = request.body;
     const query = `
-      mutation DeleteGalleryMutation($deleteTubeStationId: String!) {
-        deleteTubeStation(id: $deleteTubeStationId)
+      mutation DeleteGalleryMutation($deleteGalleryId: String!) {
+        deleteGallery(id: $deleteGalleryId)
       }
     `;
 
     const variables = {
-      deleteTubeStationId: id
+      deleteGalleryId: id
     };
 
     const response = await fetch(process.env['GRAPHQL_ENDPOINT'], {
@@ -32,7 +32,7 @@ export async function post(
       body: JSON.stringify({ data })
     };
   } catch (err) {
-    const error = `Error in /query/delete/tube-station.json.ts: ${err}`;
+    const error = `Error in /query/delete/gallery.json.ts: ${err}`;
     console.error(error);
     return {
       status: 500,

@@ -4,9 +4,9 @@
 
   const { siteLanguage, siteTitle, siteUrl } = website;
 
-  export let metadescription;
-  export let slug;
-  export let title;
+  export let metadescription: string;
+  export let slug: string;
+  export let title: string;
 
   const pageTitle = `${siteTitle} ${VERTICAL_LINE_ENTITY} ${title}`;
   const url = `${siteUrl}/${slug}`;
