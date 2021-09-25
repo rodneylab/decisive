@@ -1,27 +1,18 @@
 import type { Request } from '@sveltejs/kit';
 
 export async function post(
-  request: Request & { body: { name } }
-): Promise<{ body: string } | { error: string; status: number }> {
+  request: Request & { body: { id } }
+): Promise<{ body } | { error: string; status: number }> {
   try {
-    const { name } = request.body;
+    const { id } = request.body;
     const query = `
-			mutation CreateTubeStationMutation($createTubeStationName: String!) {
-				createTubeStation(name: $createTubeStationName) {
-					errors {
-						field
-						message
-					}
-					tubeStation {
-            id
-						name
-					}
-				}
-			}
+      mutation DeleteTubeStationMutation($deleteTubeStationId: Float!) {
+        deleteTubeStation(id: $deleteTubeStationId)
+      }
     `;
 
     const variables = {
-      createTubeStationName: name
+      deleteTubeStationId: id
     };
 
     const response = await fetch(process.env['GRAPHQL_ENDPOINT'], {
@@ -38,7 +29,7 @@ export async function post(
     const data = await response.json();
 
     return {
-      body: JSON.stringify({ ...data })
+      body: JSON.stringify({ data })
     };
   } catch (err) {
     const error = `Error in /query/create/tube-station.json.ts: ${err}`;

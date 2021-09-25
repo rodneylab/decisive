@@ -19,6 +19,8 @@
 </script>
 
 <script lang="ts">
+  import DeleteIcon from '$lib/components/Icons/Delete.svelte';
+  import EditIcon from '$lib/components/Icons/Edit.svelte';
   import SEO from '$lib/components/SEO/index.svelte';
   import { tubeStations } from '$lib/shared/stores/tubeStations';
   import { mapErrorsToFields } from '$lib/utilities/form';
@@ -34,6 +36,27 @@
   $: errors = { name: undefined };
 
   $: mapErrorsToFields;
+
+  async function handleDelete(id) {
+    try {
+      const response = await fetch('/query/delete/tube-station.json', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id })
+      });
+      const responseData = await response.json();
+      result = responseData;
+      const { deleteTubeStation: deleted } = responseData.data.data;
+      console.log('Deleted? : ', deleted);
+      const index = $tubeStations.findIndex((element) => element.id === id);
+      tubeStations.set([...$tubeStations.slice(0, index), ...$tubeStations.slice(index + 1)]);
+    } catch (error) {
+      console.error(`Error in handleDelete function in /tube-station: ${error}`);
+    }
+  }
 
   async function handleSubmit() {
     try {
@@ -67,9 +90,14 @@
 <h1>Tube Stations</h1>
 <h2>Current Stations</h2>
 <ul>
-  {#each [...$tubeStations] as { name }}
+  {#each [...$tubeStations] as { id, name }}
     <li>
       <h3>{name}</h3>
+      <EditIcon /><button
+        aria-label="Delete station"
+        type="button"
+        on:click={() => handleDelete(id)}><DeleteIcon /></button
+      >
     </li>
   {/each}
 </ul>
