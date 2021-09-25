@@ -23,7 +23,7 @@
   type="text"
 />
 {#if error}
-  <small class="error-text">{error} </small>
+  <small class="error-text">{error}</small>
 {/if}
 
 <style>

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import LessIcon from '$lib/components/Icons/Less.svelte';
+  import MoreIcon from '$lib/components/Icons/More.svelte';
   import InputField from '$lib/components/InputField.svelte';
   import { PLACEHOLDER_TEXT, TITLE } from '$lib/constants/form';
   import { DAYS } from '$lib/constants/time';
@@ -33,6 +35,13 @@
     nearestTubes = [''];
     googleMap = '';
     website = '';
+  }
+
+  function handleMoreOpeningHours() {
+    const template = openingHours.at(-1);
+    const startDay = Math.min(6, template.endDay + 1);
+    const { closingTime, openingTime } = template;
+    openingHours = [...openingHours, { startDay, endDay: 6, openingTime, closingTime }];
   }
 
   async function handleSubmit() {
@@ -160,16 +169,31 @@
       placeholder="First day in range"
       title="Opening Time"
       on:update={(event) => {
-        openingHours[index].startDay = event.detail;
+        const day = DAYS.findIndex(
+          (element) => element.toLowerCase() === event.detail.toLowerCase()
+        );
+        if (day !== -1) {
+          openingHours[index].startDay = day;
+        } else {
+          openingHours[index].startDay =
+            index === 0 ? 0 : Math.min(6, openingHours[index - 1].endDay + 1);
+        }
       }}
     />
     <InputField
       value={DAYS[endDay]}
       id={`create-gallery-opening-end-${index}`}
-      placeholder="Last dat in range"
+      placeholder="Last day in range"
       title="Closing Time"
       on:update={(event) => {
-        openingHours[index].endDay = event.detail;
+        const day = DAYS.findIndex(
+          (element) => element.toLowerCase() === event.detail.toLowerCase()
+        );
+        if (day !== -1) {
+          openingHours[index].endDay = day;
+        } else {
+          openingHours[index].endDay = 6;
+        }
       }}
     />
     <InputField
@@ -190,7 +214,11 @@
         openingHours[index].closingTime = event.detail;
       }}
     />
+    {#if index > 0}
+      <button><LessIcon /></button>
+    {/if}
   {/each}
+  <button on:click|preventDefault={handleMoreOpeningHours}><MoreIcon /></button>
   {#each nearestTubes as stationName, index}
     <InputField
       value={stationName}
