@@ -72,6 +72,7 @@
 
       const { errors: formErrors, tubeStation } = responseData.data.createTubeStation;
       submitting = false;
+      name = '';
       if (formErrors) {
         errors = mapErrorsToFields(formErrors);
       } else {

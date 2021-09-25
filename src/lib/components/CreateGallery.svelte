@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { browser } from '$app/env';
   import LessIcon from '$lib/components/Icons/Less.svelte';
   import MoreIcon from '$lib/components/Icons/More.svelte';
   import InputField from '$lib/components/InputField.svelte';
@@ -6,6 +7,7 @@
   import { DAYS } from '$lib/constants/time';
   import galleries from '$lib/shared/stores/galleries';
   import { mapErrorsToFields } from '$lib/utilities/form';
+  import { tick } from 'svelte';
 
   $: submitting = false;
 
@@ -37,11 +39,44 @@
     website = '';
   }
 
-  function handleMoreOpeningHours() {
-    const template = openingHours.at(-1);
-    const startDay = Math.min(6, template.endDay + 1);
-    const { closingTime, openingTime } = template;
-    openingHours = [...openingHours, { startDay, endDay: 6, openingTime, closingTime }];
+  function createSlug(name: string) {
+    let result = name.toLowerCase();
+    return result.replace(/ /g, '-');
+  }
+
+  function handleFewerTubeStations(index) {
+    nearestTubes = [...nearestTubes.slice(0, index), ...nearestTubes.slice(index + 1)];
+  }
+
+  function handleFewerOpeningHours(index) {
+    openingHours = [...openingHours.slice(0, index), ...openingHours.slice(index + 1)];
+  }
+
+  async function handleMoreOpeningHours() {
+    try {
+      const template = openingHours.at(-1);
+      const startDay = Math.min(6, template.endDay + 1);
+      const { closingTime, openingTime } = template;
+      openingHours = [...openingHours, { startDay, endDay: 6, openingTime, closingTime }];
+      if (browser) {
+        await tick();
+        document.getElementById(`create-gallery-opening-start-${openingHours.length - 1}`);
+      }
+    } catch (error) {
+      console.log(`Error in handleMoreOpeningHours function in CreateGallery`);
+    }
+  }
+
+  async function handleMoreTubeStations() {
+    try {
+      nearestTubes = [...nearestTubes, ''];
+      if (browser) {
+        await tick();
+        document.getElementById(`create-gallery-tube-${nearestTubes.length - 1}`).focus();
+      }
+    } catch (error) {
+      console.log(`Error in handleMoreTubeStations function in CreateGallery`);
+    }
   }
 
   async function handleSubmit() {
@@ -97,9 +132,9 @@
     error={errors?.name ?? null}
     on:update={(event) => {
       name = event.detail;
-      // if (slug === '') {
-      //   slug = kebabCase(event.detail);
-      // }
+      if (slug === '') {
+        slug = createSlug(event.detail);
+      }
     }}
   />
   <InputField
@@ -215,7 +250,11 @@
       }}
     />
     {#if index > 0}
-      <button><LessIcon /></button>
+      <button
+        on:click|preventDefault={() => {
+          handleFewerOpeningHours(index);
+        }}><LessIcon /></button
+      >
     {/if}
   {/each}
   <button on:click|preventDefault={handleMoreOpeningHours}><MoreIcon /></button>
@@ -229,7 +268,18 @@
         nearestTubes[index] = event.detail;
       }}
     />
+    {#if index > 0}
+      <button
+        aria-label="Remove this station"
+        on:click|preventDefault={() => {
+          handleFewerTubeStations(index);
+        }}><LessIcon /></button
+      >
+    {/if}
   {/each}
+  <button aria-label="Add an extra station" on:click|preventDefault={handleMoreTubeStations}
+    ><MoreIcon /></button
+  >
   <InputField
     value={googleMap}
     id="create-gallery-map"
@@ -237,6 +287,7 @@
     title="Map Link"
     error={errors?.googleMap ?? null}
     on:update={(event) => {
+      errors.googleMap = null;
       googleMap = event.detail;
     }}
   />
@@ -247,6 +298,7 @@
     title="Website Link"
     error={errors?.website ?? null}
     on:update={(event) => {
+      errors.website = null;
       website = event.detail;
     }}
   />

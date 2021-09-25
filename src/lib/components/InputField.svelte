@@ -21,6 +21,7 @@
   {placeholder}
   {title}
   type="text"
+  spellcheck
 />
 {#if error}
   <small class="error-text">{error}</small>
