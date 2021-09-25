@@ -1,11 +1,14 @@
 <script lang="ts">
   import InputField from '$lib/components/InputField.svelte';
+  import { PLACEHOLDER_TEXT, TITLE } from '$lib/constants/form';
   import { DAYS } from '$lib/constants/time';
   import galleries from '$lib/shared/stores/galleries';
   import { mapErrorsToFields } from '$lib/utilities/form';
+
   $: submitting = false;
 
   let name = '';
+  let slug = '';
   let streetAddress = '';
   let locality = '';
   let city = 'London';
@@ -17,6 +20,20 @@
   let website = '';
   let errors: { name: string | undefined; streetAddress: string | undefined };
   $: errors = { name: undefined };
+
+  async function clearFormFields() {
+    name = '';
+    slug = '';
+    streetAddress = '';
+    locality = '';
+    city = 'London';
+    postalCode = '';
+    country = 'United Kingdom';
+    openingHours = [{ startDay: 0, endDay: 6, openingTime: '10:00', closingTime: '18:00' }];
+    nearestTubes = [''];
+    googleMap = '';
+    website = '';
+  }
 
   async function handleSubmit() {
     try {
@@ -30,6 +47,7 @@
         body: JSON.stringify({
           input: {
             name,
+            slug,
             postalAddress: {
               streetAddress,
               locality,
@@ -53,6 +71,7 @@
         errors = mapErrorsToFields(formErrors);
       } else {
         galleries.set([...$galleries, gallery]);
+        clearFormFields();
       }
     } catch (error) {
       console.error(`Error in handleSubmit function in CreateGallery: ${error}`);
@@ -61,24 +80,34 @@
 </script>
 
 <form on:submit|preventDefault={handleSubmit}>
-  <span class="screen-reader-text"><label for="create-gallery-name">Name</label></span>
-  <input
-    bind:value={name}
-    required
+  <InputField
+    value={name}
     id="create-gallery-name"
     placeholder="Gallery name"
     title="Name"
-    type="text"
+    error={errors?.name ?? null}
+    on:update={(event) => {
+      name = event.detail;
+      // if (slug === '') {
+      //   slug = kebabCase(event.detail);
+      // }
+    }}
   />
-  {#if errors?.name}
-    <small class="error-text">{errors.name} </small>
-  {/if}
-
+  <InputField
+    value={slug}
+    id="create-gallery-slug"
+    placeholder="gallery-slug"
+    title="Slug"
+    error={errors?.slug ?? null}
+    on:update={(event) => {
+      slug = event.detail;
+    }}
+  />
   <InputField
     value={streetAddress}
     id="create-gallery-street-address"
-    placeholder="Street address"
-    title="Street address"
+    placeholder={PLACEHOLDER_TEXT.streetAddress}
+    title={TITLE.streetAddress}
     error={errors?.streetAddress ?? null}
     on:update={(event) => {
       streetAddress = event.detail;

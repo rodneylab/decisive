@@ -1,13 +1,13 @@
 import type { Request } from '@sveltejs/kit';
 
 export async function post(
-  request: Request & { body: { input } }
+  request: Request & { params: { slug } }
 ): Promise<{ body: string } | { error: string; status: number }> {
   try {
-    const { input } = request.body;
+    const { slug } = request.params;
     const query = `
-      mutation CreateGalleryMutation($createGalleryInput: CreateGalleryInput!) {
-        createGallery(input: $createGalleryInput) {
+      query GalleryQuery($galleryQuerySlug: String!) {
+        gallery(slug: $galleryQuerySlug) {
           gallery {
             id
             name
@@ -16,16 +16,12 @@ export async function post(
             openingTimes
             website
           }
-          errors {
-            field
-            message
-          }
         }
       }
     `;
 
     const variables = {
-      createGalleryInput: input
+      galleryQuerySlug: slug
     };
 
     const response = await fetch(process.env['GRAPHQL_ENDPOINT'], {
@@ -45,7 +41,7 @@ export async function post(
       body: JSON.stringify({ ...data })
     };
   } catch (err) {
-    const error = `Error in /query/create/gallery.json.ts: ${err}`;
+    const error = `Error in /query/gallery/[slug].json.ts: ${err}`;
     console.error(error);
     return {
       status: 500,

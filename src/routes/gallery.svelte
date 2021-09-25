@@ -19,6 +19,7 @@
 </script>
 
 <script lang="ts">
+  import { goto, prefetch } from '$app/navigation';
   import CreateGallery from '$lib/components/CreateGallery.svelte';
   import DeleteIcon from '$lib/components/Icons/Delete.svelte';
   import EditIcon from '$lib/components/Icons/Edit.svelte';
@@ -48,15 +49,27 @@
       console.error(`Error in handleDelete function in /gallery: ${error}`);
     }
   }
+
+  async function handleEdit(slug: string) {
+    await prefetch(`/gallery/${slug}`);
+    goto(`gallery/${slug}`);
+  }
 </script>
 
 <SEO title="Galleries" {slug} metadescription="Galleries" />
 <!-- <pre>{JSON.stringify(data, null, 2)}</pre> -->
 <h1>Galleries</h1>
 <ul>
-  {#each $galleries as { id, name, address, openingTimes, website }}
+  {#each $galleries as { id, name, address, openingTimes, slug, website }}
     <li>
-      <h2>{name}</h2>
+      <h2>
+        <a
+          aria-label={`Open ${name} page`}
+          sveltekit:prefetch
+          rel="external"
+          href={`/gallery/${slug}`}>{name}</a
+        >
+      </h2>
       <dl>
         <dt>Address</dt>
         <dd>{address}</dd>
@@ -66,10 +79,13 @@
         {/if}
         <dt>website</dt>
         <dd><a aria-label={`Open the ${name} website`} href={website}>{website}</a></dd>
-        <EditIcon /><button
-          aria-label="Delete station"
-          type="button"
-          on:click={() => handleDelete(id)}><DeleteIcon /></button
+        <button
+          aria-label="Edit gallery"
+          on:click={() => {
+            handleEdit(slug);
+          }}><EditIcon /></button
+        ><button aria-label="Delete gallery" type="button" on:click={() => handleDelete(id)}
+          ><DeleteIcon /></button
         >
       </dl>
     </li>

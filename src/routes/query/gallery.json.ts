@@ -6,6 +6,7 @@ export async function post(): Promise<{ body: string } | { error: string; status
           galleries {
             id
             name
+            slug
             address
             openingTimes
             website
