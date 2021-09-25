@@ -257,7 +257,9 @@
       >
     {/if}
   {/each}
-  <button on:click|preventDefault={handleMoreOpeningHours}><MoreIcon /></button>
+  <button on:click|preventDefault={handleMoreOpeningHours}
+    ><span class="screen-reader-text">Add another set of opening hours</span><MoreIcon /></button
+  >
   {#each nearestTubes as stationName, index}
     <InputField
       value={stationName}

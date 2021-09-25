@@ -79,15 +79,15 @@
         {/if}
         <dt>website</dt>
         <dd><a aria-label={`Open the ${name} website`} href={website}>{website}</a></dd>
-        <button
-          aria-label="Edit gallery"
-          on:click={() => {
-            handleEdit(slug);
-          }}><EditIcon /></button
-        ><button aria-label="Delete gallery" type="button" on:click={() => handleDelete(id)}
-          ><DeleteIcon /></button
-        >
       </dl>
+      <button
+        aria-label="Edit gallery"
+        on:click={() => {
+          handleEdit(slug);
+        }}><EditIcon /></button
+      ><button aria-label="Delete gallery" type="button" on:click={() => handleDelete(id)}
+        ><DeleteIcon /></button
+      >
     </li>
   {/each}
 </ul>
