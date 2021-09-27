@@ -24,9 +24,11 @@
   import DeleteIcon from '$lib/components/Icons/Delete.svelte';
   import EditIcon from '$lib/components/Icons/Edit.svelte';
   import SEO from '$lib/components/SEO/index.svelte';
+  import type { PaginatedGalleries } from '$lib/generated/graphql';
   import galleries from '$lib/shared/stores/galleries';
-  export let data;
-  export let slug;
+
+  export let data: { galleries: PaginatedGalleries };
+  export let slug: string;
 
   galleries.set(data.galleries.galleries);
 

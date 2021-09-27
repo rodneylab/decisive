@@ -21,10 +21,11 @@
 <script lang="ts">
   import EditableText from '$lib/components/EditableText.svelte';
   import { PLACEHOLDER_TEXT, TITLE } from '$lib/constants/form';
+  import type { GalleryQueryResponse } from '$lib/generated/graphql';
   import galleries from '$lib/shared/stores/galleries';
   import { mapErrorsToFields } from '$lib/utilities/form';
-  export let slug;
-  export let data;
+  export let slug: string;
+  export let data: { gallery: GalleryQueryResponse };
 
   const index = $galleries.findIndex((element) => element.slug === slug);
   if (index >= 0) {
@@ -83,6 +84,9 @@
     >See all galleries</a
   >
 </nav>
+{#if updating}
+  <div>Updating...</div>
+{/if}
 <h1>{name}</h1>
 <dl>
   <dt>Address</dt>

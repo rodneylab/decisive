@@ -18,9 +18,9 @@
 </script>
 
 <script lang="ts">
-  export let data;
+  export let data: { hello: string };
 
-  const { hello }: { hello: string } = data;
+  const { hello } = data;
 </script>
 
 <h1>Welcome</h1>

@@ -20,13 +20,17 @@
     "lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
     "format": "prettier --write --plugin-search-dir=. .",
     "prettier:check": "prettier --check --plugin-search-dir=. .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "gen": "graphql-codegen --config codegen.yml"
   },
   "devDependencies": {
     "@fontsource/lato": "^4.5.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@graphql-codegen/cli": "2.2.0",
+    "@graphql-codegen/typescript": "2.2.2",
+    "@graphql-codegen/typescript-operations": "2.1.4",
     "@sveltejs/kit": "next",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
@@ -34,6 +38,8 @@
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-svelte3": "^3.2.1",
+    "graphql": "^15.6.0",
+    "graphql-codegen-svelte-apollo": "^1.0.1",
     "husky": "^7.0.0",
     "prettier": "^2.4.1",
     "prettier-plugin-svelte": "^2.4.0",
@@ -42,7 +48,8 @@
     "svelte-check": "^2.2.6",
     "svelte-preprocess": "^4.9.4",
     "tslib": "^2.3.1",
-    "typescript": "^4.4.3"
+    "typescript": "^4.4.3",
+    "@graphql-codegen/introspection": "2.1.0"
   },
   "repository": {
     "type": "git",

@@ -22,11 +22,12 @@
   import DeleteIcon from '$lib/components/Icons/Delete.svelte';
   import EditIcon from '$lib/components/Icons/Edit.svelte';
   import SEO from '$lib/components/SEO/index.svelte';
+  import type { TubeStation } from '$lib/generated/graphql';
   import { tubeStations } from '$lib/shared/stores/tubeStations';
   import { mapErrorsToFields } from '$lib/utilities/form';
 
-  export let data;
-  export let slug;
+  export let data: { tubeStations: TubeStation[] };
+  export let slug: string;
   $: submitting = false;
 
   tubeStations.set(data.tubeStations);

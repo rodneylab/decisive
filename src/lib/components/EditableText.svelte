@@ -10,8 +10,8 @@
   export let id: string;
   export let placeholder: string;
   export let required: boolean = false;
-  export let title;
-  export let error;
+  export let title: string;
+  export let error: string;
 
   const dispatch = createEventDispatcher();
 

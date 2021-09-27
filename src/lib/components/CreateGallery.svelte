@@ -22,8 +22,18 @@
   let nearestTubes: string[] = [''];
   let googleMap = '';
   let website = '';
-  let errors: { name: string | undefined; streetAddress: string | undefined };
-  $: errors = { name: undefined };
+  let errors: {
+    name?: string;
+    slug?: string;
+    streetAddress?: string;
+    locality?: string;
+    city?: string;
+    postalCode?: string;
+    country?: string;
+    googleMap?: string;
+    website?: string;
+  };
+  $: errors = {};
 
   async function clearFormFields() {
     name = '';
@@ -44,11 +54,11 @@
     return result.replace(/ /g, '-');
   }
 
-  function handleFewerTubeStations(index) {
+  function handleFewerTubeStations(index: number) {
     nearestTubes = [...nearestTubes.slice(0, index), ...nearestTubes.slice(index + 1)];
   }
 
-  function handleFewerOpeningHours(index) {
+  function handleFewerOpeningHours(index: number) {
     openingHours = [...openingHours.slice(0, index), ...openingHours.slice(index + 1)];
   }
 
