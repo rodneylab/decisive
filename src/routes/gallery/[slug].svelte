@@ -47,7 +47,7 @@
   let errors: { name: string | undefined; streetAddress: string | undefined };
   $: errors = { name: undefined, streetAddress: undefined };
 
-  async function handleUpdate(changes) {
+  async function handleUpdate(changes: { address?: string; website?: string }) {
     try {
       updating = true;
       const response = await fetch('/query/create/gallery.json', {
