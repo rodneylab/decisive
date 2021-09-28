@@ -21,9 +21,11 @@
 <script lang="ts">
   import EditableText from '$lib/components/EditableText.svelte';
   import { PLACEHOLDER_TEXT, TITLE } from '$lib/constants/form';
-  import type { GalleryQueryResponse } from '$lib/generated/graphql';
+  import type { Gallery, GalleryQueryResponse } from '$lib/generated/graphql';
   import galleries from '$lib/shared/stores/galleries';
+  import type { GalleryFormErrors } from '$lib/utilities/form';
   import { mapErrorsToFields } from '$lib/utilities/form';
+
   export let slug: string;
   export let data: { gallery: GalleryQueryResponse };
 
@@ -38,34 +40,38 @@
     galleries.set([...$galleries, data.gallery.gallery]);
   }
 
+  let gallery: Gallery;
   $: gallery = $galleries.find((element) => element.slug === slug);
   $: id = gallery.id;
   $: address = gallery.address;
   $: name = gallery.name;
   $: openingTimes = gallery.openingTimes;
   $: website = gallery.website;
+  $: googleMap = gallery.googleMap;
   $: updating = false;
-  let errors: { name: string | undefined; streetAddress: string | undefined };
+  let errors: GalleryFormErrors;
   $: errors = { name: undefined, streetAddress: undefined };
 
-  async function handleUpdate(changes: { address?: string; website?: string }) {
+  async function handleUpdate(changes: { address?: string; googleMap?: string; website?: string }) {
     try {
+      console.log('handling update');
+      console.log('changes: ', { ...changes });
       updating = true;
-      const response = await fetch('/query/create/gallery.json', {
+      const response = await fetch('/query/update/gallery.json', {
         method: 'POST',
         credentials: 'same-origin',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          id,
           input: {
+            id,
             ...changes
           }
         })
       });
       const responseData = await response.json();
-      const { errors: formErrors, gallery } = responseData.data.createGallery;
+      const { errors: formErrors, gallery } = responseData.data.updateGallery;
       updating = false;
       if (formErrors) {
         errors = mapErrorsToFields(formErrors);
@@ -73,7 +79,7 @@
         galleries.set([...$galleries, gallery]);
       }
     } catch (error) {
-      console.error(`Error in handleSubmit function in CreateGallery: ${error}`);
+      console.error(`Error in handleSubmit function in UpdateGallery: ${error}`);
     }
   }
 </script>
@@ -109,4 +115,30 @@
   {/if}
   <dt>website</dt>
   <dd><a aria-label={`Open the ${name} website`} href={website}>{website}</a></dd>
+  <dt>map</dt>
+  <dd>
+    <EditableText
+      buttonLabel="Edit gallery map"
+      value={googleMap ? googleMap : 'No map yet'}
+      id={`${slug}-edit-map`}
+      placeholder={PLACEHOLDER_TEXT.googleMap}
+      title={TITLE.googleMap}
+      error={errors.googleMap}
+      on:update={(event) => {
+        handleUpdate({ googleMap: event.detail });
+      }}
+    />
+  </dd>
 </dl>
+
+{#if googleMap}
+  <iframe
+    title={`${name} Map`}
+    src={googleMap}
+    width="600"
+    height="450"
+    style="border:0;"
+    allowfullscreen
+    loading="lazy"
+  />
+{/if}

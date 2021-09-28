@@ -1,8 +1,8 @@
-import type { ApolloQueryResult, ObservableQuery, WatchQueryOptions } from '@apollo/client';
-import gql from 'graphql-tag';
-import type { Readable } from 'svelte/store';
-import { readable } from 'svelte/store';
 import client from 'undefined';
+import type {} from '@apollo/client';
+import { readable } from 'svelte/store';
+import type { Readable } from 'svelte/store';
+import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
@@ -82,6 +82,7 @@ export type Mutation = {
   createTubeStation: CreateTubeStationResponse;
   deleteGallery: Scalars['Boolean'];
   deleteTubeStation: Scalars['Boolean'];
+  updateGallery: CreateGalleryResponse;
 };
 
 export type MutationCreateGalleryArgs = {
@@ -98,6 +99,10 @@ export type MutationDeleteGalleryArgs = {
 
 export type MutationDeleteTubeStationArgs = {
   id: Scalars['String'];
+};
+
+export type MutationUpdateGalleryArgs = {
+  input: UpdateGalleryInput;
 };
 
 export type OpeningHours = {
@@ -166,48 +171,10 @@ export type TubeStation = {
   updatedAt: Scalars['DateTime'];
 };
 
-export type TubeStationsQueryVariables = Exact<{ [key: string]: never }>;
-
-export type TubeStationsQuery = {
-  __typename?: 'Query';
-  tubeStations: Array<{
-    __typename?: 'TubeStation';
-    id: string;
-    createdAt: any;
-    updatedAt: any;
-    name: string;
-  }>;
-};
-
-export const TubeStationsDoc = gql`
-  query TubeStations {
-    tubeStations {
-      id
-      createdAt
-      updatedAt
-      name
-    }
-  }
-`;
-export const TubeStations = (
-  options: Omit<WatchQueryOptions<TubeStationsQueryVariables>, 'query'>
-): Readable<
-  ApolloQueryResult<TubeStationsQuery> & {
-    query: ObservableQuery<TubeStationsQuery, TubeStationsQueryVariables>;
-  }
-> => {
-  const q = client.watchQuery({
-    query: TubeStationsDoc,
-    ...options
-  });
-  var result = readable<
-    ApolloQueryResult<TubeStationsQuery> & {
-      query: ObservableQuery<TubeStationsQuery, TubeStationsQueryVariables>;
-    }
-  >({ data: {} as any, loading: true, error: undefined, networkStatus: 1, query: q }, (set) => {
-    q.subscribe((v: any) => {
-      set({ ...v, query: q });
-    });
-  });
-  return result;
+export type UpdateGalleryInput = {
+  googleMap?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
+  website?: Maybe<Scalars['String']>;
 };

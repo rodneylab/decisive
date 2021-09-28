@@ -45,7 +45,7 @@ export async function post(
       body: JSON.stringify({ ...data })
     };
   } catch (err) {
-    const error = `Error in /query/create/gallery.json.ts: ${err}`;
+    const error = `Error in /query/update/gallery.json.ts: ${err}`;
     console.error(error);
     return {
       status: 500,

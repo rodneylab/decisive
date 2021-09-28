@@ -8,6 +8,7 @@
   import galleries from '$lib/shared/stores/galleries';
   import { mapErrorsToFields } from '$lib/utilities/form';
   import { tick } from 'svelte';
+  import DayInputField from './DayInputField.svelte';
 
   $: submitting = false;
 
@@ -208,7 +209,7 @@
     }}
   />
   {#each openingHours as { startDay, endDay, openingTime, closingTime }, index}
-    <InputField
+    <DayInputField
       value={DAYS[startDay]}
       id={`create-gallery-opening-start-${index}`}
       placeholder="First day in range"
@@ -225,7 +226,7 @@
         }
       }}
     />
-    <InputField
+    <DayInputField
       value={DAYS[endDay]}
       id={`create-gallery-opening-end-${index}`}
       placeholder="Last day in range"

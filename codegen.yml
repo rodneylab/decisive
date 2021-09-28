@@ -1,8 +1,8 @@
 overwrite: true
 schema: 'http://localhost:4000/graphql'
-documents: 'src/**/*.graphql'
+# documents: 'src/**/*.graphql'
 generates:
-  src/generated/graphql.ts:
+  src/lib/generated/graphql.ts:
     plugins:
       - 'typescript'
       - 'typescript-operations'

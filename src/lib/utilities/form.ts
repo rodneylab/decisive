@@ -9,3 +9,15 @@ export function mapErrorsToFields(formErrors) {
   }, {});
   return result;
 }
+
+export interface GalleryFormErrors {
+  name?: string;
+  slug?: string;
+  streetAddress?: string;
+  locality?: string;
+  city?: string;
+  postalCode?: string;
+  country?: string;
+  googleMap?: string;
+  website?: string;
+}
