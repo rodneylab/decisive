@@ -1,6 +1,22 @@
 <script context="module">
   export const load = async ({ fetch, page }) => {
     try {
+      // check for valid user session
+      const meResponse = await fetch('/query/me.json', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const { data } = await meResponse.json();
+      if (!data?.me) {
+        return {
+          status: 301,
+          redirect: '/login'
+        };
+      }
+
       const response = await fetch('/query/gallery.json', {
         method: 'POST',
         credentials: 'same-origin',
@@ -10,7 +26,7 @@
       });
       const { slug } = page.params;
       return {
-        props: { ...(await response.json()), slug }
+        props: { ...(await response.json()), slug, ...data }
       };
     } catch (error) {
       console.error(`Error in load function for /gallery: ${error}`);
@@ -19,16 +35,35 @@
 </script>
 
 <script lang="ts">
+  import { browser } from '$app/env';
   import { goto, prefetch } from '$app/navigation';
   import CreateGallery from '$lib/components/CreateGallery.svelte';
   import DeleteIcon from '$lib/components/Icons/Delete.svelte';
   import EditIcon from '$lib/components/Icons/Edit.svelte';
   import SEO from '$lib/components/SEO/index.svelte';
-  import type { PaginatedGalleries } from '$lib/generated/graphql';
+  import type { PaginatedGalleries, User } from '$lib/generated/graphql';
   import galleries from '$lib/shared/stores/galleries';
+  import user from '$lib/shared/stores/user';
+  import { onMount } from 'svelte';
 
   export let data: { galleries: PaginatedGalleries };
+  export let me: User | null;
   export let slug: string;
+
+  async function checkForLoggedInUser() {
+    if (browser) {
+      if (me) {
+        user.set({ ...me });
+      } else {
+        await prefetch('/login');
+        await goto('/login');
+      }
+    }
+  }
+
+  onMount(() => {
+    checkForLoggedInUser();
+  });
 
   galleries.set(data.galleries.galleries);
 

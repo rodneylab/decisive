@@ -56,8 +56,6 @@
 
   async function handleUpdate(changes: { address?: string; openStreetMapUrl?: string }) {
     try {
-      console.log('handling update');
-      console.log('changes: ', { ...changes });
       updating = true;
       const response = await fetch('/query/update/gallery.json', {
         method: 'POST',

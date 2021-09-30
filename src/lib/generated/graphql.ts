@@ -85,12 +85,20 @@ export type Location = {
   longitude: Scalars['Float'];
 };
 
+export type LoginInput = {
+  password: Scalars['String'];
+  username: Scalars['String'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createGallery: CreateGalleryResponse;
   createTubeStation: CreateTubeStationResponse;
   deleteGallery: Scalars['Boolean'];
   deleteTubeStation: Scalars['Boolean'];
+  login: UserResponse;
+  logout: Scalars['Boolean'];
+  register: UserResponse;
   updateGallery: CreateGalleryResponse;
 };
 
@@ -108,6 +116,14 @@ export type MutationDeleteGalleryArgs = {
 
 export type MutationDeleteTubeStationArgs = {
   id: Scalars['String'];
+};
+
+export type MutationLoginArgs = {
+  credentials: LoginInput;
+};
+
+export type MutationRegisterArgs = {
+  options: UsernameEmailPasswordInput;
 };
 
 export type MutationUpdateGalleryArgs = {
@@ -164,6 +180,7 @@ export type Query = {
   galleries: PaginatedGalleries;
   gallery: GalleryQueryResponse;
   hello: Scalars['String'];
+  me?: Maybe<User>;
   tubeStations: Array<TubeStation>;
 };
 
@@ -186,4 +203,25 @@ export type UpdateGalleryInput = {
   openStreetMapUrl?: Maybe<Scalars['String']>;
   slug?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
+};
+
+export type User = {
+  __typename?: 'User';
+  createdAt: Scalars['String'];
+  email: Scalars['String'];
+  id: Scalars['String'];
+  updatedAt: Scalars['String'];
+  username: Scalars['String'];
+};
+
+export type UserResponse = {
+  __typename?: 'UserResponse';
+  errors?: Maybe<Array<FieldError>>;
+  user?: Maybe<User>;
+};
+
+export type UsernameEmailPasswordInput = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+  username: Scalars['String'];
 };

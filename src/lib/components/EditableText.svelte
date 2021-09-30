@@ -2,7 +2,7 @@
   import EditIcon from '$lib/components/Icons/Edit.svelte';
   import DoneIcon from '$lib/components/Icons/HappyFace.svelte';
   import ResetIcon from '$lib/components/Icons/SadFace.svelte';
-  import InputField from '$lib/components/InputField.svelte';
+  import InputField from '$lib/components/TextInputField.svelte';
   import { createEventDispatcher } from 'svelte';
 
   export let buttonLabel: string;

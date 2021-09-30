@@ -1,28 +1,11 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-  const dispatch = createEventDispatcher();
-
-  export let value: string;
-  export let required: boolean = false;
   export let id: string;
-  export let placeholder: string;
   export let title: string;
   export let error: string | null = null;
 </script>
 
 <span class="screen-reader-text"><label for={id}>{title}</label></span>
-<input
-  bind:value
-  on:change={() => {
-    dispatch('update', value);
-  }}
-  {required}
-  {id}
-  {placeholder}
-  {title}
-  type="text"
-  spellcheck
-/>
+<slot />
 {#if error}
   <small class="error-text">{error}</small>
 {/if}

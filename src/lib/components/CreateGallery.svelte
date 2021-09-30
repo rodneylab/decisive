@@ -2,7 +2,7 @@
   import { browser } from '$app/env';
   import LessIcon from '$lib/components/Icons/Less.svelte';
   import MoreIcon from '$lib/components/Icons/More.svelte';
-  import InputField from '$lib/components/InputField.svelte';
+  import InputField from '$lib/components/TextInputField.svelte';
   import { PLACEHOLDER_TEXT, TITLE } from '$lib/constants/form';
   import { DAYS } from '$lib/constants/time';
   import galleries from '$lib/shared/stores/galleries';
@@ -36,7 +36,7 @@
   };
   $: errors = {};
 
-  async function clearFormFields() {
+  function clearFormFields() {
     name = '';
     slug = '';
     streetAddress = '';

@@ -1,35 +1,33 @@
 import type { Request } from '@sveltejs/kit';
 
 export async function post(
-  request: Request & { body: { input } }
+  request: Request & { body: { registerInput } }
 ): Promise<{ body: string } | { error: string; status: number }> {
   try {
-    const { input } = request.body;
+    const { registerInput } = request.body;
     const query = `
-      mutation CreateGalleryMutation($createGalleryInput: CreateGalleryInput!) {
-        createGallery(input: $createGalleryInput) {
-          gallery {
-            id
-            name
-            slug
-            address
-            openingTimes
-            website
-          }
+			mutation RegisterMutation($registerInput: UsernameEmailPasswordInput!) {
+				register(options: $registerInput) {
+					user {
+						email
+						id
+						username
+					}
           errors {
             field
             message
           }
-        }
-      }
+				}
+			}
     `;
 
     const variables = {
-      createGalleryInput: input
+      registerInput
     };
 
     const response = await fetch(process.env['GRAPHQL_ENDPOINT'], {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -45,7 +43,7 @@ export async function post(
       body: JSON.stringify({ ...data })
     };
   } catch (err) {
-    const error = `Error in /query/create/gallery.json.ts: ${err}`;
+    const error = `Error in /query/create/user.json.ts: ${err}`;
     console.error(error);
     return {
       status: 500,
