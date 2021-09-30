@@ -42,6 +42,7 @@
     "graphql": "^15.6.0",
     "graphql-codegen-svelte-apollo": "^1.0.1",
     "husky": "^7.0.2",
+    "leaflet": "^1.7.1",
     "prettier": "^2.4.1",
     "prettier-plugin-svelte": "^2.4.0",
     "svelte": "^3.43.0",
