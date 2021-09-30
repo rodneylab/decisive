@@ -18,6 +18,6 @@ export interface GalleryFormErrors {
   city?: string;
   postalCode?: string;
   country?: string;
-  googleMap?: string;
+  openStreetMap?: string;
   website?: string;
 }

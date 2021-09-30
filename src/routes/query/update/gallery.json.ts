@@ -15,7 +15,8 @@ export async function post(
 						address
 						openingTimes
 						website
-						googleMap
+            location
+						openStreetMap
 					}
 					errors {
 						field

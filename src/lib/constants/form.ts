@@ -1,9 +1,9 @@
 export const PLACEHOLDER_TEXT = {
-  googleMap: 'Map URL',
+  openStreetMap: 'Map URL',
   streetAddress: 'Street address'
 };
 
 export const TITLE = {
-  googleMap: 'Map URL',
+  openStreetMap: 'Map URL',
   streetAddress: 'Street address'
 };

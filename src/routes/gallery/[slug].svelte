@@ -20,6 +20,7 @@
 
 <script lang="ts">
   import EditableText from '$lib/components/EditableText.svelte';
+  import Map from '$lib/components/Map.svelte';
   import { PLACEHOLDER_TEXT, TITLE } from '$lib/constants/form';
   import type { Gallery, GalleryQueryResponse } from '$lib/generated/graphql';
   import galleries from '$lib/shared/stores/galleries';
@@ -47,12 +48,13 @@
   $: name = gallery.name;
   $: openingTimes = gallery.openingTimes;
   $: website = gallery.website;
-  $: googleMap = gallery.googleMap;
+  $: location = gallery.location;
+  $: openStreetMap = gallery.openStreetMap;
   $: updating = false;
   let errors: GalleryFormErrors;
-  $: errors = { name: undefined, streetAddress: undefined };
+  $: errors = {};
 
-  async function handleUpdate(changes: { address?: string; googleMap?: string; website?: string }) {
+  async function handleUpdate(changes: { address?: string; openStreetMapUrl?: string }) {
     try {
       console.log('handling update');
       console.log('changes: ', { ...changes });
@@ -119,26 +121,16 @@
   <dd>
     <EditableText
       buttonLabel="Edit gallery map"
-      value={googleMap ? googleMap : 'No map yet'}
+      value={openStreetMap ? openStreetMap : 'No map yet'}
       id={`${slug}-edit-map`}
-      placeholder={PLACEHOLDER_TEXT.googleMap}
-      title={TITLE.googleMap}
-      error={errors.googleMap}
+      placeholder={PLACEHOLDER_TEXT.openStreetMap}
+      title={TITLE.openStreetMap}
+      error={errors.openStreetMap}
       on:update={(event) => {
-        handleUpdate({ googleMap: event.detail });
+        handleUpdate({ openStreetMapUrl: event.detail });
       }}
     />
   </dd>
 </dl>
 
-{#if googleMap}
-  <iframe
-    title={`${name} Map`}
-    src={googleMap}
-    width="600"
-    height="450"
-    style="border:0;"
-    allowfullscreen
-    loading="lazy"
-  />
-{/if}
+<Map {location} id={`${slug}-map`} />

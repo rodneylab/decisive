@@ -15,7 +15,11 @@ export async function post(
             address
             openingTimes
             website
-            googleMap
+            openStreetMap
+            location {
+              latitude
+              longitude
+            }
           }
         }
       }

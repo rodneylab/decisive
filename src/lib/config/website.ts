@@ -22,7 +22,8 @@ const website = {
   tiktokUsername: import.meta.env ? import.meta.env.VITE_TIKTOK_USERNAME : '',
   twitterUsername: import.meta.env ? import.meta.env.VITE_TWITTER_USERNAME : '',
   twitterUserId: import.meta.env ? import.meta.env.VITE_TWITTER_ID : '',
-  wireUsername: import.meta.env ? import.meta.env.VITE_WIRE_USERNAME : ''
+  wireUsername: import.meta.env ? import.meta.env.VITE_WIRE_USERNAME : '',
+  mapboxAccessToken: import.meta.env ? import.meta.env.VITE_MAPBOX_ACCESS_TOKEN : ''
 };
 
 export { website as default };

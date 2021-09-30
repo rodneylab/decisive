@@ -30,6 +30,7 @@ export type CreateGalleryInput = {
   googleMap?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   nearestTubes?: Maybe<Array<Scalars['String']>>;
+  openStreetMapUrl?: Maybe<Scalars['String']>;
   openingHours?: Maybe<OpeningHoursInput>;
   postalAddress?: Maybe<AddressInput>;
   slug: Scalars['String'];
@@ -60,8 +61,10 @@ export type Gallery = {
   createdAt: Scalars['DateTime'];
   googleMap?: Maybe<Scalars['String']>;
   id: Scalars['String'];
+  location?: Maybe<Location>;
   name: Scalars['String'];
   nearestTubes?: Maybe<Array<TubeStation>>;
+  openStreetMap?: Maybe<Scalars['String']>;
   openingHours?: Maybe<OpeningHours>;
   openingTimes?: Maybe<Scalars['String']>;
   postalAddress?: Maybe<PostalAddress>;
@@ -74,6 +77,12 @@ export type GalleryQueryResponse = {
   __typename?: 'GalleryQueryResponse';
   error?: Maybe<Scalars['String']>;
   gallery?: Maybe<Gallery>;
+};
+
+export type Location = {
+  __typename?: 'Location';
+  latitude: Scalars['Float'];
+  longitude: Scalars['Float'];
 };
 
 export type Mutation = {
@@ -172,9 +181,9 @@ export type TubeStation = {
 };
 
 export type UpdateGalleryInput = {
-  googleMap?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   name?: Maybe<Scalars['String']>;
+  openStreetMapUrl?: Maybe<Scalars['String']>;
   slug?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
 };
