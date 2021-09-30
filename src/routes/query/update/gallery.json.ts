@@ -6,24 +6,24 @@ export async function post(
   try {
     const { input } = request.body;
     const query = `
-			mutation UpdateGalleryMutation($updateGalleryInput: UpdateGalleryInput!) {
-				updateGallery(input: $updateGalleryInput) {
-					gallery {
-						id
-						name
-						slug
-						address
-						openingTimes
-						website
+      mutation UpdateGalleryMutation($updateGalleryInput: UpdateGalleryInput!) {
+        updateGallery(input: $updateGalleryInput) {
+          gallery {
+            id
+            name
+            slug
+            address
+            openingTimes
+            website
             location
-						openStreetMap
-					}
-					errors {
-						field
-						message
-					}
-				}
-			}
+            openStreetMap
+          }
+          errors {
+            field
+            message
+          }
+        }
+      }
     `;
 
     const variables = {

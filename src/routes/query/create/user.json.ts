@@ -1,24 +1,25 @@
 import type { Request } from '@sveltejs/kit';
+import type { ResponseHeaders } from '@sveltejs/kit/types/helper';
 
 export async function post(
   request: Request & { body: { registerInput } }
-): Promise<{ body: string } | { error: string; status: number }> {
+): Promise<{ body: string; headers: ResponseHeaders } | { error: string; status: number }> {
   try {
     const { registerInput } = request.body;
     const query = `
-			mutation RegisterMutation($registerInput: UsernameEmailPasswordInput!) {
-				register(options: $registerInput) {
-					user {
-						email
-						id
-						username
-					}
+      mutation RegisterMutation($registerInput: UsernameEmailPasswordInput!) {
+        register(options: $registerInput) {
+          user {
+            email
+            id
+            username
+          }
           errors {
             field
             message
           }
-				}
-			}
+        }
+      }
     `;
 
     const variables = {
@@ -37,10 +38,14 @@ export async function post(
       })
     });
 
+    const { headers } = response;
     const data = await response.json();
 
     return {
-      body: JSON.stringify({ ...data })
+      body: JSON.stringify({ ...data }),
+      headers: {
+        'Set-Cookie': headers.get('Set-Cookie')
+      }
     };
   } catch (err) {
     const error = `Error in /query/create/user.json.ts: ${err}`;

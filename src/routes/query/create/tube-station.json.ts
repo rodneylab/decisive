@@ -6,18 +6,18 @@ export async function post(
   try {
     const { name } = request.body;
     const query = `
-			mutation CreateTubeStationMutation($createTubeStationName: String!) {
-				createTubeStation(name: $createTubeStationName) {
-					errors {
-						field
-						message
-					}
-					tubeStation {
+      mutation CreateTubeStationMutation($createTubeStationName: String!) {
+        createTubeStation(name: $createTubeStationName) {
+          errors {
+            field
+            message
+          }
+          tubeStation {
             id
-						name
-					}
-				}
-			}
+            name
+          }
+        }
+      }
     `;
 
     const variables = {

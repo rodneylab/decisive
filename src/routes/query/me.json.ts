@@ -5,13 +5,13 @@ export async function post(
 ): Promise<{ body: string } | { error: string; status: number }> {
   try {
     const query = `
-			query MeQuery {
-				me {
-					id
-					username
-					email
-				}
-			}
+      query MeQuery {
+        me {
+          id
+          username
+          email
+        }
+      }
     `;
 
     const variables = {};

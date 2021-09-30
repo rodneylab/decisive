@@ -1,14 +1,14 @@
 export async function post(): Promise<{ body: string } | { error: string; status: number }> {
   try {
     const query = `
-			query Query {
-				tubeStations {
-					id
-					createdAt
-					updatedAt
-					name
-				}
-			}
+      query Query {
+        tubeStations {
+          id
+          createdAt
+          updatedAt
+          name
+        }
+      }
     `;
 
     const response = await fetch(process.env['GRAPHQL_ENDPOINT'], {

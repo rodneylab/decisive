@@ -3,9 +3,9 @@ export async function post(): Promise<
 > {
   try {
     const query = `
-			query Query {
-				hello
-			}
+      query Query {
+        hello
+      }
     `;
 
     const response = await fetch(process.env['GRAPHQL_ENDPOINT'], {
