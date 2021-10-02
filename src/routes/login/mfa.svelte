@@ -36,6 +36,8 @@
   $: showQRCode = false;
   export let me: User | null;
 
+  const duoButtonText = me.duoRegistered ? 'Log in with Duo' : 'Registered with Duo';
+
   async function duoAuth(device) {
     try {
       duoEnrolling = true;
@@ -52,7 +54,7 @@
       if (authorised) {
         console.log('Access is not denied on this ocassion');
         await prefetch('/gallery');
-        await goto('/login/mfa');
+        await goto('/gallery');
       }
       console.log('Access denied!');
       await prefetch('/login');
@@ -138,9 +140,7 @@
   }
 </script>
 
-{#if me.duoRegistered}
-  <button on:click={duoPreauth} disabled={submitting}>Login with Duo</button>
-{:else if duoEnrolling}
+{#if duoEnrolling}
   {#if showQRCode}
     <iframe title="Duo enroll QR code" src={qrCode} width="300" height="300" />
   {/if}
@@ -153,6 +153,5 @@
   <button on:click={verifyEnroll} disabled={activationCode == null}
     >I have successfully enrolled on my phone now.</button
   >
-{:else}
-  <button on:click={duoPreauth} disabled={submitting}>Register with Duo</button>
 {/if}
+<button on:click={duoPreauth} disabled={submitting}>{duoButtonText}</button>
