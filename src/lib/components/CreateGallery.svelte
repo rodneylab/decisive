@@ -74,7 +74,7 @@
         document.getElementById(`create-gallery-opening-start-${openingHours.length - 1}`);
       }
     } catch (error) {
-      console.log(`Error in handleMoreOpeningHours function in CreateGallery`);
+      console.error(`Error in handleMoreOpeningHours function in CreateGallery`);
     }
   }
 
@@ -86,7 +86,7 @@
         document.getElementById(`create-gallery-tube-${nearestTubes.length - 1}`).focus();
       }
     } catch (error) {
-      console.log(`Error in handleMoreTubeStations function in CreateGallery`);
+      console.error(`Error in handleMoreTubeStations function in CreateGallery`);
     }
   }
 

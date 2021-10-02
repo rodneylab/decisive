@@ -1,16 +1,14 @@
 import type { Request } from '@sveltejs/kit';
 
-export async function post(
+export async function get(
   request: Request
 ): Promise<{ body: string } | { error: string; status: number }> {
   try {
     const query = `
-      query MeQuery {
-        me {
-          id
-          username
-          email
-          duoRegistered
+      query Query {
+        duoPreauth {
+          result
+          error
         }
       }
     `;
@@ -36,7 +34,7 @@ export async function post(
       body: JSON.stringify({ ...data })
     };
   } catch (err) {
-    const error = `Error in /query/me.json.ts: ${err}`;
+    const error = `Error in /query/duo-preauth.json.ts: ${err}`;
     console.error(error);
     return {
       status: 500,

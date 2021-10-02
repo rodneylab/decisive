@@ -34,8 +34,8 @@
   async function checkForLoggedInUser() {
     if (browser && me) {
       user.set({ ...me });
-      await prefetch('/gallery');
-      await goto('/gallery');
+      await prefetch('/login/mfa');
+      await goto('/login/mfa');
     }
   }
 
@@ -77,11 +77,11 @@
       } else {
         user.set({ ...userResponse });
         clearFormFields();
-        await prefetch('/gallery');
-        goto('/gallery');
+        await prefetch('/login/mfa');
+        await goto('/login/mfa');
       }
     } catch (error) {
-      console.error(`Error in handleSubmit function in CreateGallery: ${error}`);
+      console.error(`Error in handleSubmit function in /login: ${error}`);
     }
   }
 
@@ -113,6 +113,5 @@
       password = event.detail;
     }}
   />
-
   <button type="submit" disabled={submitting}>Login</button>
 </form>

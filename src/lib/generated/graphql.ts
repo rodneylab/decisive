@@ -49,6 +49,25 @@ export type CreateTubeStationResponse = {
   tubeStation?: Maybe<TubeStation>;
 };
 
+export type DuoEnrollResponse = {
+  __typename?: 'DuoEnrollResponse';
+  activationCode?: Maybe<Scalars['String']>;
+  error?: Maybe<Scalars['String']>;
+  qrCode?: Maybe<Scalars['String']>;
+};
+
+export type DuoEnrollStatusResponse = {
+  __typename?: 'DuoEnrollStatusResponse';
+  error?: Maybe<Scalars['String']>;
+  result?: Maybe<Scalars['String']>;
+};
+
+export type DuoPreauthResponse = {
+  __typename?: 'DuoPreauthResponse';
+  error?: Maybe<Scalars['String']>;
+  result?: Maybe<Scalars['String']>;
+};
+
 export type FieldError = {
   __typename?: 'FieldError';
   field: Scalars['String'];
@@ -96,6 +115,8 @@ export type Mutation = {
   createTubeStation: CreateTubeStationResponse;
   deleteGallery: Scalars['Boolean'];
   deleteTubeStation: Scalars['Boolean'];
+  duoAuth: Scalars['Boolean'];
+  duoEnroll: DuoEnrollResponse;
   login: UserResponse;
   logout: Scalars['Boolean'];
   register: UserResponse;
@@ -123,7 +144,7 @@ export type MutationLoginArgs = {
 };
 
 export type MutationRegisterArgs = {
-  options: UsernameEmailPasswordInput;
+  registerInput: UsernameEmailPasswordInput;
 };
 
 export type MutationUpdateGalleryArgs = {
@@ -177,11 +198,19 @@ export type PostalAddress = {
 
 export type Query = {
   __typename?: 'Query';
+  duoCheck: Scalars['Boolean'];
+  duoEnrollStatus: DuoEnrollStatusResponse;
+  duoPing: Scalars['Boolean'];
+  duoPreauth: DuoPreauthResponse;
   galleries: PaginatedGalleries;
   gallery: GalleryQueryResponse;
   hello: Scalars['String'];
   me?: Maybe<User>;
   tubeStations: Array<TubeStation>;
+};
+
+export type QueryDuoEnrollStatusArgs = {
+  activationCode: Scalars['String'];
 };
 
 export type QueryGalleryArgs = {
@@ -208,6 +237,7 @@ export type UpdateGalleryInput = {
 export type User = {
   __typename?: 'User';
   createdAt: Scalars['String'];
+  duoRegistered: Scalars['Boolean'];
   email: Scalars['String'];
   id: Scalars['String'];
   updatedAt: Scalars['String'];

@@ -1,21 +1,23 @@
 import type { Request } from '@sveltejs/kit';
 
 export async function post(
-  request: Request
+  request: Request & { body: { activationCode } }
 ): Promise<{ body: string } | { error: string; status: number }> {
   try {
+    const { activationCode } = request.body;
     const query = `
-      query MeQuery {
-        me {
-          id
-          username
-          email
-          duoRegistered
-        }
-      }
+		query Query($duoEnrollStatusActivationCode: String!) {
+			duoEnrollStatus(activationCode: $duoEnrollStatusActivationCode) {
+				result
+				error
+			}
+		}
+		
     `;
 
-    const variables = {};
+    const variables = {
+      duoEnrollStatusActivationCode: activationCode
+    };
 
     const response = await fetch(process.env['GRAPHQL_ENDPOINT'], {
       method: 'POST',
@@ -36,7 +38,7 @@ export async function post(
       body: JSON.stringify({ ...data })
     };
   } catch (err) {
-    const error = `Error in /query/me.json.ts: ${err}`;
+    const error = `Error in /query/duo-preauth.json.ts: ${err}`;
     console.error(error);
     return {
       status: 500,
