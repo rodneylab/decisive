@@ -1,16 +1,19 @@
 import type { Request } from '@sveltejs/kit';
 
-export async function get(
-  request: Request
+export async function post(
+  request: Request & { body: { device } }
 ): Promise<{ body: string } | { error: string; status: number }> {
   try {
+    const { device } = request.body;
     const query = `
-      mutation DuoAuthMutation {
-        duoAuth
+      mutation DuoAuthMutation($duoAuthDevice: String!) {
+        duoAuth(device: $duoAuthDevice)
       }
     `;
 
-    const variables = {};
+    const variables = {
+      duoAuthDevice: device
+    };
 
     const response = await fetch(process.env['GRAPHQL_ENDPOINT'], {
       method: 'POST',

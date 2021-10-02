@@ -8,7 +8,11 @@ export async function get(
       query Query {
         duoPreauth {
           result
-          error
+          devices {
+            capabilities
+            device
+            type
+          }
         }
       }
     `;

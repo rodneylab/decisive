@@ -27,7 +27,7 @@
 
 <script lang="ts">
   import { goto, prefetch } from '$app/navigation';
-  import type { User } from '$lib/generated/graphql';
+  import type { DuoPreauthResponse, User } from '$lib/generated/graphql';
 
   $: duoEnrolling = false;
   $: submitting = false;
@@ -36,12 +36,16 @@
   $: showQRCode = false;
   export let me: User | null;
 
-  async function duoAuth() {
+  async function duoAuth(device) {
     try {
       duoEnrolling = true;
       const response = await fetch('/query/duo-auth.json', {
-        method: 'GET',
-        credentials: 'include'
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ device })
       });
       const data = await response.json();
       const { duoAuth: authorised } = data.data;
@@ -90,14 +94,15 @@
         credentials: 'include'
       });
       const data = await response.json();
-      const { error, result } = data.data.duoPreauth;
+      const { error, devices, result }: DuoPreauthResponse = data.data.duoPreauth;
       if (error) {
         console.error(`Error in duoPreauth: ${error}`);
       } else {
         if (result === 'enroll') {
           duoEnroll();
         } else if (result === 'auth') {
-          duoAuth();
+          // todo(rodneylab): let user select a device when there are multiple ones available
+          duoAuth(devices[0].device);
         }
       }
     } catch (error) {
@@ -115,9 +120,7 @@
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          loginCredentials: {
-            activationCode
-          }
+          activationCode
         })
       });
       const data = await response.json();

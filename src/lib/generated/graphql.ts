@@ -49,6 +49,13 @@ export type CreateTubeStationResponse = {
   tubeStation?: Maybe<TubeStation>;
 };
 
+export type DuoAuthDevice = {
+  __typename?: 'DuoAuthDevice';
+  capabilities: Array<Scalars['String']>;
+  device: Scalars['String'];
+  type: Scalars['String'];
+};
+
 export type DuoEnrollResponse = {
   __typename?: 'DuoEnrollResponse';
   activationCode?: Maybe<Scalars['String']>;
@@ -64,6 +71,7 @@ export type DuoEnrollStatusResponse = {
 
 export type DuoPreauthResponse = {
   __typename?: 'DuoPreauthResponse';
+  devices?: Maybe<Array<DuoAuthDevice>>;
   error?: Maybe<Scalars['String']>;
   result?: Maybe<Scalars['String']>;
 };
