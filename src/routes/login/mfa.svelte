@@ -1,5 +1,5 @@
 <script context="module">
-  export const load = async ({ fetch, page }) => {
+  export const load = async ({ fetch }) => {
     try {
       // check for valid user session
       const meResponse = await fetch('/query/me.json', {
@@ -36,9 +36,9 @@
   $: showQRCode = false;
   export let me: User | null;
 
-  const duoButtonText = me.duoRegistered ? 'Log in with Duo' : 'Registered with Duo';
+  const duoButtonText = me.duoRegistered ? 'Log in with Duo' : 'Register with Duo';
 
-  async function duoAuth(device) {
+  async function duoAuth(device: string) {
     try {
       duoEnrolling = true;
       const response = await fetch('/query/duo-auth.json', {

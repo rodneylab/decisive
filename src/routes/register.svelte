@@ -1,5 +1,5 @@
 <script context="module">
-  export const load = async ({ fetch, page }) => {
+  export const load = async ({ fetch }) => {
     try {
       const response = await fetch('/query/me.json', {
         method: 'POST',
