@@ -25,11 +25,12 @@ specifiers:
   prettier: ^2.4.1
   prettier-plugin-svelte: ^2.4.0
   svelte: ^3.43.1
-  svelte-awesome: ^2.3.2
+  svelte-awesome: ^2.4.2
   svelte-check: ^2.2.6
   svelte-preprocess: ^4.9.8
   tslib: ^2.3.1
   typescript: ^4.4.3
+  u2f-api: ^1.2.1
 
 dependencies:
   graphql-tag: 2.12.5_graphql@15.6.0
@@ -58,11 +59,12 @@ devDependencies:
   prettier: 2.4.1
   prettier-plugin-svelte: 2.4.0_prettier@2.4.1+svelte@3.43.1
   svelte: 3.43.1
-  svelte-awesome: 2.3.2
+  svelte-awesome: 2.4.2_svelte@3.43.1
   svelte-check: 2.2.6_svelte@3.43.1
   svelte-preprocess: 4.9.8_svelte@3.43.1+typescript@4.4.3
   tslib: 2.3.1
   typescript: 4.4.3
+  u2f-api: 1.2.1
 
 packages:
 
@@ -631,7 +633,7 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       '@babel/code-frame': 7.14.5
-      '@babel/parser': 7.15.6
+      '@babel/parser': 7.15.7
       '@babel/types': 7.15.6
     dev: true
 
@@ -644,7 +646,7 @@ packages:
       '@babel/helper-function-name': 7.15.4
       '@babel/helper-hoist-variables': 7.15.4
       '@babel/helper-split-export-declaration': 7.15.4
-      '@babel/parser': 7.15.6
+      '@babel/parser': 7.15.7
       '@babel/types': 7.15.6
       debug: 4.3.2
       globals: 11.12.0
@@ -1113,7 +1115,7 @@ packages:
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
     dependencies:
-      '@graphql-tools/utils': 8.2.2_graphql@15.6.0
+      '@graphql-tools/utils': 8.2.4_graphql@15.6.0
       graphql: 15.6.0
       relay-compiler: 11.0.2_graphql@15.6.0
       tslib: 2.3.1
@@ -1685,7 +1687,7 @@ packages:
     dependencies:
       call-bind: 1.0.2
       define-properties: 1.1.3
-      es-abstract: 1.19.0
+      es-abstract: 1.19.1
     dev: true
 
   /asap/2.0.6:
@@ -1789,7 +1791,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001263
+      caniuse-lite: 1.0.30001264
       electron-to-chromium: 1.3.857
       escalade: 3.1.1
       nanocolors: 0.2.12
@@ -1858,8 +1860,8 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /caniuse-lite/1.0.30001263:
-    resolution: {integrity: sha512-doiV5dft6yzWO1WwU19kt8Qz8R0/8DgEziz6/9n2FxUasteZNwNNYSmJO3GLBH8lCVE73AB1RPDPAeYbcO5Cvw==}
+  /caniuse-lite/1.0.30001264:
+    resolution: {integrity: sha512-Ftfqqfcs/ePiUmyaySsQ4PUsdcYyXG2rfoBVsk3iY1ahHaJEw65vfb7Suzqm+cEkwwPIv/XWkg27iCpRavH4zA==}
     dev: true
 
   /capital-case/1.0.4:
@@ -2250,8 +2252,8 @@ packages:
       is-arrayish: 0.2.1
     dev: true
 
-  /es-abstract/1.19.0:
-    resolution: {integrity: sha512-oWPrF+7P1nGv/rw9oIInwdkmI1qediEJSvVfHFryBd8mWllCKB5tke3aKyf51J6chgyKmi6mODqdnin2yb88Nw==}
+  /es-abstract/1.19.1:
+    resolution: {integrity: sha512-2vJ6tjA/UfqLm2MPs7jxVybLoB8i1t1Jd9R3kISld20sIxPcTbLuggQOUxeWeAvIUkduv/CfMjuh4WmiXr2v9w==}
     engines: {node: '>= 0.4'}
     dependencies:
       call-bind: 1.0.2
@@ -4601,8 +4603,10 @@ packages:
       has-flag: 4.0.0
     dev: true
 
-  /svelte-awesome/2.3.2:
-    resolution: {integrity: sha512-odkwkVSYEARI/4CskjwoI7KIhds1Ui74H1VFAifWuDoczY+JpPeJuBwDqgo8imM7Bd76U+ns7Yf1iQqveHnx5Q==}
+  /svelte-awesome/2.4.2_svelte@3.43.1:
+    resolution: {integrity: sha512-VV1xhTU+L5ZZSfoAYlBNOcvfvkVPrPMbFrsuTdGo7xjEpWnDfslftfWSXeILSGIhQYsq7TXIfBa/PnEbHUNRaw==}
+    peerDependencies:
+      svelte: ^3.43.1
     dependencies:
       svelte: 3.43.1
     dev: true
@@ -4851,6 +4855,10 @@ packages:
     resolution: {integrity: sha512-4xfscpisVgqqDfPaJo5vkd+Qd/ItkoagnHpufr+i2QCHBsNYp+G7UAoyFl8aPtx879u38wPV65rZ8qbGZijalA==}
     engines: {node: '>=4.2.0'}
     hasBin: true
+    dev: true
+
+  /u2f-api/1.2.1:
+    resolution: {integrity: sha512-4kfxen+mVxYkdJWHIS7c4HxsqNUs6fkrxlMLi7uQTVVYMVfTh73PhYoAmp1B0PRGELGDiKmXlssgqxcPvtpfSg==}
     dev: true
 
   /ua-parser-js/0.7.28:
