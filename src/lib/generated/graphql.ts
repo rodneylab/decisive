@@ -76,6 +76,13 @@ export type DuoPreauthResponse = {
   result?: Maybe<Scalars['String']>;
 };
 
+export type FidoU2FRequest = {
+  __typename?: 'FidoU2FRequest';
+  appId: Scalars['String'];
+  challenge: Scalars['String'];
+  version: Scalars['String'];
+};
+
 export type FieldError = {
   __typename?: 'FieldError';
   field: Scalars['String'];
@@ -147,6 +154,10 @@ export type MutationDeleteTubeStationArgs = {
   id: Scalars['String'];
 };
 
+export type MutationDuoAuthArgs = {
+  device: Scalars['String'];
+};
+
 export type MutationLoginArgs = {
   credentials: LoginInput;
 };
@@ -210,6 +221,7 @@ export type Query = {
   duoEnrollStatus: DuoEnrollStatusResponse;
   duoPing: Scalars['Boolean'];
   duoPreauth: DuoPreauthResponse;
+  fidoU2FBeginRegister?: Maybe<FidoU2FRequest>;
   galleries: PaginatedGalleries;
   gallery: GalleryQueryResponse;
   hello: Scalars['String'];

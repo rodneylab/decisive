@@ -22,7 +22,7 @@
 <header>
   <div>Decisive</div>
   {#if isGuest}
-    <a aria-label="Log in" href="/login">Login</a>
+    <a sveltekit:prefetch rel="external" aria-label="Log in" href="/login">Login</a>
     <a aria-label="Register" href="/register">Register</a>
   {:else}
     <a aria-label="Open Galleries" href="/gallery">Galleries</a>
