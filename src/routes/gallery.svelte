@@ -4,10 +4,7 @@
       // check for valid user session
       const meResponse = await fetch('/query/me.json', {
         method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        credentials: 'include'
       });
       const { data } = await meResponse.json();
       if (!data?.me) {
@@ -19,10 +16,7 @@
 
       const response = await fetch('/query/gallery.json', {
         method: 'POST',
-        credentials: 'same-origin',
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        credentials: 'include'
       });
       const { slug } = page.params;
       return {
@@ -100,12 +94,7 @@
   {#each $galleries as { id, name, address, openingTimes, slug, website }}
     <li>
       <h2>
-        <a
-          aria-label={`Open ${name} page`}
-          sveltekit:prefetch
-          rel="external"
-          href={`/gallery/${slug}`}>{name}</a
-        >
+        <a aria-label={`Open ${name} page`} sveltekit:prefetch href={`/gallery/${slug}`}>{name}</a>
       </h2>
       <dl>
         <dt>Address</dt>

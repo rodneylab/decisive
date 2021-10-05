@@ -3,7 +3,7 @@
   import websiteConfiguration from '$lib/config/website';
   import type { Location } from '$lib/generated/graphql';
   import type { Map, MapOptions, TileLayer, TileLayerOptions } from 'leaflet';
-  import { onDestroy, onMount } from 'svelte';
+  import { onMount } from 'svelte';
 
   export let id: string;
   export let location: Location;
@@ -39,9 +39,9 @@
     }
   });
 
-  onDestroy(() => {
-    leaflet = null;
-  });
+  // onDestroy(() => {
+  //   leaflet = null;
+  // });
 </script>
 
 <svelte:head>

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { goto, prefetch } from '$app/navigation';
   import user from '$lib/shared/stores/user';
 
   $: isGuest = !$user;
@@ -11,8 +12,11 @@
       });
       const responseData = await response.json();
       const { logout } = responseData.data;
-      console.log('Logged out? : ', logout);
-      user.set(null);
+      if (logout) {
+        user.set(null);
+        await prefetch('/');
+        await goto('/');
+      }
     } catch (error) {
       console.error(`Error in handleLogout function in Header: ${error}`);
     }

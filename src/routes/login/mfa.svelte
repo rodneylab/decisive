@@ -4,10 +4,7 @@
       // check for valid user session
       const meResponse = await fetch('/query/me.json', {
         method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        credentials: 'include'
       });
       return {
         props: { ...(await meResponse.json()) }
@@ -50,4 +47,4 @@
 
 <Duo {duoRegistered} />
 <FidoU2f {fidoU2fRegistered} />
-<pre>{JSON.stringify($user, null,2)}</pre>
+<!-- <pre>{JSON.stringify($user, null,2)}</pre> -->

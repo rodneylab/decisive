@@ -4,10 +4,7 @@
       // check for valid user session
       const meResponse = await fetch('/query/me.json', {
         method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        credentials: 'include'
       });
       const { data } = await meResponse.json();
       if (!data?.me) {
@@ -19,10 +16,7 @@
       const { slug } = page.params;
       const response = await fetch(`/query/gallery/${slug}.json`, {
         method: 'POST',
-        credentials: 'same-origin',
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        credentials: 'same-origin'
       });
       return {
         props: { ...(await response.json()), slug }
@@ -78,7 +72,7 @@
       updating = true;
       const response = await fetch('/query/update/gallery.json', {
         method: 'POST',
-        credentials: 'same-origin',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         },
