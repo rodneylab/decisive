@@ -79,6 +79,7 @@
       const data = await response.json();
       const { signRequests, labels }: FidoU2fAuthenticateRequest =
         data.data.fidoU2fBeginAuthenticate;
+      console.log('Labels:', labels);
       // todo(rodneylab): allow user to select which key to use when there are multiple ones available
       authenticate(signRequests[0]);
     } catch (error) {
@@ -122,7 +123,7 @@
           data.data;
         registerData = await register([fidoU2fBeginRegister]);
       } catch (error) {
-        let message;
+        let message: string;
         if (error?.metaData?.type) {
           message = error.metaData.type;
         } else {
