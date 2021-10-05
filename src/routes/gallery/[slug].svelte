@@ -1,6 +1,21 @@
 <script context="module">
   export const load = async ({ fetch, page }) => {
     try {
+      // check for valid user session
+      const meResponse = await fetch('/query/me.json', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const { data } = await meResponse.json();
+      if (!data?.me) {
+        return {
+          status: 301,
+          redirect: '/login'
+        };
+      }
       const { slug } = page.params;
       const response = await fetch(`/query/gallery/${slug}.json`, {
         method: 'POST',
@@ -54,7 +69,11 @@
   let errors: GalleryFormErrors;
   $: errors = {};
 
-  async function handleUpdate(changes: { address?: string; openStreetMapUrl?: string }) {
+  async function handleUpdate(changes: {
+    address?: string;
+    openStreetMapUrl?: string;
+    website?: string;
+  }) {
     try {
       updating = true;
       const response = await fetch('/query/update/gallery.json', {
@@ -114,7 +133,21 @@
     <dd>{openingTimes}</dd>
   {/if}
   <dt>website</dt>
-  <dd><a aria-label={`Open the ${name} website`} href={website}>{website}</a></dd>
+  <dd>
+    <EditableText
+      ariaLabel={`Open the ${name} website`}
+      href={website}
+      buttonLabel="Edit gallery website URL"
+      value={website}
+      id={`${slug}-edit-website`}
+      placeholder={PLACEHOLDER_TEXT.website}
+      title={TITLE.website}
+      error={errors.website}
+      on:update={(event) => {
+        handleUpdate({ website: event.detail });
+      }}
+    />
+  </dd>
   <dt>map</dt>
   <dd>
     <EditableText

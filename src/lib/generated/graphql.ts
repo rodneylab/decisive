@@ -78,9 +78,9 @@ export type DuoPreauthResponse = {
 
 export type FidoU2fAuthenticateRequest = {
   __typename?: 'FidoU2fAuthenticateRequest';
-  error: Scalars['String'];
-  labels: Array<Scalars['String']>;
-  signRequests: Array<FidoU2fSignRequest>;
+  error?: Maybe<Scalars['String']>;
+  labels?: Maybe<Array<Scalars['String']>>;
+  signRequests?: Maybe<Array<FidoU2fSignRequest>>;
 };
 
 export type FidoU2fRegisterInput = {

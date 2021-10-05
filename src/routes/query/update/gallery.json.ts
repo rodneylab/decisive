@@ -1,10 +1,11 @@
+import type { UpdateGalleryInput } from '$lib/generated/graphql';
 import type { Request } from '@sveltejs/kit';
 
 export async function post(
   request: Request & { body: { input } }
 ): Promise<{ body: string } | { error: string; status: number }> {
   try {
-    const { input } = request.body;
+    const { input }: { input: UpdateGalleryInput } = request.body;
     const query = `
       mutation UpdateGalleryMutation($updateGalleryInput: UpdateGalleryInput!) {
         updateGallery(input: $updateGalleryInput) {
@@ -15,7 +16,6 @@ export async function post(
             address
             openingTimes
             website
-            location
             openStreetMap
           }
           errors {

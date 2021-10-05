@@ -12,6 +12,8 @@
   export let required: boolean = false;
   export let title: string;
   export let error: string;
+  export let ariaLabel: string | null = null;
+  export let href: string | null = null;
 
   const dispatch = createEventDispatcher();
 
@@ -35,6 +37,7 @@
     type="button"
     on:click={() => {
       editing = false;
+      dispatch('editing', false);
     }}><ResetIcon /></button
   >
   <button
@@ -42,16 +45,24 @@
     type="button"
     on:click={() => {
       dispatch('update', value);
+      dispatch('editing', false);
       editing = false;
     }}><DoneIcon /></button
   >
 {:else}
-  {value}
+  {#if href && ariaLabel}
+    <a aria-label={ariaLabel} {href}>
+      {value}
+    </a>
+  {:else}
+    {value}
+  {/if}
   <button
     aria-label={buttonLabel}
     type="button"
-    on:click={() => {
+    on:click|stopPropagation={() => {
       editing = true;
+      dispatch('editing', true);
     }}><EditIcon /></button
   >
 {/if}
