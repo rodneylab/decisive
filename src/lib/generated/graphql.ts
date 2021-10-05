@@ -76,11 +76,43 @@ export type DuoPreauthResponse = {
   result?: Maybe<Scalars['String']>;
 };
 
-export type FidoU2FRequest = {
-  __typename?: 'FidoU2FRequest';
+export type FidoU2fAuthenticateRequest = {
+  __typename?: 'FidoU2fAuthenticateRequest';
+  error: Scalars['String'];
+  labels: Array<Scalars['String']>;
+  signRequests: Array<FidoU2fSignRequest>;
+};
+
+export type FidoU2fRegisterInput = {
+  label: Scalars['String'];
+  registerData: FidoU2fRegistrationDataInput;
+};
+
+export type FidoU2fRegisterRequest = {
+  __typename?: 'FidoU2fRegisterRequest';
   appId: Scalars['String'];
   challenge: Scalars['String'];
   version: Scalars['String'];
+};
+
+export type FidoU2fRegistrationDataInput = {
+  clientData: Scalars['String'];
+  registrationData: Scalars['String'];
+  version: Scalars['String'];
+};
+
+export type FidoU2fSignRequest = {
+  __typename?: 'FidoU2fSignRequest';
+  appId: Scalars['String'];
+  challenge: Scalars['String'];
+  keyHandle: Scalars['String'];
+  version: Scalars['String'];
+};
+
+export type FidoU2fSignResponseInput = {
+  clientData: Scalars['String'];
+  keyHandle: Scalars['String'];
+  signatureData: Scalars['String'];
 };
 
 export type FieldError = {
@@ -132,6 +164,9 @@ export type Mutation = {
   deleteTubeStation: Scalars['Boolean'];
   duoAuth: Scalars['Boolean'];
   duoEnroll: DuoEnrollResponse;
+  fidoU2fAuthenticate: Scalars['Boolean'];
+  fidoU2fCompleteAuthentication: Scalars['Boolean'];
+  fidoU2fRegister: Scalars['Boolean'];
   login: UserResponse;
   logout: Scalars['Boolean'];
   register: UserResponse;
@@ -156,6 +191,18 @@ export type MutationDeleteTubeStationArgs = {
 
 export type MutationDuoAuthArgs = {
   device: Scalars['String'];
+};
+
+export type MutationFidoU2fAuthenticateArgs = {
+  registerInput: FidoU2fRegisterInput;
+};
+
+export type MutationFidoU2fCompleteAuthenticationArgs = {
+  signData: FidoU2fSignResponseInput;
+};
+
+export type MutationFidoU2fRegisterArgs = {
+  registerInput: FidoU2fRegisterInput;
 };
 
 export type MutationLoginArgs = {
@@ -221,7 +268,8 @@ export type Query = {
   duoEnrollStatus: DuoEnrollStatusResponse;
   duoPing: Scalars['Boolean'];
   duoPreauth: DuoPreauthResponse;
-  fidoU2FBeginRegister?: Maybe<FidoU2FRequest>;
+  fidoU2fBeginAuthenticate?: Maybe<FidoU2fAuthenticateRequest>;
+  fidoU2fBeginRegister?: Maybe<FidoU2fRegisterRequest>;
   galleries: PaginatedGalleries;
   gallery: GalleryQueryResponse;
   hello: Scalars['String'];
@@ -259,6 +307,7 @@ export type User = {
   createdAt: Scalars['String'];
   duoRegistered: Scalars['Boolean'];
   email: Scalars['String'];
+  fidoU2fRegistered: Scalars['Boolean'];
   id: Scalars['String'];
   updatedAt: Scalars['String'];
   username: Scalars['String'];

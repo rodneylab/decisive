@@ -9,15 +9,8 @@
           'Content-Type': 'application/json'
         }
       });
-      const { data } = await meResponse.json();
-      if (!data?.me) {
-        return {
-          status: 301,
-          redirect: '/login'
-        };
-      }
       return {
-        props: { ...data }
+        props: { ...(await meResponse.json()) }
       };
     } catch (error) {
       console.error(`Error in load function for /login/mfa: ${error}`);
@@ -26,13 +19,35 @@
 </script>
 
 <script lang="ts">
+  import { browser } from '$app/env';
+  import { goto, prefetch } from '$app/navigation';
   import Duo from '$lib/components/Login/Duo.svelte';
-  import FidoU2F from '$lib/components/Login/FidoU2F.svelte';
+  import FidoU2f from '$lib/components/Login/FidoU2f.svelte';
   import type { User } from '$lib/generated/graphql';
-  export let me: User | null;
+  import user from '$lib/shared/stores/user';
+  import { onMount } from 'svelte';
+  export let data: { me: User | null };
 
-  const { duoRegistered } = me;
+  const { me } = data;
+
+  async function checkForLoggedInUser() {
+    if (browser) {
+      if (me) {
+        user.set({ ...me });
+      } else {
+        await prefetch('/login');
+        await goto('/login');
+      }
+    }
+  }
+
+  onMount(() => {
+    checkForLoggedInUser();
+  });
+
+  const { duoRegistered, fidoU2fRegistered } = me;
 </script>
 
 <Duo {duoRegistered} />
-<FidoU2F />
+<FidoU2f {fidoU2fRegistered} />
+<pre>{JSON.stringify($user, null,2)}</pre>

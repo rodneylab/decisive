@@ -6,7 +6,7 @@ export async function get(
   try {
     const query = `
       query Query {
-        fidoU2FBeginRegister {
+        fidoU2fBeginRegister {
           version
           appId
           challenge
@@ -35,7 +35,7 @@ export async function get(
       body: JSON.stringify({ ...data })
     };
   } catch (err) {
-    const error = `Error in /query/duo-preauth.json.ts: ${err}`;
+    const error = `Error in /query/fido-u2f-register.json.ts: ${err}`;
     console.error(error);
     return {
       status: 500,

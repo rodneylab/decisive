@@ -5,10 +5,15 @@ export async function get(
 ): Promise<{ body: string } | { error: string; status: number }> {
   try {
     const query = `
-      mutation DuoEnrollMutation {
-        duoEnroll {
-          qrCode
-          activationCode
+      query Query {
+        fidoU2fBeginAuthenticate {
+          labels
+          signRequests {
+            keyHandle
+            challenge
+            appId
+            version
+          }
           error
         }
       }
@@ -35,7 +40,7 @@ export async function get(
       body: JSON.stringify({ ...data })
     };
   } catch (err) {
-    const error = `Error in /query/create/duo.json.ts: ${err}`;
+    const error = `Error in /query/fido-u2f.json.ts: ${err}`;
     console.error(error);
     return {
       status: 500,

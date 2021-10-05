@@ -11,6 +11,7 @@ export async function post(
           username
           email
           duoRegistered
+          fidoU2fRegistered
         }
       }
     `;
