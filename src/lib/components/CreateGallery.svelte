@@ -115,7 +115,8 @@
               postalCode,
               country
             },
-            openingHours: filteredOpeningHours.length > 0 ? filteredOpeningHours : null,
+            openingHours:
+              filteredOpeningHours.length > 0 ? { openingHoursRanges: filteredOpeningHours } : null,
             nearestTubes,
             openStreetMapUrl,
             website
