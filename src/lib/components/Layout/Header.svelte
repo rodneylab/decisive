@@ -30,6 +30,7 @@
     <a aria-label="Register" href="/register">Register</a>
   {:else}
     <a aria-label="Open Galleries" href="/gallery">Galleries</a>
+    <a aria-label="Open Tube Stations" href="/tube-station">Tube Stations</a>
     <div>{$user.username}</div>
     <button type="button" on:click={handleLogout}>Logout</button>
   {/if}

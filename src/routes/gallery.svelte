@@ -14,13 +14,22 @@
         };
       }
 
+      const tubeStationResponse = await fetch('/query/tube-station.json', {
+        method: 'POST',
+        credentials: 'same-origin'
+      });
+      const tubeStationsData = await tubeStationResponse.json();
+
       const response = await fetch('/query/gallery.json', {
         method: 'POST',
         credentials: 'include'
       });
       const { slug } = page.params;
       return {
-        props: { ...(await response.json()), slug, ...data }
+        props: {
+          data: { ...(await response.json()).data, slug, ...tubeStationsData.data },
+          ...data
+        }
       };
     } catch (error) {
       console.error(`Error in load function for /gallery: ${error}`);
@@ -35,14 +44,17 @@
   import DeleteIcon from '$lib/components/Icons/Delete.svelte';
   import EditIcon from '$lib/components/Icons/Edit.svelte';
   import SEO from '$lib/components/SEO/index.svelte';
-  import type { PaginatedGalleries, User } from '$lib/generated/graphql';
+  import type { PaginatedGalleries, TubeStation, User } from '$lib/generated/graphql';
   import galleries from '$lib/shared/stores/galleries';
+  import { tubeStations } from '$lib/shared/stores/tubeStations';
   import user from '$lib/shared/stores/user';
   import { onMount } from 'svelte';
 
-  export let data: { galleries: PaginatedGalleries };
+  export let data: { galleries: PaginatedGalleries; tubeStations: TubeStation[] };
   export let me: User | null;
   export let slug: string;
+
+  tubeStations.set(data.tubeStations);
 
   async function checkForLoggedInUser() {
     if (browser) {
@@ -65,7 +77,7 @@
     try {
       const response = await fetch('/query/delete/gallery.json', {
         method: 'POST',
-        credentials: 'same-origin',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -119,4 +131,4 @@
 </ul>
 
 <h2>Add a New Gallery</h2>
-<CreateGallery />
+<CreateGallery tubeStationsNames={$tubeStations.map((element) => element.name)} />

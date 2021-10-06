@@ -3,10 +3,7 @@
     try {
       const response = await fetch('/query/tube-station.json', {
         method: 'POST',
-        credentials: 'same-origin',
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        credentials: 'same-origin'
       });
       const { slug } = page.params;
       return {

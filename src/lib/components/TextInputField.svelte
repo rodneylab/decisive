@@ -9,6 +9,7 @@
   export let id: string;
   export let title: string;
   export let error: string | null = null;
+  export let dataList: string[] | null = null;
 </script>
 
 <InputField {id} {title} {error}>
@@ -23,5 +24,13 @@
     {title}
     type="text"
     spellcheck
+    list={dataList ? `${id}-list` : null}
   />
+  {#if dataList}
+    <datalist id={`${id}-list`}>
+      {#each dataList as value}
+        <option {value} />
+      {/each}
+    </datalist>
+  {/if}
 </InputField>

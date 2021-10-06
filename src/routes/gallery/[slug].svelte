@@ -16,7 +16,7 @@
       const { slug } = page.params;
       const response = await fetch(`/query/gallery/${slug}.json`, {
         method: 'POST',
-        credentials: 'same-origin'
+        credentials: 'include'
       });
       return {
         props: { ...(await response.json()), slug }
@@ -157,5 +157,6 @@
     />
   </dd>
 </dl>
-
-<Map {location} id={`${slug}-map`} />
+{#if location}
+  <Map {location} id={`${slug}-map`} />
+{/if}

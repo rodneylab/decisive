@@ -12,6 +12,8 @@
 
   $: submitting = false;
 
+  export let tubeStationsNames: string[];
+
   let name = '';
   let slug = '';
   let streetAddress = '';
@@ -21,7 +23,7 @@
   let country = 'United Kingdom';
   let openingHours = [{ startDay: 0, endDay: 6, openingTime: '10:00', closingTime: '18:00' }];
   let nearestTubes: string[] = [''];
-  let googleMap = '';
+  let openStreetMapUrl = '';
   let website = '';
   let errors: {
     name?: string;
@@ -31,7 +33,7 @@
     city?: string;
     postalCode?: string;
     country?: string;
-    googleMap?: string;
+    openStreetMapUrl?: string;
     website?: string;
   };
   $: errors = {};
@@ -46,7 +48,7 @@
     country = 'United Kingdom';
     openingHours = [{ startDay: 0, endDay: 6, openingTime: '10:00', closingTime: '18:00' }];
     nearestTubes = [''];
-    googleMap = '';
+    openStreetMapUrl = '';
     website = '';
   }
 
@@ -93,9 +95,12 @@
   async function handleSubmit() {
     try {
       submitting = true;
+      const filteredOpeningHours = openingHours.filter(
+        (element) => element.startDay !== -1 && element.endDay !== -1
+      );
       const response = await fetch('/query/create/gallery.json', {
         method: 'POST',
-        credentials: 'same-origin',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         },
@@ -110,11 +115,9 @@
               postalCode,
               country
             },
-            openingHours: {
-              openingHoursRanges: openingHours
-            },
+            openingHours: filteredOpeningHours.length > 0 ? filteredOpeningHours : null,
             nearestTubes,
-            googleMap,
+            openStreetMapUrl,
             website
           }
         })
@@ -215,14 +218,21 @@
       placeholder="First day in range"
       title="Opening Time"
       on:update={(event) => {
-        const day = DAYS.findIndex(
-          (element) => element.toLowerCase() === event.detail.toLowerCase()
-        );
-        if (day !== -1) {
-          openingHours[index].startDay = day;
+        if (event.detail === '') {
+          openingHours[index].startDay = -1;
+          openingHours[index].endDay = -1;
+          openingHours[index].openingTime = '';
+          openingHours[index].closingTime = '';
         } else {
-          openingHours[index].startDay =
-            index === 0 ? 0 : Math.min(6, openingHours[index - 1].endDay + 1);
+          const day = DAYS.findIndex(
+            (element) => element.toLowerCase() === event.detail.toLowerCase()
+          );
+          if (day !== -1) {
+            openingHours[index].startDay = day;
+          } else {
+            openingHours[index].startDay =
+              index === 0 ? 0 : Math.min(6, openingHours[index - 1].endDay + 1);
+          }
         }
       }}
     />
@@ -277,6 +287,7 @@
       id={`create-gallery-tube-${index}`}
       placeholder="Nearest tube station"
       title="Nearest tube station"
+      dataList={tubeStationsNames}
       on:update={(event) => {
         nearestTubes[index] = event.detail;
       }}
@@ -294,14 +305,14 @@
     ><MoreIcon /></button
   >
   <InputField
-    value={googleMap}
+    value={openStreetMapUrl}
     id="create-gallery-map"
-    placeholder="Map Link"
-    title="Map Link"
-    error={errors?.googleMap ?? null}
+    placeholder={PLACEHOLDER_TEXT.openStreetMap}
+    title={TITLE.openStreetMap}
+    error={errors?.openStreetMapUrl ?? null}
     on:update={(event) => {
-      errors.googleMap = null;
-      googleMap = event.detail;
+      errors.openStreetMapUrl = null;
+      openStreetMapUrl = event.detail;
     }}
   />
   <InputField
@@ -317,3 +328,17 @@
   />
   <button type="submit" disabled={submitting}>Create new gallery</button>
 </form>
+
+<style>
+  .screen-reader-text {
+    border: 0;
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(50%);
+    height: 1px;
+    margin: -1px;
+    width: 1px;
+    overflow: hidden;
+    position: absolute !important;
+    word-wrap: normal !important;
+  }
+</style>
