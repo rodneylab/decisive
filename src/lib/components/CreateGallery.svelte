@@ -55,7 +55,7 @@
 
   function createSlug(name: string) {
     let result = name.toLowerCase();
-    return result.replace(/ /g, '-');
+    return result.replace(/ /g, '-').replace(/&/g, 'and');
   }
 
   function handleFewerTubeStations(index: number) {
@@ -74,7 +74,7 @@
       openingHours = [...openingHours, { startDay, endDay: 6, openingTime, closingTime }];
       if (browser) {
         await tick();
-        document.getElementById(`create-gallery-opening-start-${openingHours.length - 1}`);
+        document.getElementById(`create-gallery-opening-start-${openingHours.length - 1}`).focus();
       }
     } catch (error) {
       console.error(`Error in handleMoreOpeningHours function in CreateGallery`);
