@@ -2,9 +2,10 @@
   import { browser } from '$app/env';
   import LessIcon from '$lib/components/Icons/Less.svelte';
   import MoreIcon from '$lib/components/Icons/More.svelte';
-  import InputField from '$lib/components/TextInputField.svelte';
+  import TextInputField from '$lib/components/TextInputField.svelte';
   import { PLACEHOLDER_TEXT, TITLE } from '$lib/constants/form';
   import { DAYS } from '$lib/constants/time';
+  import type { CreateGalleryInput } from '$lib/generated/graphql';
   import galleries from '$lib/shared/stores/galleries';
   import { mapErrorsToFields } from '$lib/utilities/form';
   import { tick } from 'svelte';
@@ -98,30 +99,29 @@
       const filteredOpeningHours = openingHours.filter(
         (element) => element.startDay !== -1 && element.endDay !== -1
       );
+      const data: CreateGalleryInput = {
+        name,
+        slug,
+        postalAddress: {
+          streetAddress,
+          locality,
+          city,
+          postalCode,
+          country
+        },
+        openingHours:
+          filteredOpeningHours.length > 0 ? { openingHoursRanges: filteredOpeningHours } : null,
+        nearestTubes,
+        openStreetMapUrl,
+        website
+      };
       const response = await fetch('/query/create/gallery.json', {
         method: 'POST',
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          input: {
-            name,
-            slug,
-            postalAddress: {
-              streetAddress,
-              locality,
-              city,
-              postalCode,
-              country
-            },
-            openingHours:
-              filteredOpeningHours.length > 0 ? { openingHoursRanges: filteredOpeningHours } : null,
-            nearestTubes,
-            openStreetMapUrl,
-            website
-          }
-        })
+        body: JSON.stringify({ input: data })
       });
       const responseData = await response.json();
       const { errors: formErrors, gallery } = responseData.data.createGallery;
@@ -139,7 +139,7 @@
 </script>
 
 <form on:submit|preventDefault={handleSubmit}>
-  <InputField
+  <TextInputField
     value={name}
     id="create-gallery-name"
     placeholder="Gallery name"
@@ -152,7 +152,7 @@
       }
     }}
   />
-  <InputField
+  <TextInputField
     value={slug}
     id="create-gallery-slug"
     placeholder="gallery-slug"
@@ -162,7 +162,7 @@
       slug = event.detail;
     }}
   />
-  <InputField
+  <TextInputField
     value={streetAddress}
     id="create-gallery-street-address"
     placeholder={PLACEHOLDER_TEXT.streetAddress}
@@ -172,7 +172,7 @@
       streetAddress = event.detail;
     }}
   />
-  <InputField
+  <TextInputField
     value={locality}
     id="create-gallery-locality"
     placeholder="Locality"
@@ -182,7 +182,7 @@
       locality = event.detail;
     }}
   />
-  <InputField
+  <TextInputField
     value={city}
     id="create-gallery-city"
     placeholder="City"
@@ -192,7 +192,7 @@
       city = event.detail;
     }}
   />
-  <InputField
+  <TextInputField
     value={postalCode}
     id="create-gallery-postal-code"
     placeholder="Postal Code"
@@ -202,7 +202,7 @@
       postalCode = event.detail;
     }}
   />
-  <InputField
+  <TextInputField
     value={country}
     id="create-gallery-country"
     placeholder="Country"
@@ -253,7 +253,7 @@
         }
       }}
     />
-    <InputField
+    <TextInputField
       value={openingTime}
       id={`create-gallery-opening-open-${index}`}
       placeholder="09:00"
@@ -262,7 +262,7 @@
         openingHours[index].openingTime = event.detail;
       }}
     />
-    <InputField
+    <TextInputField
       value={closingTime}
       id={`create-gallery-opening-close-${index}`}
       placeholder="18:00"
@@ -283,7 +283,7 @@
     ><span class="screen-reader-text">Add another set of opening hours</span><MoreIcon /></button
   >
   {#each nearestTubes as stationName, index}
-    <InputField
+    <TextInputField
       value={stationName}
       id={`create-gallery-tube-${index}`}
       placeholder="Nearest tube station"
@@ -305,7 +305,7 @@
   <button aria-label="Add an extra station" on:click|preventDefault={handleMoreTubeStations}
     ><MoreIcon /></button
   >
-  <InputField
+  <TextInputField
     value={openStreetMapUrl}
     id="create-gallery-map"
     placeholder={PLACEHOLDER_TEXT.openStreetMap}
@@ -316,7 +316,7 @@
       openStreetMapUrl = event.detail;
     }}
   />
-  <InputField
+  <TextInputField
     value={website}
     id="create-gallery-website"
     placeholder="Website Link"
