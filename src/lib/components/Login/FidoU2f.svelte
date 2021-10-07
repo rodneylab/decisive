@@ -9,10 +9,10 @@
     FidoU2fSignRequest,
     Mutation
   } from '$lib/generated/graphql';
+  import user from '$lib/shared/stores/user';
   import { isSupported, register, sign } from 'u2f-api';
   import TextInputField from '../TextInputField.svelte';
 
-  // $: fidoU2fRegistered = $user.fidoU2fRegistered;
   export let fidoU2fRegistered: boolean = false;
   let label = '';
   $: registering = false;
@@ -57,7 +57,7 @@
       const data: { data: Mutation['fidoU2fCompleteAuthentication'] } = await response.json();
       const { data: authorised } = data;
       if (authorised) {
-        console.log('Access is not denied on this ocassion');
+        user.set({ ...$user, mfaAuthenticated: true });
         await prefetch('/gallery');
         await goto('/gallery');
       } else {

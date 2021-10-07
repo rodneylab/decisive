@@ -1,6 +1,7 @@
 <script lang="ts">
   import { goto, prefetch } from '$app/navigation';
   import type { DuoPreauthResponse } from '$lib/generated/graphql';
+  import user from '$lib/shared/stores/user';
 
   $: enrolling = false;
   $: submitting = false;
@@ -24,7 +25,7 @@
       const data = await response.json();
       const { duoAuth: authorised } = data.data;
       if (authorised) {
-        console.log('Access is not denied on this ocassion');
+        user.set({ ...$user, mfaAuthenticated: true });
         await prefetch('/gallery');
         await goto('/gallery');
       }
