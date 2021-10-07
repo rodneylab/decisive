@@ -2,12 +2,12 @@
   import { browser } from '$app/env';
   import LessIcon from '$lib/components/Icons/Less.svelte';
   import MoreIcon from '$lib/components/Icons/More.svelte';
-  import TextInputField from '$lib/components/TextInputField.svelte';
   import { PLACEHOLDER_TEXT, TITLE } from '$lib/constants/form';
   import { DAYS } from '$lib/constants/time';
   import type { CreateGalleryInput } from '$lib/generated/graphql';
   import galleries from '$lib/shared/stores/galleries';
   import { mapErrorsToFields } from '$lib/utilities/form';
+  import { TextInputField } from '@rodneylab/sveltekit-components';
   import { tick } from 'svelte';
   import DayInputField from './DayInputField.svelte';
 
@@ -259,7 +259,12 @@
       placeholder="09:00"
       title="Opening Time"
       on:update={(event) => {
-        openingHours[index].openingTime = event.detail;
+        const { detail } = event;
+        if (/^([0-1]\d|2[0-3])$/.test(detail)) {
+          openingHours[index].openingTime = `${detail}:00`;
+        } else {
+          openingHours[index].openingTime = detail;
+        }
       }}
     />
     <TextInputField
@@ -268,7 +273,12 @@
       placeholder="18:00"
       title="Closing Time"
       on:update={(event) => {
-        openingHours[index].closingTime = event.detail;
+        const { detail } = event;
+        if (/^([0-1]\d|2[0-3])$/.test(detail)) {
+          openingHours[index].closingTime = `${detail}:00`;
+        } else {
+          openingHours[index].closingTime = detail;
+        }
       }}
     />
     {#if index > 0}

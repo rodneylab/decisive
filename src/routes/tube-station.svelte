@@ -38,6 +38,7 @@
   import { tubeStations } from '$lib/shared/stores/tubeStations';
   import user from '$lib/shared/stores/user';
   import { mapErrorsToFields } from '$lib/utilities/form';
+  import { TextInputField } from '@rodneylab/sveltekit-components';
   import { onMount } from 'svelte';
 
   export let data: { tubeStations: TubeStation[] };
@@ -46,7 +47,7 @@
   $: submitting = false;
 
   async function checkForLoggedInUser() {
-    if (browser) {
+    if (!$user && browser) {
       if (me) {
         user.set({ ...me });
       } else {
@@ -136,13 +137,14 @@
 <h2>Add a New Station</h2>
 <form on:submit|preventDefault={handleSubmit}>
   <span class="screen-reader-text"><label for="create-station-name">Name</label></span>
-  <input
-    bind:value={name}
-    required
+  <TextInputField
+    value={name}
     id="create-station-name"
     placeholder="Station name"
     title="Name"
-    type="text"
+    on:update={(event) => {
+      name = event.detail;
+    }}
   />
   {#if errors?.name}
     <small class="error-text">{errors.name} </small>

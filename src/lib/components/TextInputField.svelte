@@ -12,6 +12,7 @@
   export let dataList: string[] | null = null;
 </script>
 
+<h2>TextInputField component is deprecated, use @rodneylab/sveltekit-components instead</h2>
 <InputField {id} {title} {error}>
   <input
     bind:value

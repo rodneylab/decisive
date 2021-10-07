@@ -11,6 +11,7 @@
   export let error: string | null = null;
 </script>
 
+<h2>EmailInputField component is deprecated, use @rodneylab/sveltekit-components instead</h2>
 <InputField {id} {title} {error}>
   <input
     bind:value

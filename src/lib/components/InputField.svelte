@@ -4,6 +4,7 @@
   export let error: string | null = null;
 </script>
 
+<h2>InputField component is deprecated, use @rodneylab/sveltekit-components instead</h2>
 <span class="screen-reader-text"><label for={id}>{title}</label></span>
 <slot />
 {#if error}

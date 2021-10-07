@@ -3,10 +3,7 @@
     try {
       const response = await fetch('/query/me.json', {
         method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        credentials: 'include'
       });
       return {
         props: { ...(await response.json()) }
@@ -19,14 +16,13 @@
 
 <script lang="ts">
   import { goto, prefetch } from '$app/navigation';
-  import EmailInputField from '$lib/components/EmailInputField.svelte';
   import PasswordInputField from '$lib/components/PasswordInputField.svelte';
   import SEO from '$lib/components/SEO/index.svelte';
-  import TextInputField from '$lib/components/TextInputField.svelte';
   import { PLACEHOLDER_TEXT, TITLE } from '$lib/constants/form';
   import type { User } from '$lib/generated/graphql';
   import user from '$lib/shared/stores/user';
   import { mapErrorsToFields } from '$lib/utilities/form';
+  import { EmailInputField, TextInputField } from '@rodneylab/sveltekit-components';
 
   export let data: { me: User } | undefined;
   const { me } = data;

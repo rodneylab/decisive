@@ -57,7 +57,7 @@
   tubeStations.set(data.tubeStations);
 
   async function checkForLoggedInUser() {
-    if (browser) {
+    if (!user && browser) {
       if (me) {
         user.set({ ...me });
       } else {

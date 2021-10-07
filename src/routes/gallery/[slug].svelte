@@ -19,7 +19,7 @@
         credentials: 'include'
       });
       return {
-        props: { ...(await response.json()), slug }
+        props: { ...(await response.json()), ...data, slug }
       };
     } catch (error) {
       console.error(`Error in load function for /gallery/[slug]: ${error}`);
@@ -28,16 +28,36 @@
 </script>
 
 <script lang="ts">
+  import { browser } from '$app/env';
+  import { goto, prefetch } from '$app/navigation';
   import EditableText from '$lib/components/EditableText.svelte';
-  import Map from '$lib/components/Map.svelte';
   import { PLACEHOLDER_TEXT, TITLE } from '$lib/constants/form';
-  import type { Gallery, GalleryQueryResponse } from '$lib/generated/graphql';
+  import type { Gallery, GalleryQueryResponse, User } from '$lib/generated/graphql';
   import galleries from '$lib/shared/stores/galleries';
+  import user from '$lib/shared/stores/user';
   import type { GalleryFormErrors } from '$lib/utilities/form';
   import { mapErrorsToFields } from '$lib/utilities/form';
+  import { Map } from '@rodneylab/sveltekit-components';
+  import { onMount } from 'svelte';
 
   export let slug: string;
   export let data: { gallery: GalleryQueryResponse };
+  export let me: User | null;
+
+  async function checkForLoggedInUser() {
+    if (!$user && browser) {
+      if (me) {
+        user.set({ ...me });
+      } else {
+        await prefetch('/login');
+        await goto('/login');
+      }
+    }
+  }
+
+  onMount(() => {
+    checkForLoggedInUser();
+  });
 
   const index = $galleries.findIndex((element) => element.slug === slug);
   if (index >= 0) {

@@ -3,10 +3,7 @@
     try {
       const response = await fetch('/query/me.json', {
         method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json'
-        }
+        credentials: 'include'
       });
       return {
         props: { ...(await response.json()) }
