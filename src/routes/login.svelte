@@ -17,13 +17,12 @@
 <script lang="ts">
   import { browser } from '$app/env';
   import { goto, prefetch } from '$app/navigation';
-  import PasswordInputField from '$lib/components/PasswordInputField.svelte';
   import SEO from '$lib/components/SEO/index.svelte';
-  import TextInputField from '$lib/components/TextInputField.svelte';
   import { PLACEHOLDER_TEXT, TITLE } from '$lib/constants/form';
   import type { User } from '$lib/generated/graphql';
   import user from '$lib/shared/stores/user';
   import { mapErrorsToFields } from '$lib/utilities/form';
+  import { PasswordInputField, TextInputField } from '@rodneylab/sveltekit-components';
 
   export let data: { me: User | null };
   const { me } = data;
@@ -90,25 +89,27 @@
 </script>
 
 <SEO {title} {metadescription} {slug} />
-<h1>Login</h1>
-<form on:submit|preventDefault={handleSubmit}>
-  <TextInputField
-    value={username}
-    id="login-username"
-    placeholder={PLACEHOLDER_TEXT.username}
-    title={TITLE.username}
-    error={errors?.username ?? null}
-    on:update={(event) => {
-      username = event.detail;
-    }}
-  />
-  <PasswordInputField
-    value={password}
-    id="login-password"
-    error={errors?.password ?? null}
-    on:update={(event) => {
-      password = event.detail;
-    }}
-  />
-  <button type="submit" disabled={submitting}>Login</button>
-</form>
+<main>
+  <h1>Login</h1>
+  <form on:submit|preventDefault={handleSubmit}>
+    <TextInputField
+      value={username}
+      id="login-username"
+      placeholder={PLACEHOLDER_TEXT.username}
+      title={TITLE.username}
+      error={errors?.username ?? null}
+      on:update={(event) => {
+        username = event.detail;
+      }}
+    />
+    <PasswordInputField
+      value={password}
+      id="login-password"
+      error={errors?.password ?? null}
+      on:update={(event) => {
+        password = event.detail;
+      }}
+    />
+    <button type="submit" disabled={submitting}>Login</button>
+  </form>
+</main>

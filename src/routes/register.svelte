@@ -16,13 +16,16 @@
 
 <script lang="ts">
   import { goto, prefetch } from '$app/navigation';
-  import PasswordInputField from '$lib/components/PasswordInputField.svelte';
   import SEO from '$lib/components/SEO/index.svelte';
   import { PLACEHOLDER_TEXT, TITLE } from '$lib/constants/form';
   import type { User } from '$lib/generated/graphql';
   import user from '$lib/shared/stores/user';
   import { mapErrorsToFields } from '$lib/utilities/form';
-  import { EmailInputField, TextInputField } from '@rodneylab/sveltekit-components';
+  import {
+    EmailInputField,
+    PasswordInputField,
+    TextInputField
+  } from '@rodneylab/sveltekit-components';
 
   export let data: { me: User } | undefined;
   const { me } = data;
