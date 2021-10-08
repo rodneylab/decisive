@@ -77,6 +77,7 @@
   $: name = gallery.name;
   $: openingTimes = gallery.openingTimes;
   $: website = gallery.website;
+  $: websiteUrl = gallery.websiteUrl;
   $: location = gallery.location;
   $: openStreetMap = gallery.openStreetMap;
   $: updating = false;
@@ -150,7 +151,7 @@
   <dd>
     <EditableText
       ariaLabel={`Open the ${name} website`}
-      href={website}
+      href={websiteUrl}
       buttonLabel="Edit gallery website URL"
       value={website}
       id={`${slug}-edit-website`}
@@ -178,5 +179,5 @@
   </dd>
 </dl>
 {#if location}
-  <Map {location} id={`${slug}-map`} />
+  <Map {location} id={`${slug}-map`} style="width:100%;height:25rem" />
 {/if}

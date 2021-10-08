@@ -16,6 +16,7 @@ export async function post(
             address
             openingTimes
             website
+            websiteUrl
             openStreetMap
             location {
               latitude

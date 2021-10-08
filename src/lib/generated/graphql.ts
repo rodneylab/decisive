@@ -137,6 +137,7 @@ export type Gallery = {
   slug: Scalars['String'];
   updatedAt: Scalars['DateTime'];
   website?: Maybe<Scalars['String']>;
+  websiteUrl?: Maybe<Scalars['String']>;
 };
 
 export type GalleryQueryResponse = {

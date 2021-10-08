@@ -104,7 +104,7 @@
 <a href="/gallery#create-gallery">Create a new gallery</a>
 <h1 id="galleries">Galleries</h1>
 <ul>
-  {#each $galleries as { id, name, address, openingTimes, slug, website }}
+  {#each $galleries as { id, name, address, openingTimes, slug, website, websiteUrl }}
     <li>
       <h2>
         <a aria-label={`Open ${name} page`} sveltekit:prefetch href={`/gallery/${slug}`}>{name}</a>
@@ -117,7 +117,7 @@
           <dd>{openingTimes}</dd>
         {/if}
         <dt>website</dt>
-        <dd><a aria-label={`Open the ${name} website`} href={website}>{website}</a></dd>
+        <dd><a aria-label={`Open the ${name} website`} href={websiteUrl}>{website}</a></dd>
       </dl>
       <button
         aria-label="Edit gallery"
