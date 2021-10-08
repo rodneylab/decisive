@@ -8,7 +8,7 @@ specifiers:
   '@graphql-codegen/cli': 2.2.0
   '@graphql-codegen/introspection': 2.1.0
   '@graphql-codegen/typescript': 2.2.2
-  '@graphql-codegen/typescript-operations': 2.1.4
+  '@graphql-codegen/typescript-operations': 2.1.6
   '@rodneylab/sveltekit-components': ^0.1.3
   '@sveltejs/kit': next
   '@types/leaflet': ^1.7.5
@@ -44,7 +44,7 @@ devDependencies:
   '@graphql-codegen/cli': 2.2.0_graphql@15.6.1+typescript@4.4.3
   '@graphql-codegen/introspection': 2.1.0_graphql@15.6.1
   '@graphql-codegen/typescript': 2.2.2_graphql@15.6.1
-  '@graphql-codegen/typescript-operations': 2.1.4_graphql@15.6.1
+  '@graphql-codegen/typescript-operations': 2.1.6_graphql@15.6.1
   '@rodneylab/sveltekit-components': 0.1.3
   '@sveltejs/kit': 1.0.0-next.180_svelte@3.43.1
   '@types/leaflet': 1.7.5
@@ -835,8 +835,8 @@ packages:
       tslib: 2.3.1
     dev: true
 
-  /@graphql-codegen/typescript-operations/2.1.4_graphql@15.6.1:
-    resolution: {integrity: sha512-IftToh41G1haeRZ4dJw0zG0MTkAS1JvdTrn3ZwVbzpXks98utC4X93qJnbd1h7rTAtZa0Kk6YS2F5OP/64ZWpg==}
+  /@graphql-codegen/typescript-operations/2.1.6_graphql@15.6.1:
+    resolution: {integrity: sha512-TtvrlLcZNNotxz3UAKBDrPeT1eL2bi1CWwDSzKiViX5lEDiMp40p/Gxa7P/n9n0n5ZfYzrl06Id6l/WMlUy6Kw==}
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0
     dependencies:
