@@ -39,6 +39,7 @@
   import user from '$lib/shared/stores/user';
   import { mapErrorsToFields } from '$lib/utilities/form';
   import { TextInputField } from '@rodneylab/sveltekit-components';
+  import slugify from 'slugify';
   import { onMount } from 'svelte';
 
   export let data: { tubeStations: TubeStation[] };
@@ -151,7 +152,11 @@
     placeholder="Station name"
     title="Name"
     on:update={(event) => {
-      name = event.detail;
+      const { detail } = event;
+      name = detail;
+      if (slug === '') {
+        slug = slugify(detail, { remove: /[\.]/g, lower: true });
+      }
     }}
   />
   <TextInputField

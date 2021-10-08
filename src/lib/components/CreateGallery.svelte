@@ -8,6 +8,7 @@
   import galleries from '$lib/shared/stores/galleries';
   import { GalleryFormErrors, mapErrorsToFields } from '$lib/utilities/form';
   import { TextInputField } from '@rodneylab/sveltekit-components';
+  import slugify from 'slugify';
   import { tick } from 'svelte';
   import DayInputField from './DayInputField.svelte';
 
@@ -26,19 +27,7 @@
   let nearestTubes: string[] = [''];
   let openStreetMapUrl = '';
   let website = '';
-  let errors: GalleryFormErrors;
-  // {
-  //   name?: string;
-  //   slug?: string;
-  //   streetAddress?: string;
-  //   locality?: string;
-  //   city?: string;
-  //   postalCode?: string;
-  //   country?: string;
-  //   openStreetMapUrl?: string;
-  //   website?: string;
-  // };
-  // $: errors = {};
+  let errors: GalleryFormErrors = {};
 
   function clearFormFields() {
     name = '';
@@ -52,11 +41,6 @@
     nearestTubes = [''];
     openStreetMapUrl = '';
     website = '';
-  }
-
-  function createSlug(name: string) {
-    const result = name.toLowerCase();
-    return result.replace(/ /g, '-').replace(/&/g, 'and');
   }
 
   function handleFewerTubeStations(index: number) {
@@ -148,9 +132,10 @@
       title="Name"
       error={errors?.name ?? null}
       on:update={(event) => {
-        name = event.detail;
+        const { detail } = event;
+        name = detail;
         if (slug === '') {
-          slug = createSlug(event.detail);
+          slug = slugify(detail, { remove: /[\.]/g, lower: true });
         }
       }}
     />
@@ -322,10 +307,10 @@
       id="create-gallery-map"
       placeholder={PLACEHOLDER_TEXT.openStreetMap}
       title={TITLE.openStreetMap}
-      error={errors?.openStreetMapUrl ?? null}
+      error={errors?.openStreetMap ?? null}
       on:update={(event) => {
-        errors.openStreetMapUrl = null;
-        openStreetMapUrl = event.detail;
+        errors.openStreetMap = null;
+        openStreetMapUrl = event.detail.trim();
       }}
     />
     <TextInputField
@@ -336,7 +321,7 @@
       error={errors?.website ?? null}
       on:update={(event) => {
         errors.website = null;
-        website = event.detail;
+        website = event.detail.trim();
       }}
     />
     <button type="submit" disabled={submitting}>Create new gallery</button>
