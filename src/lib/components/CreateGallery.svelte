@@ -6,7 +6,7 @@
   import { DAYS } from '$lib/constants/time';
   import type { CreateGalleryInput } from '$lib/generated/graphql';
   import galleries from '$lib/shared/stores/galleries';
-  import { mapErrorsToFields } from '$lib/utilities/form';
+  import { GalleryFormErrors, mapErrorsToFields } from '$lib/utilities/form';
   import { TextInputField } from '@rodneylab/sveltekit-components';
   import { tick } from 'svelte';
   import DayInputField from './DayInputField.svelte';
@@ -26,18 +26,19 @@
   let nearestTubes: string[] = [''];
   let openStreetMapUrl = '';
   let website = '';
-  let errors: {
-    name?: string;
-    slug?: string;
-    streetAddress?: string;
-    locality?: string;
-    city?: string;
-    postalCode?: string;
-    country?: string;
-    openStreetMapUrl?: string;
-    website?: string;
-  };
-  $: errors = {};
+  let errors: GalleryFormErrors;
+  // {
+  //   name?: string;
+  //   slug?: string;
+  //   streetAddress?: string;
+  //   locality?: string;
+  //   city?: string;
+  //   postalCode?: string;
+  //   country?: string;
+  //   openStreetMapUrl?: string;
+  //   website?: string;
+  // };
+  // $: errors = {};
 
   function clearFormFields() {
     name = '';

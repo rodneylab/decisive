@@ -16,7 +16,7 @@
 
       const response = await fetch('/query/tube-station.json', {
         method: 'POST',
-        credentials: 'same-origin'
+        credentials: 'include'
       });
       const { slug } = page.params;
       return {
@@ -34,7 +34,7 @@
   import DeleteIcon from '$lib/components/Icons/Delete.svelte';
   import EditIcon from '$lib/components/Icons/Edit.svelte';
   import SEO from '$lib/components/SEO/index.svelte';
-  import type { TubeStation, User } from '$lib/generated/graphql';
+  import type { CreateTubeStationInput, TubeStation, User } from '$lib/generated/graphql';
   import { tubeStations } from '$lib/shared/stores/tubeStations';
   import user from '$lib/shared/stores/user';
   import { mapErrorsToFields } from '$lib/utilities/form';
@@ -64,12 +64,12 @@
   tubeStations.set(data.tubeStations);
 
   let name = '';
-  let errors: { name: string | undefined };
-  $: errors = { name: undefined };
+  let errors: { name: string | undefined; slug: string | undefined };
+  $: errors = { name: undefined, slug: undefined };
 
   $: mapErrorsToFields;
 
-  async function handleDelete(id: number) {
+  async function handleDelete(id: string) {
     try {
       const response = await fetch('/query/delete/tube-station.json', {
         method: 'POST',
@@ -89,16 +89,22 @@
     }
   }
 
+  async function handleEdit(slug: string) {
+    await prefetch(`/tube-station/${slug}`);
+    goto(`tube-station/${slug}`);
+  }
+
   async function handleSubmit() {
     try {
       submitting = true;
+      const input: CreateTubeStationInput = { name, slug };
       const response = await fetch('/query/create/tube-station.json', {
         method: 'POST',
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ name })
+        body: JSON.stringify({ input })
       });
       const responseData = await response.json();
 
@@ -117,18 +123,20 @@
 </script>
 
 <SEO title="Tube Stations" {slug} metadescription="Tube Stations" />
-<!-- <pre>{JSON.stringify(data, null, 2)}</pre>
-<pre>{JSON.stringify($tubeStations, null, 2)}</pre> -->
 <h1>Tube Stations</h1>
 <h2>Current Stations</h2>
 <ul>
-  {#each [...$tubeStations] as { id, name }}
+  {#each [...$tubeStations] as { id, name, slug }}
     <li>
-      <h3>{name}</h3>
-      <EditIcon /><button
-        aria-label="Delete station"
-        type="button"
-        on:click={() => handleDelete(id)}><DeleteIcon /></button
+      <h3>
+        <a aria-label={`Edit ${name} station`} sveltekit:prefetch href={`/tube-station/${slug}/`}
+          >{name}</a
+        >
+      </h3>
+      <button aria-label="Edit station" type="button" on:click={() => handleEdit(slug)}
+        ><EditIcon /></button
+      ><button aria-label="Delete station" type="button" on:click={() => handleDelete(id)}
+        ><DeleteIcon /></button
       >
     </li>
   {/each}
@@ -146,14 +154,15 @@
       name = event.detail;
     }}
   />
-  {#if errors?.name}
-    <small class="error-text">{errors.name} </small>
-  {/if}
+  <TextInputField
+    value={slug}
+    id="create-station-slug"
+    placeholder="tube-station-slug"
+    title="Slug"
+    error={errors?.slug ?? null}
+    on:update={(event) => {
+      slug = event.detail;
+    }}
+  />
   <button type="submit" disabled={submitting}>Create new station</button>
 </form>
-
-<style>
-  .error-text {
-    color: #c42021;
-  }
-</style>

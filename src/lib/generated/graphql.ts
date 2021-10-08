@@ -43,6 +43,11 @@ export type CreateGalleryResponse = {
   gallery?: Maybe<Gallery>;
 };
 
+export type CreateTubeStationInput = {
+  name: Scalars['String'];
+  slug: Scalars['String'];
+};
+
 export type CreateTubeStationResponse = {
   __typename?: 'CreateTubeStationResponse';
   errors?: Maybe<Array<FieldError>>;
@@ -172,6 +177,7 @@ export type Mutation = {
   logout: Scalars['Boolean'];
   register: UserResponse;
   updateGallery: CreateGalleryResponse;
+  updateTubeStation: CreateTubeStationResponse;
 };
 
 export type MutationCreateGalleryArgs = {
@@ -179,7 +185,7 @@ export type MutationCreateGalleryArgs = {
 };
 
 export type MutationCreateTubeStationArgs = {
-  name: Scalars['String'];
+  input: CreateTubeStationInput;
 };
 
 export type MutationDeleteGalleryArgs = {
@@ -216,6 +222,10 @@ export type MutationRegisterArgs = {
 
 export type MutationUpdateGalleryArgs = {
   input: UpdateGalleryInput;
+};
+
+export type MutationUpdateTubeStationArgs = {
+  input: UpdateTubeStationInput;
 };
 
 export type OpeningHours = {
@@ -275,6 +285,7 @@ export type Query = {
   gallery: GalleryQueryResponse;
   hello: Scalars['String'];
   me?: Maybe<User>;
+  tubeStation: TubeStationQueryResponse;
   tubeStations: Array<TubeStation>;
 };
 
@@ -286,13 +297,24 @@ export type QueryGalleryArgs = {
   slug: Scalars['String'];
 };
 
+export type QueryTubeStationArgs = {
+  slug: Scalars['String'];
+};
+
 export type TubeStation = {
   __typename?: 'TubeStation';
   createdAt: Scalars['DateTime'];
   galleries?: Maybe<Array<Gallery>>;
   id: Scalars['String'];
   name: Scalars['String'];
+  slug: Scalars['String'];
   updatedAt: Scalars['DateTime'];
+};
+
+export type TubeStationQueryResponse = {
+  __typename?: 'TubeStationQueryResponse';
+  error?: Maybe<Scalars['String']>;
+  tubeStation?: Maybe<TubeStation>;
 };
 
 export type UpdateGalleryInput = {
@@ -301,6 +323,12 @@ export type UpdateGalleryInput = {
   openStreetMapUrl?: Maybe<Scalars['String']>;
   slug?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
+};
+
+export type UpdateTubeStationInput = {
+  id: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
 };
 
 export type User = {

@@ -1,23 +1,19 @@
-import type { UpdateGalleryInput } from '$lib/generated/graphql';
+import type { UpdateGalleryInput, UpdateTubeStationInput } from '$lib/generated/graphql';
 import type { Request } from '@sveltejs/kit';
 import type { ResponseHeaders } from '@sveltejs/kit/types/helper';
 
 export async function post(
-  request: Request & { body: { input } }
+  request: Request & { body: { input: UpdateTubeStationInput } }
 ): Promise<{ body: string; headers: ResponseHeaders } | { error: string; status: number }> {
   try {
     const { input }: { input: UpdateGalleryInput } = request.body;
     const query = `
-      mutation UpdateGalleryMutation($updateGalleryInput: UpdateGalleryInput!) {
-        updateGallery(input: $updateGalleryInput) {
-          gallery {
+      mutation UpdateTubeStationMutation($updateTubeStationInput: UpdateTubeStationInput!) {
+        updateTubeStation(input: $updateTubeStationInput) {
+          tubeStation {
             id
             name
             slug
-            address
-            openingTimes
-            website
-            openStreetMap
           }
           errors {
             field
@@ -28,7 +24,7 @@ export async function post(
     `;
 
     const variables = {
-      updateGalleryInput: input
+      updateTubeStationInput: input
     };
 
     const response = await fetch(process.env['GRAPHQL_ENDPOINT'], {
@@ -53,7 +49,7 @@ export async function post(
       }
     };
   } catch (err) {
-    const error = `Error in /query/update/gallery.json.ts: ${err}`;
+    const error = `Error in /query/update/tube-station.json.ts: ${err}`;
     console.error(error);
     return {
       status: 500,

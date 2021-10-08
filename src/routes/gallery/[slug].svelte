@@ -38,7 +38,7 @@
   import type { GalleryFormErrors } from '$lib/utilities/form';
   import { mapErrorsToFields } from '$lib/utilities/form';
   import { Map } from '@rodneylab/sveltekit-components';
-  import { onMount } from 'svelte';
+  import { afterUpdate, onMount } from 'svelte';
 
   export let slug: string;
   export let data: { gallery: GalleryQueryResponse };
@@ -56,6 +56,10 @@
   }
 
   onMount(() => {
+    checkForLoggedInUser();
+  });
+
+  afterUpdate(() => {
     checkForLoggedInUser();
   });
 

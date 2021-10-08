@@ -21,3 +21,8 @@ export interface GalleryFormErrors {
   openStreetMap?: string;
   website?: string;
 }
+
+export interface TubeStationFormErrors {
+  name?: string;
+  slug?: string;
+}

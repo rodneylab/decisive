@@ -25,6 +25,7 @@ specifiers:
   leaflet: ^1.7.1
   prettier: ^2.4.1
   prettier-plugin-svelte: ^2.4.0
+  slugify: ^1.6.1
   svelte: ^3.43.1
   svelte-awesome: ^2.4.2
   svelte-check: ^2.2.7
@@ -60,6 +61,7 @@ devDependencies:
   leaflet: 1.7.1
   prettier: 2.4.1
   prettier-plugin-svelte: 2.4.0_prettier@2.4.1+svelte@3.43.1
+  slugify: 1.6.1
   svelte: 3.43.1
   svelte-awesome: 2.4.2_svelte@3.43.1
   svelte-check: 2.2.7_svelte@3.43.1
@@ -4433,6 +4435,11 @@ packages:
       ansi-styles: 4.3.0
       astral-regex: 2.0.0
       is-fullwidth-code-point: 3.0.0
+    dev: true
+
+  /slugify/1.6.1:
+    resolution: {integrity: sha512-5ofqMTbetNhxlzjYYLBaZFQd6oiTuSkQlyfPEFIMwgUABlZQ0hbk5xIV9Ydd5jghWeRoO7GkiJliUvTpLOjNRA==}
+    engines: {node: '>=8.0.0'}
     dev: true
 
   /snake-case/3.0.4:

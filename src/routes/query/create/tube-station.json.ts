@@ -1,14 +1,15 @@
+import type { CreateTubeStationInput } from '$lib/generated/graphql';
 import type { Request } from '@sveltejs/kit';
 import type { ResponseHeaders } from '@sveltejs/kit/types/helper';
 
 export async function post(
-  request: Request & { body: { name } }
+  request: Request & { body: { input: CreateTubeStationInput } }
 ): Promise<{ body: string; headers: ResponseHeaders } | { error: string; status: number }> {
   try {
-    const { name } = request.body;
+    const { input } = request.body;
     const query = `
-      mutation CreateTubeStationMutation($createTubeStationName: String!) {
-        createTubeStation(name: $createTubeStationName) {
+      mutation CreateTubeStationMutation($createTubeStationInput: CreateTubeStationInput!) {
+        createTubeStation(input: $createTubeStationInput) {
           errors {
             field
             message
@@ -16,13 +17,14 @@ export async function post(
           tubeStation {
             id
             name
+            slug
           }
         }
       }
     `;
 
     const variables = {
-      createTubeStationName: name
+      createTubeStationInput: input
     };
 
     const response = await fetch(process.env['GRAPHQL_ENDPOINT'], {
