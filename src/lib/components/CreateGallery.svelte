@@ -54,7 +54,7 @@
   }
 
   function createSlug(name: string) {
-    let result = name.toLowerCase();
+    const result = name.toLowerCase();
     return result.replace(/ /g, '-').replace(/&/g, 'and');
   }
 
@@ -138,207 +138,209 @@
   }
 </script>
 
-<form on:submit|preventDefault={handleSubmit}>
-  <TextInputField
-    value={name}
-    id="create-gallery-name"
-    placeholder="Gallery name"
-    title="Name"
-    error={errors?.name ?? null}
-    on:update={(event) => {
-      name = event.detail;
-      if (slug === '') {
-        slug = createSlug(event.detail);
-      }
-    }}
-  />
-  <TextInputField
-    value={slug}
-    id="create-gallery-slug"
-    placeholder="gallery-slug"
-    title="Slug"
-    error={errors?.slug ?? null}
-    on:update={(event) => {
-      slug = event.detail;
-    }}
-  />
-  <TextInputField
-    value={streetAddress}
-    id="create-gallery-street-address"
-    placeholder={PLACEHOLDER_TEXT.streetAddress}
-    title={TITLE.streetAddress}
-    error={errors?.streetAddress ?? null}
-    on:update={(event) => {
-      streetAddress = event.detail;
-    }}
-  />
-  <TextInputField
-    value={locality}
-    id="create-gallery-locality"
-    placeholder="Locality"
-    title="Locality"
-    error={errors?.locality ?? null}
-    on:update={(event) => {
-      locality = event.detail;
-    }}
-  />
-  <TextInputField
-    value={city}
-    id="create-gallery-city"
-    placeholder="City"
-    title="City"
-    error={errors?.city ?? null}
-    on:update={(event) => {
-      city = event.detail;
-    }}
-  />
-  <TextInputField
-    value={postalCode}
-    id="create-gallery-postal-code"
-    placeholder="Postal Code"
-    title="Postal code"
-    error={errors?.postalCode ?? null}
-    on:update={(event) => {
-      postalCode = event.detail;
-    }}
-  />
-  <TextInputField
-    value={country}
-    id="create-gallery-country"
-    placeholder="Country"
-    title="Country"
-    error={errors?.country ?? null}
-    on:update={(event) => {
-      country = event.detail;
-    }}
-  />
-  {#each openingHours as { startDay, endDay, openingTime, closingTime }, index}
-    <DayInputField
-      value={DAYS[startDay]}
-      id={`create-gallery-opening-start-${index}`}
-      placeholder="First day in range"
-      title="Opening Time"
+<aside id="create-gallery">
+  <form on:submit|preventDefault={handleSubmit}>
+    <TextInputField
+      value={name}
+      id="create-gallery-name"
+      placeholder="Gallery name"
+      title="Name"
+      error={errors?.name ?? null}
       on:update={(event) => {
-        if (event.detail === '') {
-          openingHours[index].startDay = -1;
-          openingHours[index].endDay = -1;
-          openingHours[index].openingTime = '';
-          openingHours[index].closingTime = '';
-        } else {
+        name = event.detail;
+        if (slug === '') {
+          slug = createSlug(event.detail);
+        }
+      }}
+    />
+    <TextInputField
+      value={slug}
+      id="create-gallery-slug"
+      placeholder="gallery-slug"
+      title="Slug"
+      error={errors?.slug ?? null}
+      on:update={(event) => {
+        slug = event.detail;
+      }}
+    />
+    <TextInputField
+      value={streetAddress}
+      id="create-gallery-street-address"
+      placeholder={PLACEHOLDER_TEXT.streetAddress}
+      title={TITLE.streetAddress}
+      error={errors?.streetAddress ?? null}
+      on:update={(event) => {
+        streetAddress = event.detail;
+      }}
+    />
+    <TextInputField
+      value={locality}
+      id="create-gallery-locality"
+      placeholder="Locality"
+      title="Locality"
+      error={errors?.locality ?? null}
+      on:update={(event) => {
+        locality = event.detail;
+      }}
+    />
+    <TextInputField
+      value={city}
+      id="create-gallery-city"
+      placeholder="City"
+      title="City"
+      error={errors?.city ?? null}
+      on:update={(event) => {
+        city = event.detail;
+      }}
+    />
+    <TextInputField
+      value={postalCode}
+      id="create-gallery-postal-code"
+      placeholder="Postal Code"
+      title="Postal code"
+      error={errors?.postalCode ?? null}
+      on:update={(event) => {
+        postalCode = event.detail;
+      }}
+    />
+    <TextInputField
+      value={country}
+      id="create-gallery-country"
+      placeholder="Country"
+      title="Country"
+      error={errors?.country ?? null}
+      on:update={(event) => {
+        country = event.detail;
+      }}
+    />
+    {#each openingHours as { startDay, endDay, openingTime, closingTime }, index}
+      <DayInputField
+        value={DAYS[startDay]}
+        id={`create-gallery-opening-start-${index}`}
+        placeholder="First day in range"
+        title="Opening Time"
+        on:update={(event) => {
+          if (event.detail === '') {
+            openingHours[index].startDay = -1;
+            openingHours[index].endDay = -1;
+            openingHours[index].openingTime = '';
+            openingHours[index].closingTime = '';
+          } else {
+            const day = DAYS.findIndex(
+              (element) => element.toLowerCase() === event.detail.toLowerCase()
+            );
+            if (day !== -1) {
+              openingHours[index].startDay = day;
+            } else {
+              openingHours[index].startDay =
+                index === 0 ? 0 : Math.min(6, openingHours[index - 1].endDay + 1);
+            }
+          }
+        }}
+      />
+      <DayInputField
+        value={DAYS[endDay]}
+        id={`create-gallery-opening-end-${index}`}
+        placeholder="Last day in range"
+        title="Closing Time"
+        on:update={(event) => {
           const day = DAYS.findIndex(
             (element) => element.toLowerCase() === event.detail.toLowerCase()
           );
           if (day !== -1) {
-            openingHours[index].startDay = day;
+            openingHours[index].endDay = day;
           } else {
-            openingHours[index].startDay =
-              index === 0 ? 0 : Math.min(6, openingHours[index - 1].endDay + 1);
+            openingHours[index].endDay = 6;
           }
-        }
-      }}
-    />
-    <DayInputField
-      value={DAYS[endDay]}
-      id={`create-gallery-opening-end-${index}`}
-      placeholder="Last day in range"
-      title="Closing Time"
+        }}
+      />
+      <TextInputField
+        value={openingTime}
+        id={`create-gallery-opening-open-${index}`}
+        placeholder="09:00"
+        title="Opening Time"
+        on:update={(event) => {
+          const { detail } = event;
+          if (/^([0-1]\d|2[0-3])$/.test(detail)) {
+            openingHours[index].openingTime = `${detail}:00`;
+          } else {
+            openingHours[index].openingTime = detail;
+          }
+        }}
+      />
+      <TextInputField
+        value={closingTime}
+        id={`create-gallery-opening-close-${index}`}
+        placeholder="18:00"
+        title="Closing Time"
+        on:update={(event) => {
+          const { detail } = event;
+          if (/^([0-1]\d|2[0-3])$/.test(detail)) {
+            openingHours[index].closingTime = `${detail}:00`;
+          } else {
+            openingHours[index].closingTime = detail;
+          }
+        }}
+      />
+      {#if index > 0}
+        <button
+          on:click|preventDefault={() => {
+            handleFewerOpeningHours(index);
+          }}><LessIcon /></button
+        >
+      {/if}
+    {/each}
+    <button on:click|preventDefault={handleMoreOpeningHours}
+      ><span class="screen-reader-text">Add another set of opening hours</span><MoreIcon /></button
+    >
+    {#each nearestTubes as stationName, index}
+      <TextInputField
+        value={stationName}
+        id={`create-gallery-tube-${index}`}
+        placeholder="Nearest tube station"
+        title="Nearest tube station"
+        dataList={tubeStationsNames}
+        on:update={(event) => {
+          nearestTubes[index] = event.detail;
+        }}
+      />
+      {#if index > 0}
+        <button
+          aria-label="Remove this station"
+          on:click|preventDefault={() => {
+            handleFewerTubeStations(index);
+          }}><LessIcon /></button
+        >
+      {/if}
+    {/each}
+    <button aria-label="Add an extra station" on:click|preventDefault={handleMoreTubeStations}
+      ><MoreIcon /></button
+    >
+    <TextInputField
+      value={openStreetMapUrl}
+      id="create-gallery-map"
+      placeholder={PLACEHOLDER_TEXT.openStreetMap}
+      title={TITLE.openStreetMap}
+      error={errors?.openStreetMapUrl ?? null}
       on:update={(event) => {
-        const day = DAYS.findIndex(
-          (element) => element.toLowerCase() === event.detail.toLowerCase()
-        );
-        if (day !== -1) {
-          openingHours[index].endDay = day;
-        } else {
-          openingHours[index].endDay = 6;
-        }
+        errors.openStreetMapUrl = null;
+        openStreetMapUrl = event.detail;
       }}
     />
     <TextInputField
-      value={openingTime}
-      id={`create-gallery-opening-open-${index}`}
-      placeholder="09:00"
-      title="Opening Time"
+      value={website}
+      id="create-gallery-website"
+      placeholder="Website Link"
+      title="Website Link"
+      error={errors?.website ?? null}
       on:update={(event) => {
-        const { detail } = event;
-        if (/^([0-1]\d|2[0-3])$/.test(detail)) {
-          openingHours[index].openingTime = `${detail}:00`;
-        } else {
-          openingHours[index].openingTime = detail;
-        }
+        errors.website = null;
+        website = event.detail;
       }}
     />
-    <TextInputField
-      value={closingTime}
-      id={`create-gallery-opening-close-${index}`}
-      placeholder="18:00"
-      title="Closing Time"
-      on:update={(event) => {
-        const { detail } = event;
-        if (/^([0-1]\d|2[0-3])$/.test(detail)) {
-          openingHours[index].closingTime = `${detail}:00`;
-        } else {
-          openingHours[index].closingTime = detail;
-        }
-      }}
-    />
-    {#if index > 0}
-      <button
-        on:click|preventDefault={() => {
-          handleFewerOpeningHours(index);
-        }}><LessIcon /></button
-      >
-    {/if}
-  {/each}
-  <button on:click|preventDefault={handleMoreOpeningHours}
-    ><span class="screen-reader-text">Add another set of opening hours</span><MoreIcon /></button
-  >
-  {#each nearestTubes as stationName, index}
-    <TextInputField
-      value={stationName}
-      id={`create-gallery-tube-${index}`}
-      placeholder="Nearest tube station"
-      title="Nearest tube station"
-      dataList={tubeStationsNames}
-      on:update={(event) => {
-        nearestTubes[index] = event.detail;
-      }}
-    />
-    {#if index > 0}
-      <button
-        aria-label="Remove this station"
-        on:click|preventDefault={() => {
-          handleFewerTubeStations(index);
-        }}><LessIcon /></button
-      >
-    {/if}
-  {/each}
-  <button aria-label="Add an extra station" on:click|preventDefault={handleMoreTubeStations}
-    ><MoreIcon /></button
-  >
-  <TextInputField
-    value={openStreetMapUrl}
-    id="create-gallery-map"
-    placeholder={PLACEHOLDER_TEXT.openStreetMap}
-    title={TITLE.openStreetMap}
-    error={errors?.openStreetMapUrl ?? null}
-    on:update={(event) => {
-      errors.openStreetMapUrl = null;
-      openStreetMapUrl = event.detail;
-    }}
-  />
-  <TextInputField
-    value={website}
-    id="create-gallery-website"
-    placeholder="Website Link"
-    title="Website Link"
-    error={errors?.website ?? null}
-    on:update={(event) => {
-      errors.website = null;
-      website = event.detail;
-    }}
-  />
-  <button type="submit" disabled={submitting}>Create new gallery</button>
-</form>
+    <button type="submit" disabled={submitting}>Create new gallery</button>
+  </form>
+</aside>
 
 <style>
   .screen-reader-text {

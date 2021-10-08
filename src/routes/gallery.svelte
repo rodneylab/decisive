@@ -101,7 +101,8 @@
 
 <SEO title="Galleries" {slug} metadescription="Galleries" />
 <!-- <pre>{JSON.stringify(data, null, 2)}</pre> -->
-<h1>Galleries</h1>
+<a href="/gallery#create-gallery">Create a new gallery</a>
+<h1 id="galleries">Galleries</h1>
 <ul>
   {#each $galleries as { id, name, address, openingTimes, slug, website }}
     <li>
@@ -131,4 +132,5 @@
 </ul>
 
 <h2>Add a New Gallery</h2>
+<a href="/gallery#galleries">back to top</a>
 <CreateGallery tubeStationsNames={$tubeStations.map((element) => element.name)} />
