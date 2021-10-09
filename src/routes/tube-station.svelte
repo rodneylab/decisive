@@ -44,7 +44,7 @@
 
   export let data: { tubeStations: TubeStation[] };
   export let me: User | null;
-  export let slug: string;
+  // export let slug: string;
   $: submitting = false;
 
   async function checkForLoggedInUser() {
@@ -65,6 +65,7 @@
   tubeStations.set(data.tubeStations);
 
   let name = '';
+  let slug = '';
   let errors: { name: string | undefined; slug: string | undefined };
   $: errors = { name: undefined, slug: undefined };
 
@@ -112,6 +113,7 @@
       const { errors: formErrors, tubeStation } = responseData.data.createTubeStation;
       submitting = false;
       name = '';
+      slug = '';
       if (formErrors) {
         errors = mapErrorsToFields(formErrors);
       } else {
@@ -155,7 +157,7 @@
       const { detail } = event;
       name = detail;
       if (slug === '') {
-        slug = slugify(detail, { remove: /[\.]/g, lower: true });
+        slug = slugify(detail, { remove: /[\.()]/g, lower: true });
       }
     }}
   />
