@@ -249,6 +249,8 @@
           const { detail } = event;
           if (/^([0-1]\d|2[0-3])$/.test(detail)) {
             openingHours[index].openingTime = `${detail}:00`;
+          } else if (/^\d$/.test(detail)) {
+            openingHours[index].openingTime = `0${detail}:00`;
           } else {
             openingHours[index].openingTime = detail;
           }
@@ -263,6 +265,8 @@
           const { detail } = event;
           if (/^([0-1]\d|2[0-3])$/.test(detail)) {
             openingHours[index].closingTime = `${detail}:00`;
+          } else if (/^\d$/.test(detail)) {
+            openingHours[index].closingTime = `0${detail}:00`;
           } else {
             openingHours[index].closingTime = detail;
           }
