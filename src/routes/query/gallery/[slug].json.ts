@@ -14,6 +14,9 @@ export async function post(
             name
             slug
             address
+            postalAddress {
+              locality
+            }
             openingTimes
             website
             websiteUrl

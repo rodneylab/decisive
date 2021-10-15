@@ -85,6 +85,7 @@
   $: location = gallery.location;
   $: openStreetMap = gallery.openStreetMap;
   $: updating = false;
+  $: locality = gallery.postalAddress.locality;
   let errors: GalleryFormErrors;
   $: errors = {};
 
@@ -183,5 +184,11 @@
   </dd>
 </dl>
 {#if location}
-  <Map {location} id={`${slug}-map`} style="width:100%;height:25rem" />
+  <Map
+    {location}
+    id={`${slug}-map`}
+    style="width:100%;height:25rem"
+    marker
+    markerMarkup={`<strong>${name}</strong><br/>${locality}`}
+  />
 {/if}
