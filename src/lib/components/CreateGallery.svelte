@@ -205,6 +205,7 @@
         id={`create-gallery-opening-start-${index}`}
         placeholder="First day in range"
         title="Opening Time"
+        error={errors?.[`startDay${index}`] ?? null}
         on:update={(event) => {
           if (event.detail === '') {
             openingHours[index].startDay = -1;
@@ -229,6 +230,7 @@
         id={`create-gallery-opening-end-${index}`}
         placeholder="Last day in range"
         title="Closing Time"
+        error={errors?.[`endDay${index}`] ?? null}
         on:update={(event) => {
           const day = DAYS.findIndex(
             (element) => element.toLowerCase() === event.detail.toLowerCase()
@@ -245,6 +247,7 @@
         id={`create-gallery-opening-open-${index}`}
         placeholder="09:00"
         title="Opening Time"
+        error={errors?.[`openingTime${index}`] ?? null}
         on:update={(event) => {
           const { detail } = event;
           if (/^([0-1]\d|2[0-3])$/.test(detail)) {
@@ -261,6 +264,7 @@
         id={`create-gallery-opening-close-${index}`}
         placeholder="18:00"
         title="Closing Time"
+        error={errors?.[`closingTime${index}`] ?? null}
         on:update={(event) => {
           const { detail } = event;
           if (/^([0-1]\d|2[0-3])$/.test(detail)) {
