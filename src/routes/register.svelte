@@ -18,7 +18,7 @@
   import { goto, prefetch } from '$app/navigation';
   import SEO from '$lib/components/SEO/index.svelte';
   import { PLACEHOLDER_TEXT, TITLE } from '$lib/constants/form';
-  import type { User } from '$lib/generated/graphql';
+  import type { Mutation, User } from '$lib/generated/graphql';
   import user from '$lib/shared/stores/user';
   import { mapErrorsToFields } from '$lib/utilities/form';
   import {
@@ -79,16 +79,17 @@
         })
       });
       const responseData = await response.json();
-      const { errors: formErrors, user: userResponse } = responseData.data.register;
+      const { errors: formErrors, user: userResponse }: Mutation['register'] =
+        responseData.data.register;
       submitting = false;
-      if (formErrors) {
+      if (formErrors?.length) {
         errors = mapErrorsToFields(formErrors);
       } else {
         user.set(userResponse);
         clearFormFields();
       }
     } catch (error) {
-      console.error(`Error in handleSubmit function in CreateGallery: ${error}`);
+      console.error(`Error in handleSubmit function in register: ${error}`);
     }
   }
 

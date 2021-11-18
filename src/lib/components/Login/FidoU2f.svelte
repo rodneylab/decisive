@@ -10,8 +10,8 @@
     Mutation
   } from '$lib/generated/graphql';
   import user from '$lib/shared/stores/user';
+  import { TextInputField } from '@rodneylab/sveltekit-components';
   import { isSupported, register, sign } from 'u2f-api';
-  import TextInputField from '../TextInputField.svelte';
 
   export let fidoU2fRegistered: boolean = false;
   let label = '';

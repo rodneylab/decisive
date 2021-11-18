@@ -8,10 +8,10 @@ export async function post(
     const { registerInput } = request.body;
     const query = `
       mutation RegisterMutation($registerInput: UsernameEmailPasswordInput!) {
-        register(options: $registerInput) {
+        register(registerInput: $registerInput) {
           user {
-            email
             id
+            email
             username
           }
           errors {

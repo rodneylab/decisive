@@ -50,4 +50,3 @@
 
 <Duo {duoRegistered} />
 <FidoU2f {fidoU2fRegistered} />
-<!-- <pre>{JSON.stringify($user, null,2)}</pre> -->
