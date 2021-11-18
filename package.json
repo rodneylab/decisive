@@ -24,8 +24,8 @@
     "gen": "graphql-codegen --config codegen.yml && prettier --write src/lib/generated/graphql.ts"
   },
   "devDependencies": {
-    "@commitlint/cli": "^14.1.0",
-    "@commitlint/config-conventional": "^14.1.0",
+    "@commitlint/cli": "^15.0.0",
+    "@commitlint/config-conventional": "^15.0.0",
     "@fontsource/lato": "^4.5.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
@@ -36,11 +36,11 @@
     "@graphql-codegen/typescript-operations": "2.2.0",
     "@rodneylab/sveltekit-components": "link:../components/package",
     "@sveltejs/kit": "next",
-    "@types/leaflet": "^1.7.5",
-    "@typescript-eslint/eslint-plugin": "^5.3.0",
-    "@typescript-eslint/parser": "^5.3.0",
+    "@types/leaflet": "^1.7.6",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
     "dotenv": "^10.0.0",
-    "eslint": "^8.1.0",
+    "eslint": "^8.2.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-svelte3": "^3.2.1",
     "graphql": "^16.0.1",
@@ -48,14 +48,14 @@
     "husky": "^7.0.4",
     "leaflet": "^1.7.1",
     "prettier": "^2.4.1",
-    "prettier-plugin-svelte": "^2.4.0",
-    "slugify": "^1.6.1",
+    "prettier-plugin-svelte": "^2.5.0",
+    "slugify": "^1.6.2",
     "svelte": "^3.44.1",
     "svelte-awesome": "^2.4.2",
-    "svelte-check": "^2.2.8",
+    "svelte-check": "^2.2.10",
     "svelte-preprocess": "^4.9.8",
     "tslib": "^2.3.1",
-    "typescript": "^4.4.4",
+    "typescript": "^4.5.2",
     "u2f-api": "^1.2.1"
   },
   "repository": {
@@ -67,6 +67,6 @@
   },
   "type": "module",
   "dependencies": {
-    "graphql-tag": "^2.12.5"
+    "graphql-tag": "^2.12.6"
   }
 }
