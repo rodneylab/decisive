@@ -157,7 +157,7 @@
       const { detail } = event;
       name = detail;
       if (slug === '') {
-        slug = slugify(detail, { remove: /[\.()]/g, lower: true });
+        slug = slugify(detail, { remove: /[\.()']/g, lower: true });
       }
     }}
   />
