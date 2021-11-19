@@ -125,9 +125,7 @@
 
 <!-- <pre>{JSON.stringify(gallery, null, 2)}</pre> -->
 <nav aria-label="All galleries">
-  <a aria-label="See all galleries" href="/gallery" sveltekit:prefetch rel="external"
-    >See all galleries</a
-  >
+  <a aria-label="See all galleries" href="/gallery" sveltekit:prefetch>See all galleries</a>
 </nav>
 {#if updating}
   <div>Updating...</div>
