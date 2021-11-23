@@ -100,7 +100,6 @@
 </script>
 
 <SEO title="Galleries" {slug} metadescription="Galleries" />
-<!-- <pre>{JSON.stringify(data, null, 2)}</pre> -->
 <a href="/gallery#create-gallery">Create a new gallery</a>
 <h1 id="galleries">Galleries</h1>
 <ul>

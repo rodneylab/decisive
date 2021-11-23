@@ -32,7 +32,12 @@
   import { goto, prefetch } from '$app/navigation';
   import EditableText from '$lib/components/EditableText.svelte';
   import { PLACEHOLDER_TEXT, TITLE } from '$lib/constants/form';
-  import type { Gallery, GalleryQueryResponse, User } from '$lib/generated/graphql';
+  import type {
+    Gallery,
+    GalleryQueryResponse,
+    UpdateGalleryInput,
+    User
+  } from '$lib/generated/graphql';
   import galleries from '$lib/shared/stores/galleries';
   import user from '$lib/shared/stores/user';
   import type { GalleryFormErrors } from '$lib/utilities/form';
@@ -77,7 +82,7 @@
   let gallery: Gallery;
   $: gallery = $galleries.find((element) => element.slug === slug);
   $: id = gallery.id;
-  $: address = gallery.address;
+  // $: address = gallery.address;
   $: name = gallery.name;
   $: openingTimes = gallery.openingTimes;
   $: website = gallery.website;
@@ -89,11 +94,7 @@
   let errors: GalleryFormErrors;
   $: errors = {};
 
-  async function handleUpdate(changes: {
-    address?: string;
-    openStreetMapUrl?: string;
-    website?: string;
-  }) {
+  async function handleUpdate(changes: UpdateGalleryInput) {
     try {
       updating = true;
       const response = await fetch('/query/update/gallery.json', {
@@ -104,7 +105,6 @@
         },
         body: JSON.stringify({
           input: {
-            id,
             ...changes
           }
         })
@@ -116,6 +116,13 @@
         errors = mapErrorsToFields(formErrors);
       } else {
         galleries.set([...$galleries, gallery]);
+        if (changes.name) {
+          name = changes.name;
+        }
+        if (changes.slug) {
+          await prefetch(`/gallery/${changes.slug}`);
+          await goto(`/gallery/${changes.slug}`);
+        }
       }
     } catch (error) {
       console.error(`Error in handleSubmit function in UpdateGallery: ${error}`);
@@ -123,7 +130,6 @@
   }
 </script>
 
-<!-- <pre>{JSON.stringify(gallery, null, 2)}</pre> -->
 <nav aria-label="All galleries">
   <a aria-label="See all galleries" href="/gallery" sveltekit:prefetch>See all galleries</a>
 </nav>
@@ -132,7 +138,35 @@
 {/if}
 <h1>{name}</h1>
 <dl>
-  <dt>Address</dt>
+  <dt>Gallery Name</dt>
+  <dd>
+    <EditableText
+      buttonLabel="Edit gallery name"
+      value={name}
+      id={`${slug}-edit-name`}
+      placeholder={PLACEHOLDER_TEXT.galleryName}
+      title={TITLE.galleryName}
+      error={errors.name}
+      on:update={(event) => {
+        handleUpdate({ id, name: event.detail });
+      }}
+    />
+  </dd>
+  <dt>slug</dt>
+  <dd>
+    <EditableText
+      buttonLabel="Edit gallery slug"
+      value={slug}
+      id={'edit-slug'}
+      placeholder={PLACEHOLDER_TEXT.slug}
+      title={TITLE.slug}
+      error={errors.slug}
+      on:update={(event) => {
+        handleUpdate({ id, slug: event.detail });
+      }}
+    />
+  </dd>
+  <!-- <dt>Address</dt>
   <dd>
     <EditableText
       buttonLabel="Edit gallery address"
@@ -142,10 +176,10 @@
       title={TITLE.streetAddress}
       error={errors.streetAddress}
       on:update={(event) => {
-        handleUpdate({ address: event.detail });
+        handleUpdate({ id, address: event.detail });
       }}
     />
-  </dd>
+  </dd> -->
   {#if openingTimes}
     <dt>Opening times</dt>
     <dd>{openingTimes}</dd>
@@ -162,7 +196,7 @@
       title={TITLE.website}
       error={errors.website}
       on:update={(event) => {
-        handleUpdate({ website: event.detail });
+        handleUpdate({ id, website: event.detail });
       }}
     />
   </dd>
@@ -170,13 +204,13 @@
   <dd>
     <EditableText
       buttonLabel="Edit gallery map"
-      value={openStreetMap ? openStreetMap : 'No map yet'}
+      value={openStreetMap ? openStreetMap : ''}
       id={`${slug}-edit-map`}
       placeholder={PLACEHOLDER_TEXT.openStreetMap}
       title={TITLE.openStreetMap}
       error={errors.openStreetMap}
       on:update={(event) => {
-        handleUpdate({ openStreetMapUrl: event.detail });
+        handleUpdate({ id, openStreetMapUrl: event.detail });
       }}
     />
   </dd>
