@@ -18,6 +18,7 @@ export interface GalleryFormErrors {
   city?: string;
   postalCode?: string;
   country?: string;
+  tubeStation?: string;
   openStreetMap?: string;
   website?: string;
 }

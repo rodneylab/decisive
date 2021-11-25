@@ -31,6 +31,7 @@
   import { browser } from '$app/env';
   import { goto, prefetch } from '$app/navigation';
   import EditableText from '$lib/components/EditableText.svelte';
+  import LessIcon from '$lib/components/Icons/Less.svelte';
   import { PLACEHOLDER_TEXT, TITLE } from '$lib/constants/form';
   import type {
     Gallery,
@@ -82,7 +83,7 @@
   let gallery: Gallery;
   $: gallery = $galleries.find((element) => element.slug === slug);
   $: id = gallery.id;
-  // $: address = gallery.address;
+  $: postalAddress = { ...gallery.postalAddress };
   $: name = gallery.name;
   $: openingTimes = gallery.openingTimes;
   $: website = gallery.website;
@@ -90,7 +91,15 @@
   $: location = gallery.location;
   $: openStreetMap = gallery.openStreetMap;
   $: updating = false;
+  $: streetAddress = gallery.postalAddress.streetAddress;
   $: locality = gallery.postalAddress.locality;
+  $: city = gallery.postalAddress.city;
+  $: postalCode = gallery.postalAddress.postalCode;
+  $: country = gallery.postalAddress.country;
+  $: nearestTubes = gallery.nearestTubes.map((element) => element.name);
+
+  let newNearestTube: string = '';
+
   let errors: GalleryFormErrors;
   $: errors = {};
 
@@ -122,6 +131,16 @@
         if (changes.slug) {
           await prefetch(`/gallery/${changes.slug}`);
           await goto(`/gallery/${changes.slug}`);
+        }
+        if (changes.postalAddress) {
+          streetAddress = changes.postalAddress.streetAddress;
+          locality = changes.postalAddress.locality;
+          city = changes.postalAddress.city;
+          postalCode = changes.postalAddress.postalCode;
+          country = changes.postalAddress.country;
+        }
+        if (changes.addNearestTubes) {
+          nearestTubes = [...nearestTubes, ...changes.addNearestTubes];
         }
       }
     } catch (error) {
@@ -166,20 +185,72 @@
       }}
     />
   </dd>
-  <!-- <dt>Address</dt>
+  <dt>Address</dt>
   <dd>
     <EditableText
-      buttonLabel="Edit gallery address"
-      value={address}
+      buttonLabel="Edit gallery street address"
+      value={streetAddress}
       id={`${slug}-edit-address`}
       placeholder={PLACEHOLDER_TEXT.streetAddress}
       title={TITLE.streetAddress}
       error={errors.streetAddress}
       on:update={(event) => {
-        handleUpdate({ id, address: event.detail });
+        handleUpdate({ id, postalAddress: { ...postalAddress, streetAddress: event.detail } });
       }}
     />
-  </dd> -->
+  </dd>
+  <dd>
+    <EditableText
+      buttonLabel="Edit gallery address locality"
+      value={locality}
+      id={`${slug}-edit-locality`}
+      placeholder={PLACEHOLDER_TEXT.locality}
+      title={TITLE.locality}
+      error={errors.locality}
+      on:update={(event) => {
+        handleUpdate({ id, postalAddress: { ...postalAddress, locality: event.detail } });
+      }}
+    />
+  </dd>
+  <dd>
+    <EditableText
+      buttonLabel="Edit gallery address city"
+      value={city}
+      id={`${slug}-edit-city`}
+      placeholder={PLACEHOLDER_TEXT.city}
+      title={TITLE.city}
+      error={errors.city}
+      on:update={(event) => {
+        handleUpdate({ id, postalAddress: { ...postalAddress, city: event.detail } });
+      }}
+    />
+  </dd>
+  <dd>
+    <EditableText
+      buttonLabel="Edit gallery address postal code"
+      value={postalCode}
+      id={`${slug}-edit-postal-code`}
+      placeholder={PLACEHOLDER_TEXT.postalCode}
+      title={TITLE.postalCode}
+      error={errors.postalCode}
+      on:update={(event) => {
+        handleUpdate({ id, postalAddress: { ...postalAddress, postalCode: event.detail } });
+      }}
+    />
+  </dd>
+  <dd>
+    <EditableText
+      buttonLabel="Edit gallery address country"
+      value={country}
+      id={`${slug}-edit-country`}
+      placeholder={PLACEHOLDER_TEXT.country}
+      title={TITLE.country}
+      error={errors.country}
+      on:update={(event) => {
+        handleUpdate({ id, postalAddress: { ...postalAddress, country: event.detail } });
+      }}
+    />
+  </dd>
   {#if openingTimes}
     <dt>Opening times</dt>
     <dd>{openingTimes}</dd>
@@ -200,7 +271,42 @@
       }}
     />
   </dd>
-  <dt>map</dt>
+  <dt>Nearest Tube Stations</dt>
+  {#each nearestTubes as tubeStationName, index}
+    {tubeStationName}
+    <button
+      aria-label="Remove this station"
+      on:click|preventDefault={() => {
+        handleUpdate({ id, addNearestTubes: [tubeStationName] });
+      }}><LessIcon /></button
+    >
+  {:else}
+    No nearest tubes added yet
+  {/each}
+  <EditableText
+    buttonLabel="Add an existing station to gallery nearest tubes"
+    value={newNearestTube}
+    id={`${slug}-new-nearest-tube`}
+    placeholder={PLACEHOLDER_TEXT.tubeStationName}
+    title={TITLE.tubeStationName}
+    error={errors.tubeStation}
+    on:update={(event) => {
+      handleUpdate({ id, addNearestTubes: [event.detail] });
+    }}
+  />
+  <EditableText
+    href={websiteUrl}
+    buttonLabel="Edit gallery website URL"
+    value={website}
+    id={`${slug}-edit-website`}
+    placeholder={PLACEHOLDER_TEXT.website}
+    title={TITLE.website}
+    error={errors.website}
+    on:update={(event) => {
+      handleUpdate({ id, website: event.detail });
+    }}
+  />
+  <dt>Map</dt>
   <dd>
     <EditableText
       buttonLabel="Edit gallery map"

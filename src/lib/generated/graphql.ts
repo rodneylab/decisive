@@ -318,9 +318,12 @@ export type TubeStationQueryResponse = {
 };
 
 export type UpdateGalleryInput = {
+  addNearestTubes?: Maybe<Array<Scalars['String']>>;
   id: Scalars['String'];
   name?: Maybe<Scalars['String']>;
   openStreetMapUrl?: Maybe<Scalars['String']>;
+  postalAddress?: Maybe<AddressInput>;
+  removeNearestTubes?: Maybe<Array<Scalars['String']>>;
   slug?: Maybe<Scalars['String']>;
   website?: Maybe<Scalars['String']>;
 };

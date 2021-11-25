@@ -15,11 +15,18 @@ export async function post(
             slug
             address
             postalAddress {
+              streetAddress
               locality
+              city
+              postalCode
+              country
             }
             openingTimes
             website
             websiteUrl
+            nearestTubes {
+              name
+            }
             openStreetMap
             location {
               latitude

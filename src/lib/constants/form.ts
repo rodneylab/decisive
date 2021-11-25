@@ -4,6 +4,10 @@ export const PLACEHOLDER_TEXT = {
   openStreetMap: 'Map URL',
   slug: 'Slug',
   streetAddress: 'Street address',
+  locality: 'District',
+  city: 'Hope City',
+  postalCode: 'W1A 1AA',
+  country: 'New Land',
   tubeStationName: 'Station Name',
   username: 'user123',
   website: 'https://www.example.com/'
@@ -15,6 +19,10 @@ export const TITLE = {
   openStreetMap: 'Map URL',
   slug: 's-l-u-g',
   streetAddress: 'Street address',
+  locality: 'Locality',
+  city: 'City',
+  postalCode: 'Postal Code',
+  country: 'Country',
   username: 'Username',
   tubeStationName: 'Station name',
   website: 'Website URL'

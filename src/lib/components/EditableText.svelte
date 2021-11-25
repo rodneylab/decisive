@@ -22,7 +22,7 @@
 
 {#if editing}
   <TextInputField
-    {value}
+    value={value ?? placeholder}
     {id}
     {placeholder}
     {required}
