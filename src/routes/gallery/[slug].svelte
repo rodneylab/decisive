@@ -327,7 +327,7 @@
 <h2>Add a New Exhibition</h2>
 <CreateExhibition gallerySlug={slug} />
 
-{#if location}
+{#if location && false}
   <Map
     {location}
     id={`${slug}-map`}

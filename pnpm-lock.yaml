@@ -25,12 +25,14 @@ specifiers:
   graphql-codegen-svelte-apollo: ^1.1.0
   graphql-tag: ^2.12.6
   husky: ^7.0.4
+  just-throttle: ^4.0.1
   leaflet: ^1.7.1
   prettier: ^2.5.1
   prettier-plugin-svelte: ^2.5.1
   slugify: ^1.6.5
   svelte: ^3.45.0
   svelte-awesome: ^2.4.2
+  svelte-calendar: ^3.1.6
   svelte-check: ^2.2.12
   svelte-preprocess: ^4.10.1
   tslib: ^2.3.1
@@ -64,12 +66,14 @@ devDependencies:
   graphql: 15.6.1
   graphql-codegen-svelte-apollo: 1.1.0_graphql@15.6.1
   husky: 7.0.4
+  just-throttle: 4.0.1
   leaflet: 1.7.1
   prettier: 2.5.1
   prettier-plugin-svelte: 2.5.1_prettier@2.5.1+svelte@3.45.0
   slugify: 1.6.5
   svelte: 3.45.0
   svelte-awesome: 2.4.2_svelte@3.45.0
+  svelte-calendar: 3.1.6
   svelte-check: 2.2.12_svelte@3.45.0
   svelte-preprocess: 4.10.1_svelte@3.45.0+typescript@4.5.4
   tslib: 2.3.1
@@ -2366,6 +2370,10 @@ packages:
     resolution: {integrity: sha512-hBSVCvSmWC+QypYObzwGOd9wqdDpOt+0wl0KbU+R+uuZBS1jN8VsD1ss3irQDknRj5NvxiTF6oj/nDRnN/UQNw==}
     dev: true
 
+  /dayjs/1.10.7:
+    resolution: {integrity: sha512-P6twpd70BcPK34K26uJ1KT3wlhpuOAPoMwJzpsIWUxHZ7wpmbdZL/hQqBDfz7hGurYSa5PhzdhDHtt319hL3ig==}
+    dev: true
+
   /debounce/1.2.1:
     resolution: {integrity: sha512-XRRe6Glud4rd/ZGQfiV1ruXSfbvfJedlV9Y6zOlP+2K04vBYiJEte6stfFkCP03aMnY5tsipamumUjL14fofug==}
     dev: true
@@ -3706,6 +3714,14 @@ packages:
       semver: 5.7.1
     dev: true
 
+  /just-throttle/2.3.1:
+    resolution: {integrity: sha512-0H4miIAWZYpnpg7oD/Y/PBb77ISSHAETif5xK9EnwIgYCO6oC8ErkJxDumMUTR44shSOwptRIArRuvNuvN/hOw==}
+    dev: true
+
+  /just-throttle/4.0.1:
+    resolution: {integrity: sha512-BC3LgilNVj4WQt2vj4//4n/UHSQtkl5P5fz+aOZ+c0t1sjIzBeIFL2+5T32MhTs4YrKjAgNo2DT/VRh/NwQOZA==}
+    dev: true
+
   /jwa/1.4.1:
     resolution: {integrity: sha512-qiLX/xhEEFKUAJ6FiBMbes3w9ATzyk5W7Hvzpa/SLYdxNtng+gcurvrI7TbACjIXlsJyr05/S1oUhZrc63evQA==}
     dependencies:
@@ -5005,6 +5021,13 @@ packages:
       svelte: ^3.43.1
     dependencies:
       svelte: 3.45.0
+    dev: true
+
+  /svelte-calendar/3.1.6:
+    resolution: {integrity: sha512-jOHiPlxBAa1LGVFQZoczdAGnCSI2RKcuQQHj32TjLbXO/P2Povx4JphPEcP7XjKj/s/jimBC6xQyFhyjD0vxbg==}
+    dependencies:
+      dayjs: 1.10.7
+      just-throttle: 2.3.1
     dev: true
 
   /svelte-check/2.2.12_svelte@3.45.0:

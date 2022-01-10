@@ -26,6 +26,25 @@ export type AddressInput = {
   streetAddress: Scalars['String'];
 };
 
+export type CreateExhibitionInput = {
+  description: Scalars['String'];
+  end: Scalars['String'];
+  freeEntry: Scalars['Boolean'];
+  gallery: Scalars['String'];
+  hashtags?: Maybe<Array<Scalars['String']>>;
+  inPerson: Scalars['Boolean'];
+  name: Scalars['String'];
+  online: Scalars['Boolean'];
+  start: Scalars['String'];
+  summaryText: Scalars['String'];
+};
+
+export type CreateExhibitionResponse = {
+  __typename?: 'CreateExhibitionResponse';
+  errors?: Maybe<Array<FieldError>>;
+  exhibition?: Maybe<Exhibition>;
+};
+
 export type CreateGalleryInput = {
   googleMap?: Maybe<Scalars['String']>;
   name: Scalars['String'];
@@ -79,6 +98,23 @@ export type DuoPreauthResponse = {
   devices?: Maybe<Array<DuoAuthDevice>>;
   error?: Maybe<Scalars['String']>;
   result?: Maybe<Scalars['String']>;
+};
+
+export type Exhibition = {
+  __typename?: 'Exhibition';
+  createdAt: Scalars['DateTime'];
+  description?: Maybe<Scalars['String']>;
+  end?: Maybe<Scalars['String']>;
+  freeEntry: Scalars['Boolean'];
+  gallery?: Maybe<Gallery>;
+  hashtags?: Maybe<Array<Scalars['String']>>;
+  id: Scalars['String'];
+  inPerson: Scalars['Boolean'];
+  name: Scalars['String'];
+  online: Scalars['Boolean'];
+  start?: Maybe<Scalars['String']>;
+  summaryText?: Maybe<Scalars['String']>;
+  updatedAt: Scalars['DateTime'];
 };
 
 export type FidoU2fAuthenticateRequest = {
@@ -140,6 +176,7 @@ export type Gallery = {
   openingTimes?: Maybe<Scalars['String']>;
   postalAddress?: Maybe<PostalAddress>;
   slug: Scalars['String'];
+  tubes?: Maybe<Scalars['String']>;
   updatedAt: Scalars['DateTime'];
   website?: Maybe<Scalars['String']>;
   websiteUrl?: Maybe<Scalars['String']>;
@@ -164,6 +201,7 @@ export type LoginInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createExhibition: CreateExhibitionResponse;
   createGallery: CreateGalleryResponse;
   createTubeStation: CreateTubeStationResponse;
   deleteGallery: Scalars['Boolean'];
@@ -178,6 +216,10 @@ export type Mutation = {
   register: UserResponse;
   updateGallery: CreateGalleryResponse;
   updateTubeStation: CreateTubeStationResponse;
+};
+
+export type MutationCreateExhibitionArgs = {
+  input: CreateExhibitionInput;
 };
 
 export type MutationCreateGalleryArgs = {

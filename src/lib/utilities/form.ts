@@ -10,6 +10,13 @@ export function mapErrorsToFields(formErrors) {
   return result;
 }
 
+export interface ExhibitionFormErrors {
+  name?: string;
+  description?: string;
+  summaryText?: string;
+  hashtags?: string;
+}
+
 export interface GalleryFormErrors {
   name?: string;
   slug?: string;
