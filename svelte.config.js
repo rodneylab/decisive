@@ -13,6 +13,7 @@ const config = {
     vite: {
       optimizeDeps: {
         include: ['just-throttle', 'dayjs']
+        // include: ['just-throttle']
       }
     }
   }

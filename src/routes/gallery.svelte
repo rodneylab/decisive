@@ -47,11 +47,21 @@
   import DeleteIcon from '$lib/components/Icons/Delete.svelte';
   import EditIcon from '$lib/components/Icons/Edit.svelte';
   import SEO from '$lib/components/SEO/index.svelte';
-  import type { PaginatedGalleries, TubeStation, User } from '$lib/generated/graphql';
+  import type { Gallery, PaginatedGalleries, TubeStation, User } from '$lib/generated/graphql';
   import galleries from '$lib/shared/stores/galleries';
   import { tubeStations } from '$lib/shared/stores/tubeStations';
   import user from '$lib/shared/stores/user';
   import { onMount } from 'svelte';
+  import {
+    LowerCaseSanitizer,
+    PrefixIndexStrategy,
+    Search as JSSearch,
+    StemmingTokenizer,
+    StopWordsTokenizer,
+    TfIdfSearchIndex
+  } from 'js-search';
+  import { stemmer } from 'stemmer';
+  import { TextInputField } from '@rodneylab/sveltekit-components';
 
   export let data: { galleries: PaginatedGalleries; tubeStations: TubeStation[] };
   export let me: User | null;
@@ -70,11 +80,35 @@
     }
   }
 
-  onMount(() => {
-    checkForLoggedInUser();
-  });
+  $: searchQuery = '';
+  $: search = null;
+  let searchResults: Gallery[];
+  $: searchResults = search && searchQuery ? search.search(searchQuery) : $galleries;
 
   galleries.set(data.galleries.galleries);
+
+  $: rebulidIndex;
+  function rebulidIndex() {
+    const dataToSearch = new JSSearch('slug');
+
+    dataToSearch.tokenizer = new StopWordsTokenizer(dataToSearch.tokenizer);
+    dataToSearch.tokenizer = new StemmingTokenizer(stemmer, dataToSearch.tokenizer);
+    dataToSearch.indexStrategy = new PrefixIndexStrategy();
+    dataToSearch.sanitizer = new LowerCaseSanitizer();
+    dataToSearch.searchIndex = new TfIdfSearchIndex('slug');
+    const indexBy = ['name', 'address'];
+
+    indexBy.forEach((element) => {
+      dataToSearch.addIndex(element);
+    });
+    dataToSearch.addDocuments([...$galleries]);
+    search = dataToSearch;
+  }
+
+  onMount(() => {
+    checkForLoggedInUser();
+    rebulidIndex();
+  });
 
   async function handleDelete(id: string) {
     try {
@@ -105,8 +139,17 @@
 <SEO title="Galleries" {slug} metadescription="Galleries" />
 <a href="/gallery#create-gallery">Create a new gallery</a>
 <h1 id="galleries">Galleries</h1>
+<form on:submit|preventDefault={() => {}}>
+  <TextInputField
+    bind:value={searchQuery}
+    id="gallery-search"
+    placeholder="Find a gallery"
+    title="Find a gallery"
+    style="width:100%"
+  />
+</form>
 <ul>
-  {#each $galleries as { id, name, address, openingTimes, slug, website, websiteUrl }}
+  {#each searchResults as { id, name, address, openingTimes, slug, website, websiteUrl }}
     <li>
       <h2>
         <a aria-label={`Open ${name} page`} sveltekit:prefetch href={`/gallery/${slug}`}>{name}</a>
