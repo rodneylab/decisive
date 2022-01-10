@@ -1,4 +1,5 @@
-<script context="module">
+<script context="module" lang="ts">
+  import type { LoadInput } from '@sveltejs/kit';
   export const load = async ({ fetch, page }) => {
     try {
       // check for valid user session

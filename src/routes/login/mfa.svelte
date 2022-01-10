@@ -1,5 +1,7 @@
-<script context="module">
-  export const load = async ({ fetch }) => {
+<script context="module" lang="ts">
+  import type { LoadInput } from '@sveltejs/kit';
+
+  export const load = async ({ fetch, url }: LoadInput) => {
     try {
       // check for valid user session
       const meResponse = await fetch('/query/me.json', {
@@ -10,7 +12,8 @@
         props: { ...(await meResponse.json()) }
       };
     } catch (error) {
-      console.error(`Error in load function for /login/mfa: ${error}`);
+      const { pathname } = url;
+      console.error(`Error in load function for ${pathname}: ${error}`);
     }
   };
 </script>

@@ -1,15 +1,17 @@
-<script context="module">
-  export function load({ error, status }) {
+<script context="module" lang="ts">
+  import type { ErrorLoadInput } from '@sveltejs/kit';
+
+  export function load({ error, status }: ErrorLoadInput) {
     const { message } = error;
     return { props: { status, message } };
   }
 </script>
 
-<script>
+<script lang="ts">
   import SEO from '$lib/components/SEO/index.svelte';
 
-  export let message;
-  export let status;
+  export let message: string;
+  export let status: number;
 
   const title = 'Page not found';
 </script>

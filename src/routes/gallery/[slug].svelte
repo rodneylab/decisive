@@ -1,5 +1,6 @@
-<script context="module">
-  export const load = async ({ fetch, page }) => {
+<script context="module" lang="ts">
+  import type { LoadInput } from '@sveltejs/kit';
+  export const load = async ({ fetch, params, url }: LoadInput) => {
     try {
       // check for valid user session
       const meResponse = await fetch('/query/me.json', {
@@ -13,7 +14,7 @@
           redirect: '/login'
         };
       }
-      const { slug } = page.params;
+      const { slug } = params;
       const response = await fetch(`/query/gallery/${slug}.json`, {
         method: 'POST',
         credentials: 'include'
@@ -22,7 +23,8 @@
         props: { ...(await response.json()), ...data, slug }
       };
     } catch (error) {
-      console.error(`Error in load function for /gallery/[slug]: ${error}`);
+      const { pathname } = url;
+      console.error(`Error in load function for ${pathname}: ${error}`);
     }
   };
 </script>
@@ -30,6 +32,7 @@
 <script lang="ts">
   import { browser } from '$app/env';
   import { goto, prefetch } from '$app/navigation';
+  import CreateExhibition from '$lib/components/CreateExhibition.svelte';
   import EditableText from '$lib/components/EditableText.svelte';
   import LessIcon from '$lib/components/Icons/Less.svelte';
   import { PLACEHOLDER_TEXT, TITLE } from '$lib/constants/form';
@@ -321,6 +324,9 @@
     />
   </dd>
 </dl>
+<h2>Add a New Exhibition</h2>
+<CreateExhibition gallerySlug={slug} />
+
 {#if location}
   <Map
     {location}
