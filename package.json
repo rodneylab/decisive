@@ -24,7 +24,7 @@
     "gen": "graphql-codegen --config codegen.yml && prettier --write src/lib/generated/graphql.ts"
   },
   "devDependencies": {
-    "@commitlint/cli": "^16.0.1",
+    "@commitlint/cli": "^16.0.2",
     "@commitlint/config-conventional": "^15.0.0",
     "@fontsource/lato": "^4.5.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
@@ -53,7 +53,7 @@
     "slugify": "^1.6.5",
     "svelte": "^3.45.0",
     "svelte-awesome": "^2.4.2",
-    "svelte-check": "^2.2.11",
+    "svelte-check": "^2.2.12",
     "svelte-preprocess": "^4.10.1",
     "tslib": "^2.3.1",
     "typescript": "^4.5.4",
