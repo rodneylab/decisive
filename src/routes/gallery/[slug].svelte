@@ -48,6 +48,8 @@
   import { mapErrorsToFields } from '$lib/utilities/form';
   import { Map } from '@rodneylab/sveltekit-components';
   import { afterUpdate, onMount } from 'svelte';
+  import dayjs from 'dayjs';
+  import { N_DASH_ENTITY } from '$lib/constants/entities';
 
   export let slug: string;
   export let data: { gallery: GalleryQueryResponse };
@@ -100,6 +102,7 @@
   $: postalCode = gallery.postalAddress.postalCode;
   $: country = gallery.postalAddress.country;
   $: nearestTubes = gallery.nearestTubes.map((element) => element.name);
+  $: exhibitions = gallery.exhibitions;
 
   let newNearestTube: string = '';
 
@@ -150,6 +153,8 @@
       console.error(`Error in handleSubmit function in UpdateGallery: ${error}`);
     }
   }
+
+  const dateFormat = 'dddd, DD-MMM-YYYY';
 </script>
 
 <nav aria-label="All galleries">
@@ -324,10 +329,24 @@
     />
   </dd>
 </dl>
-<h2>Add a New Exhibition</h2>
+<h2>Exhibitions</h2>
+<ul>
+  {#each exhibitions as { name, id, start, end }}
+    <li>
+      <h3>{name}</h3>
+      <dl>
+        <dt>id</dt>
+        <dd>{id}</dd>
+        <dt>Runs</dt>
+        <dd>{dayjs(start).format(dateFormat)}{N_DASH_ENTITY}{dayjs(end).format(dateFormat)}</dd>
+      </dl>
+    </li>
+  {/each}
+</ul>
+<h3>Add a New Exhibition</h3>
 <CreateExhibition gallerySlug={slug} />
 
-{#if location && false}
+{#if location}
   <Map
     {location}
     id={`${slug}-map`}

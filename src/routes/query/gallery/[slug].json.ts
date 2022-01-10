@@ -22,6 +22,12 @@ export async function post(
               country
             }
             openingTimes
+            exhibitions {
+              name
+              id
+              start
+              end
+            }
             website
             websiteUrl
             nearestTubes {

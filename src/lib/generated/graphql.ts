@@ -166,6 +166,7 @@ export type Gallery = {
   __typename?: 'Gallery';
   address?: Maybe<Scalars['String']>;
   createdAt: Scalars['DateTime'];
+  exhibitions?: Maybe<Array<Exhibition>>;
   googleMap?: Maybe<Scalars['String']>;
   id: Scalars['String'];
   location?: Maybe<Location>;
@@ -297,6 +298,12 @@ export type OpeningHoursRangeInput = {
   startDay: Scalars['Float'];
 };
 
+export type PaginatedExhibitions = {
+  __typename?: 'PaginatedExhibitions';
+  exhibitions: Array<Exhibition>;
+  hasMore: Scalars['Boolean'];
+};
+
 export type PaginatedGalleries = {
   __typename?: 'PaginatedGalleries';
   galleries: Array<Gallery>;
@@ -321,6 +328,7 @@ export type Query = {
   duoEnrollStatus: DuoEnrollStatusResponse;
   duoPing: Scalars['Boolean'];
   duoPreauth: DuoPreauthResponse;
+  exhibitions: PaginatedExhibitions;
   fidoU2fBeginAuthenticate?: Maybe<FidoU2fAuthenticateRequest>;
   fidoU2fBeginRegister?: Maybe<FidoU2fRegisterRequest>;
   galleries: PaginatedGalleries;
