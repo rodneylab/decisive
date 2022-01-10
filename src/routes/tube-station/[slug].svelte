@@ -1,13 +1,14 @@
 <script context="module" lang="ts">
   import type { LoadInput } from '@sveltejs/kit';
-  export const load = async ({ fetch, page }) => {
+
+  export const load = async ({ fetch, params, url }: LoadInput) => {
     try {
       // check for valid user session
       const meResponse = await fetch('/query/me.json', {
         method: 'POST',
         credentials: 'include'
       });
-      const { slug } = page.params;
+      const { slug } = params;
       const { data } = await meResponse.json();
       if (!data?.me) {
         return {
@@ -23,7 +24,8 @@
         props: { ...(await response.json()), ...data, slug }
       };
     } catch (error) {
-      console.error(`Error in load function for /tube-station/[slug]: ${error}`);
+      const { pathname } = url;
+      console.error(`Error in load function for ${pathname}: ${error}`);
     }
   };
 </script>
