@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@commitlint/cli': ^16.0.2
-  '@commitlint/config-conventional': ^15.0.0
+  '@commitlint/config-conventional': ^16.0.0
   '@fontsource/lato': ^4.5.0
   '@fortawesome/fontawesome-svg-core': ^1.2.36
   '@fortawesome/free-regular-svg-icons': ^5.15.4
@@ -42,7 +42,7 @@ dependencies:
 
 devDependencies:
   '@commitlint/cli': 16.0.2_@types+node@17.0.8
-  '@commitlint/config-conventional': 15.0.0
+  '@commitlint/config-conventional': 16.0.0
   '@fontsource/lato': 4.5.0
   '@fortawesome/fontawesome-svg-core': 1.2.36
   '@fortawesome/free-regular-svg-icons': 5.15.4
@@ -712,8 +712,8 @@ packages:
       - '@types/node'
     dev: true
 
-  /@commitlint/config-conventional/15.0.0:
-    resolution: {integrity: sha512-eZBRL8Lk3hMNHp1wUMYj0qrZQEsST1ai7KHR8J1IDD9aHgT7L2giciibuQ+Og7vxVhR5WtYDvh9xirXFVPaSkQ==}
+  /@commitlint/config-conventional/16.0.0:
+    resolution: {integrity: sha512-mN7J8KlKFn0kROd+q9PB01sfDx/8K/R25yITspL1No8PB4oj9M1p77xWjP80hPydqZG9OvQq+anXK3ZWeR7s3g==}
     engines: {node: '>=v12'}
     dependencies:
       conventional-changelog-conventionalcommits: 4.6.3
