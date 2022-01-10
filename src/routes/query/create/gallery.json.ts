@@ -1,8 +1,9 @@
+import type { CreateGalleryInput } from '$lib/generated/graphql';
 import type { Request } from '@sveltejs/kit';
 import type { ResponseHeaders } from '@sveltejs/kit/types/helper';
 
 export async function post(
-  request: Request & { body: { input } }
+  request: Request & { body: { input: CreateGalleryInput } }
 ): Promise<{ body: string; headers: ResponseHeaders } | { error: string; status: number }> {
   try {
     const { input } = request.body;
