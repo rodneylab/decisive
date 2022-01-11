@@ -2,7 +2,7 @@
   import { goto, prefetch } from '$app/navigation';
   import user from '$lib/shared/stores/user';
 
-  $: isGuest = !$user;
+  $: isGuest = !!!$user;
 
   async function handleLogout() {
     try {
@@ -29,6 +29,7 @@
     <a sveltekit:prefetch rel="external" aria-label="Log in" href="/login">Login</a>
     <a aria-label="Register" href="/register">Register</a>
   {:else}
+    <a aria-label="Open Exhibitions" href="/exhibition">Exhibitions</a>
     <a aria-label="Open Galleries" href="/gallery">Galleries</a>
     <a aria-label="Open Tube Stations" href="/tube-station">Tube Stations</a>
     <div>{$user.username}</div>

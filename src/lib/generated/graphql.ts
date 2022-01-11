@@ -117,6 +117,12 @@ export type Exhibition = {
   updatedAt: Scalars['DateTime'];
 };
 
+export type ExhibitionQueryResponse = {
+  __typename?: 'ExhibitionQueryResponse';
+  error?: Maybe<Scalars['String']>;
+  exhibition?: Maybe<Exhibition>;
+};
+
 export type FidoU2fAuthenticateRequest = {
   __typename?: 'FidoU2fAuthenticateRequest';
   error?: Maybe<Scalars['String']>;
@@ -328,6 +334,7 @@ export type Query = {
   duoEnrollStatus: DuoEnrollStatusResponse;
   duoPing: Scalars['Boolean'];
   duoPreauth: DuoPreauthResponse;
+  exhibition: ExhibitionQueryResponse;
   exhibitions: PaginatedExhibitions;
   fidoU2fBeginAuthenticate?: Maybe<FidoU2fAuthenticateRequest>;
   fidoU2fBeginRegister?: Maybe<FidoU2fRegisterRequest>;
@@ -341,6 +348,10 @@ export type Query = {
 
 export type QueryDuoEnrollStatusArgs = {
   activationCode: Scalars['String'];
+};
+
+export type QueryExhibitionArgs = {
+  id: Scalars['String'];
 };
 
 export type QueryGalleryArgs = {
