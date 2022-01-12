@@ -285,7 +285,7 @@
     <button
       aria-label="Remove this station"
       on:click|preventDefault={() => {
-        handleUpdate({ id, addNearestTubes: [tubeStationName] });
+        handleUpdate({ id, removeNearestTubes: [tubeStationName] });
       }}><LessIcon /></button
     >
   {:else}
