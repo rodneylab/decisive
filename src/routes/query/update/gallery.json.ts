@@ -3,10 +3,10 @@ import type { Request } from '@sveltejs/kit';
 import type { ResponseHeaders } from '@sveltejs/kit/types/helper';
 
 export async function post(
-  request: Request & { body: { input } }
+  request: Request & { body: { input: UpdateGalleryInput } }
 ): Promise<{ body: string; headers: ResponseHeaders } | { error: string; status: number }> {
   try {
-    const { input }: { input: UpdateGalleryInput } = request.body;
+    const { input } = request.body;
     const query = `
       mutation UpdateGalleryMutation($updateGalleryInput: UpdateGalleryInput!) {
         updateGallery(input: $updateGalleryInput) {

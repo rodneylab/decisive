@@ -1,8 +1,9 @@
+import type { LoginInput } from '$lib/generated/graphql';
 import type { Request } from '@sveltejs/kit';
 import type { ResponseHeaders } from '@sveltejs/kit/types/helper';
 
 export async function post(
-  request: Request & { body: { loginCredentials } }
+  request: Request & { body: { loginCredentials: LoginInput } }
 ): Promise<{ body: string; headers: ResponseHeaders } | { error: string; status: number }> {
   try {
     const { loginCredentials } = request.body;

@@ -1,8 +1,8 @@
 import type { Request } from '@sveltejs/kit';
 
 export async function post(
-  request: Request & { body: { id } }
-): Promise<{ body } | { error: string; status: number }> {
+  request: Request & { body: { id: string } }
+): Promise<{ body: string } | { error: string; status: number }> {
   try {
     const { id } = request.body;
     const query = `

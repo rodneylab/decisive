@@ -37,10 +37,10 @@
   import DeleteIcon from '$lib/components/Icons/Delete.svelte';
   import EditIcon from '$lib/components/Icons/Edit.svelte';
   import SEO from '$lib/components/SEO/index.svelte';
-  import type { CreateTubeStationInput, TubeStation, User } from '$lib/generated/graphql';
+  import type { CreateTubeStationInput, Mutation, TubeStation, User } from '$lib/generated/graphql';
   import { tubeStations } from '$lib/shared/stores/tubeStations';
   import user from '$lib/shared/stores/user';
-  import { mapErrorsToFields } from '$lib/utilities/form';
+  import { mapErrorsToFields, TubeStationFormErrors } from '$lib/utilities/form';
   import { TextInputField } from '@rodneylab/sveltekit-components';
   import slugify from 'slugify';
   import { onMount } from 'svelte';
@@ -69,7 +69,7 @@
 
   let name = '';
   let slug = '';
-  let errors: { name: string | undefined; slug: string | undefined };
+  let errors: TubeStationFormErrors;
   $: errors = { name: undefined, slug: undefined };
 
   $: mapErrorsToFields;
@@ -113,7 +113,8 @@
       });
       const responseData = await response.json();
 
-      const { errors: formErrors, tubeStation } = responseData.data.createTubeStation;
+      const { errors: formErrors, tubeStation }: Mutation['createTubeStation'] =
+        responseData.data.createTubeStation;
       submitting = false;
       name = '';
       slug = '';

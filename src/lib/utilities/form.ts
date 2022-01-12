@@ -1,4 +1,6 @@
-export function mapErrorsToFields(formErrors) {
+import type { FieldError } from '$lib/generated/graphql';
+
+export function mapErrorsToFields(formErrors: FieldError[]) {
   const result = formErrors.reduce((accumulator, currentValue) => {
     const key = currentValue.field;
     if (!accumulator[key]) {

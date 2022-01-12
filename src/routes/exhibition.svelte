@@ -37,9 +37,6 @@
 <script lang="ts">
   import { browser } from '$app/env';
   import { goto, prefetch } from '$app/navigation';
-  // import CreateGallery from '$lib/components/CreateGallery.svelte';
-  import DeleteIcon from '$lib/components/Icons/Delete.svelte';
-  import EditIcon from '$lib/components/Icons/Edit.svelte';
   import SEO from '$lib/components/SEO/index.svelte';
   import type { Exhibition, PaginatedExhibitions, User } from '$lib/generated/graphql';
   import dayjs from 'dayjs';

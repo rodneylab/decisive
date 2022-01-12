@@ -280,7 +280,7 @@
     />
   </dd>
   <dt>Nearest Tube Stations</dt>
-  {#each nearestTubes as tubeStationName, index}
+  {#each nearestTubes as tubeStationName}
     {tubeStationName}
     <button
       aria-label="Remove this station"

@@ -2,7 +2,7 @@ import type { Request } from '@sveltejs/kit';
 import type { ResponseHeaders } from '@sveltejs/kit/types/helper';
 
 export async function post(
-  request: Request & { params: { slug } }
+  request: Request & { params: { slug: string } }
 ): Promise<{ body: string; headers: ResponseHeaders } | { error: string; status: number }> {
   try {
     const { slug } = request.params;
