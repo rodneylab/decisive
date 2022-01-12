@@ -12,6 +12,18 @@ export async function post(
           exhibition {
             id
             name
+            description
+            summaryText
+            hashtags
+            gallery {
+              name
+              slug
+            }
+            start
+            end
+            freeEntry
+            online
+            inPerson
           }
           error
         }

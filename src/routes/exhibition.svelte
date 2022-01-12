@@ -135,8 +135,11 @@
     style="width:100%"
   />
 </form>
+Showing {filteredResults.length} exhibitions.
 <ul>
   {#each filteredResults as { id, name, start, end, freeEntry, online, inPerson, gallery, hashtags }}
+  {@const galleryPage = `/gallery/${gallery.slug}`}
+  {@const galleryName = gallery.name}
     <li>
       <h2>
         <a aria-label={`Open ${name} page`} sveltekit:prefetch href={`/exhibition/${id}`}>{name}</a>
@@ -146,7 +149,9 @@
         <dd>{dayjs(start).format(dateFormat)}{N_DASH_ENTITY}{dayjs(end).format(dateFormat)}</dd>
         <dt>Gallery</dt>
         <dd>
-          {gallery.name}
+          <a aria-label={`Open the ${galleryName} page`} href={galleryPage}
+            >{galleryName}</a
+          >
         </dd>
         <dt>Attendance</dt>
         <dd>
@@ -162,3 +167,4 @@
     </li>
   {/each}
 </ul>
+

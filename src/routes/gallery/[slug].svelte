@@ -46,7 +46,7 @@
   import user from '$lib/shared/stores/user';
   import type { GalleryFormErrors } from '$lib/utilities/form';
   import { mapErrorsToFields } from '$lib/utilities/form';
-  import { Map } from '@rodneylab/sveltekit-components';
+  import Map from '$lib/components/Map.svelte';
   import { afterUpdate, onMount } from 'svelte';
   import dayjs from 'dayjs';
   import { N_DASH_ENTITY } from '$lib/constants/entities';
@@ -333,10 +333,14 @@
 <ul>
   {#each exhibitions as { name, id, start, end }}
     <li>
-      <h3>{name}</h3>
+      <h3>
+        <a
+          aria-label={`Open the ${name} exhibition page`}
+          sveltekit:prefetch
+          href={`/exhibition/${id}`}>{name}</a
+        >
+      </h3>
       <dl>
-        <dt>id</dt>
-        <dd>{id}</dd>
         <dt>Runs</dt>
         <dd>{dayjs(start).format(dateFormat)}{N_DASH_ENTITY}{dayjs(end).format(dateFormat)}</dd>
       </dl>
