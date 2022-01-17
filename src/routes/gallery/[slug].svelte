@@ -39,17 +39,26 @@
   import type {
     Gallery,
     GalleryQueryResponse,
+    Mutation,
+    OpeningHoursRangeInput,
     UpdateGalleryInput,
     User
   } from '$lib/generated/graphql';
   import galleries from '$lib/shared/stores/galleries';
   import user from '$lib/shared/stores/user';
-  import type { GalleryFormErrors } from '$lib/utilities/form';
+  import type { GalleryFormErrors, OpeningHours } from '$lib/utilities/form';
   import { mapErrorsToFields } from '$lib/utilities/form';
   import Map from '$lib/components/Map.svelte';
   import { afterUpdate, onMount } from 'svelte';
   import dayjs from 'dayjs';
   import { N_DASH_ENTITY } from '$lib/constants/entities';
+  import EditIcon from '$lib/components/Icons/Edit.svelte';
+  import MoreIcon from '$lib/components/Icons/More.svelte';
+  import SaveIcon from '$lib/components/Icons/Save.svelte';
+  import UndoIcon from '$lib/components/Icons/Undo.svelte';
+  import DayInputField from '$lib/components/DayInputField.svelte';
+  import { TextInputField } from '@rodneylab/sveltekit-components';
+  import { tick } from 'svelte';
 
   export let slug: string;
   export let data: { gallery: GalleryQueryResponse };
@@ -86,10 +95,16 @@
   }
 
   let gallery: Gallery;
+  let newOpeningHours: OpeningHoursRangeInput[];
   $: gallery = $galleries.find((element) => element.slug === slug);
   $: id = gallery.id;
   $: postalAddress = { ...gallery.postalAddress };
   $: name = gallery.name;
+  $: openingHoursRanges = gallery.openingHours.openingHoursRanges;
+  $: newOpeningHours = openingHoursRanges.map((element) => {
+    const { startDay, endDay, openingTime, closingTime } = element;
+    return { startDay, endDay, openingTime, closingTime };
+  });
   $: openingTimes = gallery.openingTimes;
   $: website = gallery.website;
   $: websiteUrl = gallery.websiteUrl;
@@ -103,11 +118,39 @@
   $: country = gallery.postalAddress.country;
   $: nearestTubes = gallery.nearestTubes.map((element) => element.name);
   $: exhibitions = gallery.exhibitions;
+  $: editOpeningHours = false;
+  import { DAYS } from '$lib/constants/time';
 
   let newNearestTube: string = '';
 
   let errors: GalleryFormErrors;
   $: errors = {};
+
+  function handleFewerOpeningHours(index: number) {
+    newOpeningHours = [...newOpeningHours.slice(0, index), ...newOpeningHours.slice(index + 1)];
+  }
+
+  async function handleMoreOpeningHours() {
+    try {
+      const template = newOpeningHours.at(-1);
+      const startDay = Math.min(6, template.endDay + 1);
+      const { closingTime, openingTime } = template;
+      newOpeningHours = [...newOpeningHours, { startDay, endDay: 6, openingTime, closingTime }];
+      if (browser) {
+        await tick();
+        document
+          .getElementById(`create-gallery-opening-start-${newOpeningHours.length - 1}`)
+          .focus();
+      }
+    } catch (error) {
+      console.error(`Error in handleMoreOpeningHours function in CreateGallery`);
+    }
+  }
+
+  function handleUndoOpeningHoursChanges() {
+    newOpeningHours = openingHoursRanges;
+    editOpeningHours = false;
+  }
 
   async function handleUpdate(changes: UpdateGalleryInput) {
     try {
@@ -125,7 +168,8 @@
         })
       });
       const responseData = await response.json();
-      const { errors: formErrors, gallery } = responseData.data.updateGallery;
+      const { errors: formErrors, gallery }: Mutation['updateGallery'] =
+        responseData.data.updateGallery;
       updating = false;
       if (formErrors) {
         errors = mapErrorsToFields(formErrors);
@@ -145,6 +189,9 @@
           postalCode = changes.postalAddress.postalCode;
           country = changes.postalAddress.country;
         }
+        if (changes.replacementOpeningHours) {
+          openingTimes = gallery.openingTimes;
+        }
         if (changes.addNearestTubes) {
           nearestTubes = [...nearestTubes, ...changes.addNearestTubes];
         }
@@ -152,6 +199,21 @@
     } catch (error) {
       console.error(`Error in handleSubmit function in UpdateGallery: ${error}`);
     }
+  }
+
+  async function handleUpdateOpeningHours() {
+    const filteredOpeningHours = newOpeningHours.filter(
+      (element) => element.startDay !== -1 && element.endDay !== -1
+    );
+
+    await handleUpdate({
+      id,
+      replacementOpeningHours:
+        filteredOpeningHours.length > 0
+          ? { openingHoursRanges: newOpeningHours }
+          : { openingHoursRanges: [] }
+    });
+    editOpeningHours = false;
   }
 
   const dateFormat = 'dddd, DD-MMM-YYYY';
@@ -261,7 +323,103 @@
   </dd>
   {#if openingTimes}
     <dt>Opening times</dt>
-    <dd>{openingTimes}</dd>
+    <dd>
+      {openingTimes}
+      <button
+        on:click={() => {
+          editOpeningHours = !editOpeningHours;
+        }}><EditIcon /></button
+      >
+    </dd>
+  {/if}
+  {#if editOpeningHours}
+    {#each newOpeningHours as { startDay, endDay, openingTime, closingTime }, index}
+      <DayInputField
+        value={DAYS[startDay]}
+        id={`create-gallery-opening-start-${index}`}
+        placeholder="First day in range"
+        title="Opening Time"
+        error={errors?.[`startDay${index}`] ?? null}
+        on:update={(event) => {
+          if (event.detail.trim() !== '') {
+            const day = DAYS.findIndex(
+              (element) => element.toLowerCase() === event.detail.toLowerCase()
+            );
+            if (day !== -1) {
+              newOpeningHours[index].startDay = day;
+            } else {
+              newOpeningHours[index].startDay =
+                index === 0 ? 0 : Math.min(6, newOpeningHours[index - 1].endDay + 1);
+            }
+          }
+        }}
+      />
+      <DayInputField
+        value={DAYS[endDay]}
+        id={`create-gallery-opening-end-${index}`}
+        placeholder="Last day in range"
+        title="Closing Time"
+        error={errors?.[`endDay${index}`] ?? null}
+        on:update={(event) => {
+          const day = DAYS.findIndex(
+            (element) => element.toLowerCase() === event.detail.toLowerCase()
+          );
+          if (day !== -1) {
+            newOpeningHours[index].endDay = day;
+          } else {
+            newOpeningHours[index].endDay = 6;
+          }
+        }}
+      />
+      <TextInputField
+        value={openingTime}
+        id={`create-gallery-opening-open-${index}`}
+        placeholder="09:00"
+        title="Opening Time"
+        error={errors?.[`openingTime${index}`] ?? null}
+        on:update={(event) => {
+          const { detail } = event;
+          if (/^([0-1]\d|2[0-3])$/.test(detail)) {
+            newOpeningHours[index].openingTime = `${detail}:00`;
+          } else if (/^\d$/.test(detail)) {
+            newOpeningHours[index].openingTime = `0${detail}:00`;
+          } else {
+            newOpeningHours[index].openingTime = detail;
+          }
+        }}
+      />
+      <TextInputField
+        value={closingTime}
+        id={`create-gallery-opening-close-${index}`}
+        placeholder="18:00"
+        title="Closing Time"
+        error={errors?.[`closingTime${index}`] ?? null}
+        on:update={(event) => {
+          const { detail } = event;
+          if (/^([0-1]\d|2[0-3])$/.test(detail)) {
+            newOpeningHours[index].closingTime = `${detail}:00`;
+          } else if (/^\d$/.test(detail)) {
+            newOpeningHours[index].closingTime = `0${detail}:00`;
+          } else {
+            newOpeningHours[index].closingTime = detail;
+          }
+        }}
+      />
+      <button
+        on:click|preventDefault={() => {
+          handleFewerOpeningHours(index);
+        }}><LessIcon /></button
+      >
+    {/each}
+    <button on:click|preventDefault={handleMoreOpeningHours}
+      ><span class="screen-reader-text">Add another set of opening hours</span><MoreIcon /></button
+    >
+    <button on:click|preventDefault={handleUndoOpeningHoursChanges}
+      ><UndoIcon /><span class="screen-reader-text">Forget about changes</span></button
+    >
+    <button on:click|preventDefault={handleUpdateOpeningHours}
+      ><SaveIcon /><span class="screen-reader-text">Save changes</span></button
+    >
   {/if}
   <dt>website</dt>
   <dd>

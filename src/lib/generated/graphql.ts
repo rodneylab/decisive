@@ -4,6 +4,7 @@ import { readable } from 'svelte/store';
 import type { Readable } from 'svelte/store';
 import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
@@ -19,10 +20,10 @@ export type Scalars = {
 };
 
 export type AddressInput = {
-  city?: Maybe<Scalars['String']>;
-  country?: Maybe<Scalars['String']>;
-  locality?: Maybe<Scalars['String']>;
-  postalCode?: Maybe<Scalars['String']>;
+  city?: InputMaybe<Scalars['String']>;
+  country?: InputMaybe<Scalars['String']>;
+  locality?: InputMaybe<Scalars['String']>;
+  postalCode?: InputMaybe<Scalars['String']>;
   streetAddress: Scalars['String'];
 };
 
@@ -31,7 +32,7 @@ export type CreateExhibitionInput = {
   end: Scalars['String'];
   freeEntry: Scalars['Boolean'];
   gallery: Scalars['String'];
-  hashtags?: Maybe<Array<Scalars['String']>>;
+  hashtags?: InputMaybe<Array<Scalars['String']>>;
   inPerson: Scalars['Boolean'];
   name: Scalars['String'];
   online: Scalars['Boolean'];
@@ -46,14 +47,14 @@ export type CreateExhibitionResponse = {
 };
 
 export type CreateGalleryInput = {
-  googleMap?: Maybe<Scalars['String']>;
+  googleMap?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
-  nearestTubes?: Maybe<Array<Scalars['String']>>;
-  openStreetMapUrl?: Maybe<Scalars['String']>;
-  openingHours?: Maybe<OpeningHoursInput>;
-  postalAddress?: Maybe<AddressInput>;
+  nearestTubes?: InputMaybe<Array<Scalars['String']>>;
+  openStreetMapUrl?: InputMaybe<Scalars['String']>;
+  openingHours?: InputMaybe<OpeningHoursInput>;
+  postalAddress?: InputMaybe<AddressInput>;
   slug: Scalars['String'];
-  website?: Maybe<Scalars['String']>;
+  website?: InputMaybe<Scalars['String']>;
 };
 
 export type CreateGalleryResponse = {
@@ -283,7 +284,7 @@ export type OpeningHours = {
 };
 
 export type OpeningHoursInput = {
-  openingHoursRanges?: Maybe<Array<OpeningHoursRangeInput>>;
+  openingHoursRanges?: InputMaybe<Array<OpeningHoursRangeInput>>;
 };
 
 export type OpeningHoursRange = {
@@ -379,20 +380,21 @@ export type TubeStationQueryResponse = {
 };
 
 export type UpdateGalleryInput = {
-  addNearestTubes?: Maybe<Array<Scalars['String']>>;
+  addNearestTubes?: InputMaybe<Array<Scalars['String']>>;
   id: Scalars['String'];
-  name?: Maybe<Scalars['String']>;
-  openStreetMapUrl?: Maybe<Scalars['String']>;
-  postalAddress?: Maybe<AddressInput>;
-  removeNearestTubes?: Maybe<Array<Scalars['String']>>;
-  slug?: Maybe<Scalars['String']>;
-  website?: Maybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  openStreetMapUrl?: InputMaybe<Scalars['String']>;
+  postalAddress?: InputMaybe<AddressInput>;
+  removeNearestTubes?: InputMaybe<Array<Scalars['String']>>;
+  replacementOpeningHours?: InputMaybe<OpeningHoursInput>;
+  slug?: InputMaybe<Scalars['String']>;
+  website?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateTubeStationInput = {
   id: Scalars['String'];
-  name?: Maybe<Scalars['String']>;
-  slug?: Maybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']>;
 };
 
 export type User = {

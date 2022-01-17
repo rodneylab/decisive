@@ -22,6 +22,15 @@ export async function post(
               country
             }
             openingTimes
+            openingHours {
+              openingHoursRanges {
+                id
+                startDay
+                endDay
+                openingTime
+                closingTime
+              }
+            }
             exhibitions {
               name
               id
