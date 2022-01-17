@@ -1,4 +1,4 @@
-import type { FieldError } from '$lib/generated/graphql';
+import type { FieldError, OpeningHoursRangeInput } from '$lib/generated/graphql';
 
 export function mapErrorsToFields(formErrors: FieldError[]) {
   const result = formErrors.reduce((accumulator, currentValue) => {

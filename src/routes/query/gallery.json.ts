@@ -14,6 +14,7 @@ export async function post(
             slug
             address
             openingTimes
+            byAppointmentOpeningTimes
             website
           }
           hasMore

@@ -172,6 +172,8 @@ export type FieldError = {
 export type Gallery = {
   __typename?: 'Gallery';
   address?: Maybe<Scalars['String']>;
+  byAppointmentOpeningHours?: Maybe<OpeningHours>;
+  byAppointmentOpeningTimes?: Maybe<Scalars['String']>;
   createdAt: Scalars['DateTime'];
   exhibitions?: Maybe<Array<Exhibition>>;
   googleMap?: Maybe<Scalars['String']>;
@@ -386,6 +388,7 @@ export type UpdateGalleryInput = {
   openStreetMapUrl?: InputMaybe<Scalars['String']>;
   postalAddress?: InputMaybe<AddressInput>;
   removeNearestTubes?: InputMaybe<Array<Scalars['String']>>;
+  replacementByAppointmentOpeningHours?: InputMaybe<OpeningHoursInput>;
   replacementOpeningHours?: InputMaybe<OpeningHoursInput>;
   slug?: InputMaybe<Scalars['String']>;
   website?: InputMaybe<Scalars['String']>;

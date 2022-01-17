@@ -1,3 +1,12 @@
+import type { OpeningHoursRangeInput } from '$lib/generated/graphql';
+
+export const DEFAULT_NEW_OPENING_HOURS: OpeningHoursRangeInput = {
+  startDay: 0,
+  endDay: 6,
+  openingTime: '10:00',
+  closingTime: '18:00'
+};
+
 export const PLACEHOLDER_TEXT = {
   fidoU2fLabel: 'Key label',
   galleryName: 'Gallery Name',

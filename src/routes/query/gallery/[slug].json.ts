@@ -31,6 +31,16 @@ export async function post(
                 closingTime
               }
             }
+            byAppointmentOpeningTimes
+            byAppointmentOpeningHours {
+              openingHoursRanges {
+                id
+                startDay
+                endDay
+                openingTime
+                closingTime
+              }
+            }
             exhibitions {
               name
               id

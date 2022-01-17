@@ -149,7 +149,7 @@
   />
 </form>
 <ul>
-  {#each searchResults as { id, name, address, openingTimes, slug, website, websiteUrl }}
+  {#each searchResults as { byAppointmentOpeningTimes, id, name, address, openingTimes, slug, website, websiteUrl }}
     <li>
       <h2>
         <a aria-label={`Open ${name} page`} sveltekit:prefetch href={`/gallery/${slug}`}>{name}</a>
@@ -161,6 +161,11 @@
           <dt>Opening times</dt>
           <dd>{openingTimes}</dd>
         {/if}
+        {#if byAppointmentOpeningTimes}
+          <dt>By appointment opening times</dt>
+          <dd>{byAppointmentOpeningTimes}</dd>
+        {/if}
+
         <dt>website</dt>
         <dd><a aria-label={`Open the ${name} website`} href={websiteUrl}>{website}</a></dd>
       </dl>

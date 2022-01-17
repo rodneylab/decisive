@@ -16,6 +16,8 @@ export async function post(
             slug
             address
             openingTimes
+            openingTimes
+            byAppointmentOpeningTimes
             website
             openStreetMap
           }
