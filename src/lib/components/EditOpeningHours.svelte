@@ -40,8 +40,9 @@
   $: handleMoreOpeningHours;
   async function handleMoreOpeningHours() {
     try {
-      const template = newOpeningHours.at(-1) ?? DEFAULT_NEW_OPENING_HOURS;
-      const startDay = Math.min(6, template.endDay + 1);
+      const last = newOpeningHours.at(-1);
+      const template = last ?? DEFAULT_NEW_OPENING_HOURS;
+      const startDay = last ? Math.min(6, template.endDay + 1) : template.startDay;
       const { closingTime, openingTime } = template;
       newOpeningHours = [...newOpeningHours, { startDay, endDay: 6, openingTime, closingTime }];
       if (browser) {
