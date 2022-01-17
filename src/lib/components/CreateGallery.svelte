@@ -10,7 +10,7 @@
   import { TextInputField } from '@rodneylab/sveltekit-components';
   import slugify from 'slugify';
   import { tick } from 'svelte';
-  import DayInputField from './DayInputField.svelte';
+  import DayInputField from '$lib/components/DayInputField.svelte';
 
   $: submitting = false;
 
