@@ -224,6 +224,7 @@ export type Mutation = {
   login: UserResponse;
   logout: Scalars['Boolean'];
   register: UserResponse;
+  updateExhibition: CreateExhibitionResponse;
   updateGallery: CreateGalleryResponse;
   updateTubeStation: CreateTubeStationResponse;
 };
@@ -270,6 +271,10 @@ export type MutationLoginArgs = {
 
 export type MutationRegisterArgs = {
   registerInput: UsernameEmailPasswordInput;
+};
+
+export type MutationUpdateExhibitionArgs = {
+  input: UpdateExhibitionInput;
 };
 
 export type MutationUpdateGalleryArgs = {
@@ -379,6 +384,12 @@ export type TubeStationQueryResponse = {
   __typename?: 'TubeStationQueryResponse';
   error?: Maybe<Scalars['String']>;
   tubeStation?: Maybe<TubeStation>;
+};
+
+export type UpdateExhibitionInput = {
+  id: Scalars['String'];
+  name?: InputMaybe<Scalars['String']>;
+  summaryText: Scalars['String'];
 };
 
 export type UpdateGalleryInput = {
