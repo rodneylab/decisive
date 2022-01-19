@@ -35,6 +35,12 @@
     <HeaderNavLink label="Open Exhibitions" href="/exhibition" text="Exhibitions" {pathname} />
     <HeaderNavLink label="Open Galleries" href="/gallery" text="Galleries" {pathname} />
     <HeaderNavLink
+      label="Open Photographers"
+      href="/photographer"
+      text="Photographers"
+      {pathname}
+    />
+    <HeaderNavLink
       label="Open Tube Stations"
       href="/tube-station"
       text="Tube Stations"

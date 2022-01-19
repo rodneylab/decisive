@@ -32,6 +32,14 @@ export interface GalleryFormErrors {
   website?: string;
 }
 
+export interface PhotographerFormErrors {
+  firstName?: string;
+  lastName?: string;
+  otherNames?: string;
+  slug?: string;
+  website?: string;
+}
+
 export interface TubeStationFormErrors {
   name?: string;
   slug?: string;

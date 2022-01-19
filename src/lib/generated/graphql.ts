@@ -63,6 +63,20 @@ export type CreateGalleryResponse = {
   gallery?: Maybe<Gallery>;
 };
 
+export type CreatePhotographerInput = {
+  firstName?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']>;
+  otherNames?: InputMaybe<Scalars['String']>;
+  slug: Scalars['String'];
+  website?: InputMaybe<Scalars['String']>;
+};
+
+export type CreatePhotographerResponse = {
+  __typename?: 'CreatePhotographerResponse';
+  errors?: Maybe<Array<FieldError>>;
+  photographer?: Maybe<Photographer>;
+};
+
 export type CreateTubeStationInput = {
   name: Scalars['String'];
   slug: Scalars['String'];
@@ -213,6 +227,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createExhibition: CreateExhibitionResponse;
   createGallery: CreateGalleryResponse;
+  createPhotographer: CreatePhotographerResponse;
   createTubeStation: CreateTubeStationResponse;
   deleteGallery: Scalars['Boolean'];
   deleteTubeStation: Scalars['Boolean'];
@@ -235,6 +250,10 @@ export type MutationCreateExhibitionArgs = {
 
 export type MutationCreateGalleryArgs = {
   input: CreateGalleryInput;
+};
+
+export type MutationCreatePhotographerArgs = {
+  input: CreatePhotographerInput;
 };
 
 export type MutationCreateTubeStationArgs = {
@@ -324,6 +343,33 @@ export type PaginatedGalleries = {
   hasMore: Scalars['Boolean'];
 };
 
+export type PaginatedPhotographers = {
+  __typename?: 'PaginatedPhotographers';
+  hasMore: Scalars['Boolean'];
+  photographers: Array<Photographer>;
+};
+
+export type Photographer = {
+  __typename?: 'Photographer';
+  createdAt: Scalars['DateTime'];
+  exhibitions?: Maybe<Array<Exhibition>>;
+  firstName?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  lastName?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  otherNames?: Maybe<Scalars['String']>;
+  slug: Scalars['String'];
+  updatedAt: Scalars['DateTime'];
+  website?: Maybe<Scalars['String']>;
+  websiteUrl?: Maybe<Scalars['String']>;
+};
+
+export type PhotographerQueryResponse = {
+  __typename?: 'PhotographerQueryResponse';
+  error?: Maybe<Scalars['String']>;
+  photographer?: Maybe<Photographer>;
+};
+
 export type PostalAddress = {
   __typename?: 'PostalAddress';
   city?: Maybe<Scalars['String']>;
@@ -350,6 +396,8 @@ export type Query = {
   gallery: GalleryQueryResponse;
   hello: Scalars['String'];
   me?: Maybe<User>;
+  photographer: PhotographerQueryResponse;
+  photographers: PaginatedPhotographers;
   tubeStation: TubeStationQueryResponse;
   tubeStations: Array<TubeStation>;
 };
@@ -363,6 +411,10 @@ export type QueryExhibitionArgs = {
 };
 
 export type QueryGalleryArgs = {
+  slug: Scalars['String'];
+};
+
+export type QueryPhotographerArgs = {
   slug: Scalars['String'];
 };
 
