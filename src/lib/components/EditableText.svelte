@@ -6,7 +6,7 @@
   import { createEventDispatcher } from 'svelte';
 
   export let buttonLabel: string;
-  export let dataList: string[];
+  export let dataList: string[] | undefined = undefined;
   export let value: string;
   export let id: string;
   export let placeholder: string;

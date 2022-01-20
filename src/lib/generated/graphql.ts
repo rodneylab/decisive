@@ -28,6 +28,7 @@ export type AddressInput = {
 };
 
 export type CreateExhibitionInput = {
+  bodyText: Scalars['String'];
   description: Scalars['String'];
   end: Scalars['String'];
   freeEntry: Scalars['Boolean'];
@@ -38,6 +39,7 @@ export type CreateExhibitionInput = {
   online: Scalars['Boolean'];
   start: Scalars['String'];
   summaryText: Scalars['String'];
+  url: Scalars['String'];
 };
 
 export type CreateExhibitionResponse = {
@@ -117,6 +119,7 @@ export type DuoPreauthResponse = {
 
 export type Exhibition = {
   __typename?: 'Exhibition';
+  bodyText?: Maybe<Scalars['String']>;
   createdAt: Scalars['DateTime'];
   description?: Maybe<Scalars['String']>;
   end?: Maybe<Scalars['String']>;
@@ -131,6 +134,7 @@ export type Exhibition = {
   start?: Maybe<Scalars['String']>;
   summaryText?: Maybe<Scalars['String']>;
   updatedAt: Scalars['DateTime'];
+  url?: Maybe<Scalars['String']>;
 };
 
 export type ExhibitionQueryResponse = {
@@ -441,10 +445,12 @@ export type TubeStationQueryResponse = {
 
 export type UpdateExhibitionInput = {
   addPhotographers?: InputMaybe<Array<Scalars['String']>>;
+  bodyText?: InputMaybe<Scalars['String']>;
   id: Scalars['String'];
   name?: InputMaybe<Scalars['String']>;
   removePhotographers?: InputMaybe<Array<Scalars['String']>>;
   summaryText?: InputMaybe<Scalars['String']>;
+  url?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateGalleryInput = {

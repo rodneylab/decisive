@@ -13,7 +13,9 @@ export async function post(
             id
             name
             description
+            url
             summaryText
+            bodyText
             hashtags
             gallery {
               name

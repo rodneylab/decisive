@@ -15,8 +15,10 @@ export function mapErrorsToFields(formErrors: FieldError[]) {
 export interface ExhibitionFormErrors {
   name?: string;
   description?: string;
+  bodyText?: string;
   summaryText?: string;
   hashtags?: string;
+  url?: string;
 }
 
 export interface GalleryFormErrors {
