@@ -54,7 +54,7 @@
   import { stemmer } from 'stemmer';
   import { TextInputField } from '@rodneylab/sveltekit-components';
   import { N_DASH_ENTITY } from '$lib/constants/entities';
-  import photographers from '$lib/shared/stores/photographers';
+  import type { Dayjs } from 'dayjs';
 
   export let data: { exhibitions: PaginatedExhibitions };
   export let me: User | null;
@@ -76,11 +76,14 @@
   let searchResults: Exhibition[];
   $: searchResults = search && searchQuery ? search.search(searchQuery) : $exhibitions;
 
-  const today = dayjs(new Date());
-  const aYearAgo = today.subtract(1, 'year');
-  const aYearAhead = today.add(1, 'year');
+  const today: Dayjs = dayjs(new Date());
+  const aYearAgo: Dayjs = today.subtract(1, 'year');
+  const aYearAhead: Dayjs = today.add(1, 'year');
+  const aWeekAhead: Dayjs = today.add(1, 'week');
 
   $: onNow = true;
+  $: filterOpeningSoon = false;
+  $: filterClosingSoon = false;
   $: earliestEnd = onNow ? today : aYearAgo;
   $: latestStart = onNow ? today : aYearAhead;
   exhibitions.set(data.exhibitions.exhibitions);
@@ -104,10 +107,25 @@
     search = dataToSearch;
   }
 
+  function closingSoon(endDate: Dayjs): boolean {
+    return today < endDate && endDate < aWeekAhead;
+  }
+
+  function openingSoon(startDate: Dayjs): boolean {
+    const aWeekAhead: Dayjs = today.add(1, 'week');
+    return today < startDate && startDate < aWeekAhead;
+  }
+
   $: filteredResults = [...searchResults].filter((element) => {
     const { start, end } = element;
     const startDate = dayjs(start);
+    if (filterOpeningSoon) {
+      return openingSoon(startDate);
+    }
     const endDate = dayjs(end);
+    if (filterClosingSoon) {
+      return closingSoon(endDate);
+    }
 
     return startDate <= latestStart && endDate >= earliestEnd;
   });
@@ -124,6 +142,21 @@
 <h1 id="exhibitions">Exhibitions</h1>
 <label for="filter-exhibitions-on-now">On now?</label>
 <input id="filter-exhibitions-on-now" type="checkbox" name="On now" bind:checked={onNow} />
+<label for="filter-exhibitions-opening-soon">Opening soon?</label>
+<input
+  id="filter-exhibitions-opening-soon"
+  type="checkbox"
+  name="Opening soon"
+  bind:checked={filterOpeningSoon}
+/>
+<label for="filter-exhibitions-closing-soon">Closing soon?</label>
+<input
+  id="filter-exhibitions-closing-soon"
+  type="checkbox"
+  name="Closing soon"
+  bind:checked={filterClosingSoon}
+/>
+
 <form on:submit|preventDefault={() => {}}>
   <TextInputField
     bind:value={searchQuery}
@@ -135,13 +168,20 @@
 </form>
 Showing {filteredResults.length} exhibitions.
 <ul>
-  {#each filteredResults as { id, name, start, end, freeEntry, online, inPerson, gallery, hashtags, photographers }}
+  {#each filteredResults as { id, name, start: startString, end: endString, freeEntry, online, inPerson, gallery, hashtags, photographers }}
     {@const galleryPage = `/gallery/${gallery.slug}`}
     {@const galleryName = gallery.name}
+    {@const start = dayjs(startString)}
+    {@const end = dayjs(endString)}
     <li>
       <h2>
         <a aria-label={`Open ${name} page`} sveltekit:prefetch href={`/exhibition/${id}`}>{name}</a>
       </h2>
+      {#if openingSoon(start)}
+        <strong>Opening soon!</strong>
+      {:else if closingSoon(end)}
+        <strong>Closing soon!</strong>
+      {/if}
       {#if photographers.length}
         <p>
           Photographers:{' '}
@@ -151,7 +191,7 @@ Showing {filteredResults.length} exhibitions.
         </p>{/if}
       <dl>
         <dt>Runs</dt>
-        <dd>{dayjs(start).format(dateFormat)}{N_DASH_ENTITY}{dayjs(end).format(dateFormat)}</dd>
+        <dd>{start.format(dateFormat)}{N_DASH_ENTITY}{end.format(dateFormat)}</dd>
         <dt>Gallery</dt>
         <dd>
           <a aria-label={`Open the ${galleryName} page`} href={galleryPage}>{galleryName}</a>
