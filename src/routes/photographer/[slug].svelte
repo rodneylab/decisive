@@ -91,22 +91,23 @@
 <h2>
   <a aria-label={`Open ${name} page`} sveltekit:prefetch href={`/photographer/${slug}`}>{name}</a>
 </h2>
-{#if website}
-  <dl>
+<dl>
+  {#if website}
     <dt>Website</dt>
     <dd>
       <a aria-label={`Open ${name} website`} href={websiteUrl}>{website}</a>
     </dd>
-    <dt>Exhibitions</dt>
-    <dd>
-      <ul>
-        {#each exhibitions as { name: exhibitionName, id }}
-          <li>
-            <a aria-label={`Jump to ${name} exhibition`} href={`/exhibition/${id}`}
-              >{exhibitionName}</a
-            >
-          </li>
-        {/each}
-      </ul>
-    </dd>
-  </dl>{/if}
+  {/if}
+  <dt>Exhibitions</dt>
+  <dd>
+    <ul>
+      {#each exhibitions as { name: exhibitionName, id }}
+        <li>
+          <a aria-label={`Jump to ${name} exhibition`} href={`/exhibition/${id}`}
+            >{exhibitionName}</a
+          >
+        </li>
+      {/each}
+    </ul>
+  </dd>
+</dl>

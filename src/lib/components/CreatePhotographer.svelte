@@ -5,6 +5,7 @@
   import { TextInputField } from '@rodneylab/sveltekit-components';
   import slugify from 'slugify';
   import { beforeNavigate } from '$app/navigation';
+  import photographers from '$lib/shared/stores/photographers';
 
   $: submitting = false;
   let firstName = browser
@@ -63,11 +64,12 @@
       });
       const responseData = await response.json();
       console.log('responseData: ', { responseData });
-      const { errors: formErrors } = responseData.data.createPhotographer;
+      const { errors: formErrors, photographer } = responseData.data.createPhotographer;
       submitting = false;
       if (formErrors) {
         errors = mapErrorsToFields(formErrors);
       } else {
+        photographers.set([...$photographers, photographer]);
         clearFormFields();
       }
     } catch (error) {
