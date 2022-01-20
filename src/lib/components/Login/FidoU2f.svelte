@@ -58,8 +58,8 @@
       const { data: authorised } = data;
       if (authorised) {
         user.set({ ...$user, mfaAuthenticated: true });
-        await prefetch('/gallery');
-        await goto('/gallery');
+        await prefetch('/exhibition');
+        await goto('/exhibition');
       } else {
         console.log('Access denied!');
         await prefetch('/login');

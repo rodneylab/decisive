@@ -32,8 +32,8 @@
 
   async function checkForLoggedInUser() {
     if ($user?.mfaAuthenticated) {
-      await prefetch('/gallery');
-      await goto('/gallery');
+      await prefetch('/exhibition');
+      await goto('/exhibition');
     } else if (browser) {
       if (me) {
         user.set({ ...me });
