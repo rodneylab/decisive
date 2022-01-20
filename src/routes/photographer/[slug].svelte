@@ -32,6 +32,7 @@
   import { browser } from '$app/env';
   import { goto, prefetch } from '$app/navigation';
   import type { Photographer, PhotographerQueryResponse, User } from '$lib/generated/graphql';
+  // import exhibitions from '$lib/shared/stores/exhibitions';
   import galleries from '$lib/shared/stores/galleries';
   import photographers from '$lib/shared/stores/photographers';
   import user from '$lib/shared/stores/user';
@@ -77,6 +78,7 @@
   $: name = photographer.name;
   $: website = photographer.website;
   $: websiteUrl = photographer.websiteUrl;
+  $: exhibitions = photographer.exhibitions;
   $: updating = false;
 </script>
 
@@ -94,5 +96,17 @@
     <dt>Website</dt>
     <dd>
       <a aria-label={`Open ${name} website`} href={websiteUrl}>{website}</a>
+    </dd>
+    <dt>Exhibitions</dt>
+    <dd>
+      <ul>
+        {#each exhibitions as { name: exhibitionName, id }}
+          <li>
+            <a aria-label={`Jump to ${name} exhibition`} href={`/exhibition/${id}`}
+              >{exhibitionName}</a
+            >
+          </li>
+        {/each}
+      </ul>
     </dd>
   </dl>{/if}

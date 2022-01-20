@@ -54,6 +54,7 @@
   import { stemmer } from 'stemmer';
   import { TextInputField } from '@rodneylab/sveltekit-components';
   import { N_DASH_ENTITY } from '$lib/constants/entities';
+  import photographers from '$lib/shared/stores/photographers';
 
   export let data: { exhibitions: PaginatedExhibitions };
   export let me: User | null;
@@ -134,21 +135,26 @@
 </form>
 Showing {filteredResults.length} exhibitions.
 <ul>
-  {#each filteredResults as { id, name, start, end, freeEntry, online, inPerson, gallery, hashtags }}
-  {@const galleryPage = `/gallery/${gallery.slug}`}
-  {@const galleryName = gallery.name}
+  {#each filteredResults as { id, name, start, end, freeEntry, online, inPerson, gallery, hashtags, photographers }}
+    {@const galleryPage = `/gallery/${gallery.slug}`}
+    {@const galleryName = gallery.name}
     <li>
       <h2>
         <a aria-label={`Open ${name} page`} sveltekit:prefetch href={`/exhibition/${id}`}>{name}</a>
       </h2>
+      {#if photographers.length}
+        <p>
+          Photographers:{' '}
+          {#each photographers as { name: photographerName, slug: photographerSlug }}
+            <a href={`/photographer/${photographerSlug}`}>{photographerName}</a>
+          {/each}
+        </p>{/if}
       <dl>
         <dt>Runs</dt>
         <dd>{dayjs(start).format(dateFormat)}{N_DASH_ENTITY}{dayjs(end).format(dateFormat)}</dd>
         <dt>Gallery</dt>
         <dd>
-          <a aria-label={`Open the ${galleryName} page`} href={galleryPage}
-            >{galleryName}</a
-          >
+          <a aria-label={`Open the ${galleryName} page`} href={galleryPage}>{galleryName}</a>
         </dd>
         <dt>Attendance</dt>
         <dd>
@@ -164,4 +170,3 @@ Showing {filteredResults.length} exhibitions.
     </li>
   {/each}
 </ul>
-

@@ -127,7 +127,8 @@ Showing {searchResults.length} photographer{searchResults.length !== 1 ? 's' : '
           <dd>
             <a aria-label={`Open ${name} website`} href={websiteUrl}>{website}</a>
           </dd>
-        </dl>{/if}
+        </dl>
+      {/if}
     </li>
   {/each}
 </ul>

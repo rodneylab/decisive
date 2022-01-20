@@ -76,8 +76,8 @@
   }
 </script>
 
-<h1>Create Exhibition</h1>
-<aside id="create-gallery">
+<h1>Create Photographer</h1>
+<aside id="create-photographer">
   <form on:submit|preventDefault={handleSubmit}>
     <TextInputField
       value={firstName}

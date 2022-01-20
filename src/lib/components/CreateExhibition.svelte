@@ -4,12 +4,18 @@
   import { ExhibitionFormErrors, mapErrorsToFields } from '$lib/utilities/form';
   import { TextArea, TextInputField } from '@rodneylab/sveltekit-components';
   import { Datepicker } from 'svelte-calendar';
+  import photographers from '$lib/shared/stores/photographers';
 
   export let gallerySlug: string;
+
+  $: photographerNames = $photographers.map((element) => element.name);
 
   $: submitting = false;
   let name = browser
     ? window.sessionStorage.getItem(`${gallerySlug}-create-exhibition-name}`) ?? ''
+    : '';
+  let photographer = browser
+    ? window.sessionStorage.getItem(`${gallerySlug}-create-exhibition-photographer}`) ?? ''
     : '';
   let description = browser
     ? window.sessionStorage.getItem(`${gallerySlug}-create-exhibition-description}`) ?? ''
@@ -83,13 +89,13 @@
         clearFormFields();
       }
     } catch (error) {
-      console.error(`Error in handleSubmit function in CreateGallery: ${error}`);
+      console.error(`Error in handleSubmit function in CreateExhibition: ${error}`);
     }
   }
 </script>
 
 <h1>Create Exhibition</h1>
-<aside id="create-gallery">
+<aside id="create-exhibition">
   <form on:submit|preventDefault={handleSubmit}>
     <TextInputField
       value={name}
@@ -103,67 +109,81 @@
         name = detail;
       }}
     />
-    <TextArea
-      value={description}
-      id="create-exhibition-description"
-      rows={2}
-      placeholder="Exhibition description"
-      title="Exhibition description"
-      error={errors?.description ?? null}
-      on:update={(event) => {
-        const { detail } = event;
-        sessionStore('description', detail);
-        description = detail;
-      }}
-    />
-    <TextArea
-      value={summaryText}
-      id="create-exhibition-summary"
-      rows={4}
-      placeholder="Exhibition summary"
-      title="Exhibition summary"
-      error={errors?.summaryText ?? null}
-      on:update={(event) => {
-        const { detail } = event;
-        sessionStore('summaryText', detail);
-        summaryText = detail;
-      }}
-    />
-    <TextInputField
-      value={hashtags.join(' ')}
-      id="create-exhibition-hashtags"
-      placeholder="Exhibition hashtags"
-      title="Hashtags"
-      error={errors?.hashtags ?? null}
-      on:update={(event) => {
-        const { detail } = event;
-        hashtags = detail.split(',').map((element) => element.trim());
-      }}
-    />
-    <Datepicker bind:selected={start} format={dateFormat} />
-    <Datepicker bind:selected={end} format={dateFormat} />
-    <label for="create-exhibition-free-entry">Free entry?</label>
-    <input
-      id="create-exhibition-free-entry"
-      type="checkbox"
-      name="Free entry"
-      bind:checked={freeEntry}
-    />
-    <label for="create-exhibition-online">Online?</label>
-    <input
-      id="create-exhibition-online"
-      type="checkbox"
-      name="Online exhibition"
-      bind:checked={online}
-    />
-    <label for="create-exhibition-in-person">In person?</label>
+    <form on:submit|preventDefault={handleSubmit}>
+      <TextInputField
+        value={name}
+        id="create-exhibition-photographer"
+        placeholder="Photographer name"
+        title="Photographer"
+        dataList={photographerNames}
+        on:update={(event) => {
+          const { detail } = event;
+          sessionStore('photographer', detail);
+          photographer = detail;
+        }}
+      />
+      <TextArea
+        value={description}
+        id="create-exhibition-description"
+        rows={2}
+        placeholder="Exhibition description"
+        title="Exhibition description"
+        error={errors?.description ?? null}
+        on:update={(event) => {
+          const { detail } = event;
+          sessionStore('description', detail);
+          description = detail;
+        }}
+      />
+      <TextArea
+        value={summaryText}
+        id="create-exhibition-summary"
+        rows={4}
+        placeholder="Exhibition summary"
+        title="Exhibition summary"
+        error={errors?.summaryText ?? null}
+        on:update={(event) => {
+          const { detail } = event;
+          sessionStore('summaryText', detail);
+          summaryText = detail;
+        }}
+      />
+      <TextInputField
+        value={hashtags.join(' ')}
+        id="create-exhibition-hashtags"
+        placeholder="Exhibition hashtags"
+        title="Hashtags"
+        error={errors?.hashtags ?? null}
+        on:update={(event) => {
+          const { detail } = event;
+          hashtags = detail.split(',').map((element) => element.trim());
+        }}
+      />
+      <Datepicker bind:selected={start} format={dateFormat} />
+      <Datepicker bind:selected={end} format={dateFormat} />
+      <label for="create-exhibition-free-entry">Free entry?</label>
+      <input
+        id="create-exhibition-free-entry"
+        type="checkbox"
+        name="Free entry"
+        bind:checked={freeEntry}
+      />
+      <label for="create-exhibition-online">Online?</label>
+      <input
+        id="create-exhibition-online"
+        type="checkbox"
+        name="Online exhibition"
+        bind:checked={online}
+      />
+      <label for="create-exhibition-in-person">In person?</label>
 
-    <input
-      id="create-exhibition-in-person"
-      type="checkbox"
-      name="In Person exhibition"
-      bind:checked={inPerson}
-    />
-    <button type="submit" disabled={submitting}>Create new exhibition</button>
+      <input
+        id="create-exhibition-in-person"
+        type="checkbox"
+        name="In Person exhibition"
+        bind:checked={inPerson}
+      />
+      <button type="submit" disabled={submitting}>Create new exhibition</button>
+    </form>
   </form>
 </aside>

@@ -127,6 +127,7 @@ export type Exhibition = {
   inPerson: Scalars['Boolean'];
   name: Scalars['String'];
   online: Scalars['Boolean'];
+  photographers?: Maybe<Array<Photographer>>;
   start?: Maybe<Scalars['String']>;
   summaryText?: Maybe<Scalars['String']>;
   updatedAt: Scalars['DateTime'];
@@ -439,9 +440,11 @@ export type TubeStationQueryResponse = {
 };
 
 export type UpdateExhibitionInput = {
+  addPhotographers?: InputMaybe<Array<Scalars['String']>>;
   id: Scalars['String'];
   name?: InputMaybe<Scalars['String']>;
-  summaryText: Scalars['String'];
+  removePhotographers?: InputMaybe<Array<Scalars['String']>>;
+  summaryText?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdateGalleryInput = {

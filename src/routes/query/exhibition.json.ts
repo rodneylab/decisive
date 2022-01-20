@@ -20,6 +20,10 @@ export async function post(
               name
               slug
             }
+            photographers {
+              name
+              slug
+            }
             hashtags
           }
         }

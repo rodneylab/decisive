@@ -20,6 +20,9 @@ export async function post(
               name
               slug
             }
+            photographers {
+              name
+            }
             start
             end
             freeEntry

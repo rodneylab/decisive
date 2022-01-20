@@ -2,23 +2,31 @@ import type { Request } from '@sveltejs/kit';
 import type { ResponseHeaders } from '@sveltejs/kit/types/helper';
 
 export async function post(
-  request: Request
+  request: Request & { params: { slug: string } }
 ): Promise<{ body: string; headers: ResponseHeaders } | { error: string; status: number }> {
   try {
+    const { slug } = request.params;
     const query = `
-    query Photographers {
-      photographers {
-        photographers {
-          name
-          slug
-          website
-          websiteUrl
-          id
+      query PhotographerQuery($photographerQuerySlug: String!) {
+        photographer(slug: $photographerQuerySlug) {
+          photographer {
+            name
+            slug
+            website
+            websiteUrl
+            exhibitions {
+              id
+              name
+            }
+            id
+          }
         }
-        hasMore
       }
-    }
     `;
+
+    const variables = {
+      photographerQuerySlug: slug
+    };
 
     const response = await fetch(process.env['GRAPHQL_ENDPOINT'], {
       method: 'POST',
@@ -28,14 +36,14 @@ export async function post(
       },
       body: JSON.stringify({
         query,
-        variables: {}
+        variables
       })
     });
 
     const { headers } = response;
     const data = await response.json();
-    // console.log(`photographers.json:`, { ...data.photographers });
 
+    console.log({ data });
     return {
       body: JSON.stringify({ ...data }),
       headers: {
@@ -43,7 +51,7 @@ export async function post(
       }
     };
   } catch (err) {
-    const error = `Error in /query/photographer.json.ts: ${err}`;
+    const error = `Error in /query/photographer/[slug].json.ts: ${err}`;
     console.error(error);
     return {
       status: 500,

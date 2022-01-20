@@ -6,6 +6,7 @@
   import { createEventDispatcher } from 'svelte';
 
   export let buttonLabel: string;
+  export let dataList: string[];
   export let value: string;
   export let id: string;
   export let placeholder: string;
@@ -28,6 +29,7 @@
     {required}
     {title}
     {error}
+    {dataList}
     on:update={(event) => {
       value = event.detail;
     }}
