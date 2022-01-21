@@ -68,7 +68,7 @@ devDependencies:
   '@graphql-codegen/typescript': 2.4.2_graphql@15.8.0
   '@graphql-codegen/typescript-operations': 2.2.2_graphql@15.8.0
   '@rodneylab/sveltekit-components': link:../components/package
-  '@sveltejs/kit': 1.0.0-next.236_svelte@3.46.2
+  '@sveltejs/kit': 1.0.0-next.238_svelte@3.46.2
   '@testing-library/dom': 8.11.2
   '@testing-library/svelte': 3.0.3_svelte@3.46.2
   '@testing-library/user-event': 13.5.0_@testing-library+dom@8.11.2
@@ -1475,8 +1475,8 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.236_svelte@3.46.2:
-    resolution: {integrity: sha512-V/K6KZwZlfM2jDiL7luisRkPujf/pAT2SUpgOEONk44WwUwYwd928qN2u0Z6SAfQFCDAxUI8pMHP2OC1bm352Q==}
+  /@sveltejs/kit/1.0.0-next.238_svelte@3.46.2:
+    resolution: {integrity: sha512-XK4OMAcFFvJkLd8FzIsGg+OuI9ZVjio4Uw2aHd1D2kRJmUPSe9TjG2ThIJzcxj+k8uexXfUzNxh/DEbKb4ILYw==}
     engines: {node: '>=14.13'}
     hasBin: true
     peerDependencies:
