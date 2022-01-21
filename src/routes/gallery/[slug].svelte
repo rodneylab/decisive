@@ -153,6 +153,7 @@
         }
         if (changes.replacementOpeningHours) {
           openingTimes = gallery.openingTimes;
+          openingHoursRanges = gallery.openingHours.openingHoursRanges;
         }
         if (changes.addNearestTubes) {
           nearestTubes = [...nearestTubes, ...changes.addNearestTubes];
