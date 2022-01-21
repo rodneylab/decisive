@@ -77,15 +77,8 @@
   $: searchResults = search && searchQuery ? search.search(searchQuery) : $exhibitions;
 
   const today: Dayjs = dayjs(new Date());
-  const aYearAgo: Dayjs = today.subtract(1, 'year');
-  const aYearAhead: Dayjs = today.add(1, 'year');
   const aWeekAhead: Dayjs = today.add(1, 'week');
 
-  $: onNow = true;
-  $: filterOpeningSoon = false;
-  $: filterClosingSoon = false;
-  $: earliestEnd = onNow ? today : aYearAgo;
-  $: latestStart = onNow ? today : aYearAhead;
   exhibitions.set(data.exhibitions.exhibitions);
 
   $: rebulidIndex;
@@ -99,7 +92,6 @@
     dataToSearch.searchIndex = new TfIdfSearchIndex('id');
     const indexBy = ['name', ['gallery', 'name']];
 
-    onNow = onNow;
     indexBy.forEach((element) => {
       dataToSearch.addIndex(element);
     });
@@ -116,19 +108,23 @@
     return today < startDate && startDate < aWeekAhead;
   }
 
-  $: filteredResults = [...searchResults].filter((element) => {
-    const { start, end } = element;
-    const startDate = dayjs(start);
-    if (filterOpeningSoon) {
-      return openingSoon(startDate);
-    }
-    const endDate = dayjs(end);
-    if (filterClosingSoon) {
-      return closingSoon(endDate);
-    }
-
-    return startDate <= latestStart && endDate >= earliestEnd;
-  });
+  let exhibitionFilter: 'all' | 'closingSoon' | 'onNow' | 'openingSoon' = 'onNow';
+  $: filteredResults =
+    exhibitionFilter === 'all'
+      ? [...searchResults]
+      : [...searchResults].filter((element) => {
+          const { start, end } = element;
+          const startDate = dayjs(start);
+          if (exhibitionFilter === 'openingSoon') {
+            return openingSoon(startDate);
+          }
+          const endDate = dayjs(end);
+          if (exhibitionFilter === 'closingSoon') {
+            return closingSoon(endDate);
+          }
+          // only on Now
+          return startDate <= today && endDate >= today;
+        });
 
   onMount(() => {
     checkForLoggedInUser();
@@ -140,23 +136,39 @@
 
 <SEO title="Exhibitions" {slug} metadescription="Exhibitions" />
 <h1 id="exhibitions">Exhibitions</h1>
+<label for="filter-exhibitions-all">All</label>
+<input
+  id="filter-exhibitions-all"
+  type="radio"
+  name="exhibition-filters"
+  bind:group={exhibitionFilter}
+  value="all"
+/>
+
 <label for="filter-exhibitions-on-now">On now?</label>
-<input id="filter-exhibitions-on-now" type="checkbox" name="On now" bind:checked={onNow} />
+<input
+  id="filter-exhibitions-on-now"
+  type="radio"
+  name="exhibition-filters"
+  bind:group={exhibitionFilter}
+  value="onNow"
+/>
 <label for="filter-exhibitions-opening-soon">Opening soon?</label>
 <input
   id="filter-exhibitions-opening-soon"
-  type="checkbox"
-  name="Opening soon"
-  bind:checked={filterOpeningSoon}
+  type="radio"
+  name="exhibition-filters"
+  bind:group={exhibitionFilter}
+  value="openingSoon"
 />
 <label for="filter-exhibitions-closing-soon">Closing soon?</label>
 <input
   id="filter-exhibitions-closing-soon"
-  type="checkbox"
-  name="Closing soon"
-  bind:checked={filterClosingSoon}
+  type="radio"
+  name="exhibition-filters"
+  bind:group={exhibitionFilter}
+  value="closingSoon"
 />
-
 <form on:submit|preventDefault={() => {}}>
   <TextInputField
     bind:value={searchQuery}
