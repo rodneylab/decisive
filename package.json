@@ -21,7 +21,8 @@
     "format": "prettier --write --plugin-search-dir=. .",
     "prettier:check": "prettier --check --plugin-search-dir=. .",
     "prepare": "husky install",
-    "gen": "graphql-codegen --config codegen.yml && prettier --write src/lib/generated/graphql.ts"
+    "gen": "graphql-codegen --config codegen.yml && prettier --write src/lib/generated/graphql.ts",
+    "test": "uvu tests  -r tsm -r module-alias/register -r vite-register -r tests/setup/register -i setup"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.0.3",
@@ -36,6 +37,9 @@
     "@graphql-codegen/typescript-operations": "2.2.2",
     "@rodneylab/sveltekit-components": "link:../components/package",
     "@sveltejs/kit": "next",
+    "@testing-library/dom": "^8.11.2",
+    "@testing-library/svelte": "^3.0.3",
+    "@testing-library/user-event": "^13.5.0",
     "@types/js-search": "^1.4.0",
     "@types/leaflet": "^1.7.8",
     "@types/marked": "^4.0.1",
@@ -51,9 +55,11 @@
     "graphql-codegen-svelte-apollo": "^1.1.0",
     "husky": "^7.0.4",
     "js-search": "^2.0.0",
+    "jsdom": "^19.0.0",
     "just-throttle": "^4.0.1",
     "leaflet": "^1.7.1",
     "marked": "^4.0.10",
+    "module-alias": "^2.2.2",
     "prettier": "^2.5.1",
     "prettier-plugin-svelte": "^2.6.0",
     "slugify": "^1.6.5",
@@ -64,8 +70,11 @@
     "svelte-check": "^2.3.0",
     "svelte-preprocess": "^4.10.2",
     "tslib": "^2.3.1",
+    "tsm": "^2.2.1",
     "typescript": "^4.5.4",
-    "u2f-api": "^1.2.1"
+    "u2f-api": "^1.2.1",
+    "uvu": "^0.5.3",
+    "vite-register": "^0.0.9"
   },
   "repository": {
     "type": "git",
