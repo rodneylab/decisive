@@ -1,10 +1,12 @@
-import type { Request } from '@sveltejs/kit';
+import type { RequestEvent } from '@sveltejs/kit';
 
-export async function post(
-  request: Request & { body: { id: string } }
-): Promise<{ body: string } | { error: string; status: number }> {
+export async function post({
+  request
+}: RequestEvent & { body: { id: string } }): Promise<
+  { body: string } | { error: string; status: number }
+> {
   try {
-    const { id } = request.body;
+    const { id } = await request.json();
     const query = `
       mutation DeleteGalleryMutation($deleteTubeStationId: String!) {
         deleteTubeStation(id: $deleteTubeStationId)

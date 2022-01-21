@@ -1,11 +1,13 @@
 import type { FidoU2fRegisterInput } from '$lib/generated/graphql';
-import type { Request } from '@sveltejs/kit';
+import type { RequestEvent } from '@sveltejs/kit';
 
-export async function post(
-  request: Request & { body: { input: FidoU2fRegisterInput } }
-): Promise<{ body: string } | { error: string; status: number }> {
+export async function post({
+  request
+}: RequestEvent & { body: { input: FidoU2fRegisterInput } }): Promise<
+  { body: string } | { error: string; status: number }
+> {
   try {
-    const { input } = request.body;
+    const { input } = await request.json();
     const query = `
       mutation FidoU2fRegisterMutation(
         $fidoU2FRegisterRegisterInput: FidoU2fRegisterInput!
@@ -23,7 +25,7 @@ export async function post(
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        Cookie: request.headers.cookie
+        Cookie: request.headers.get('cookie')
       },
       body: JSON.stringify({
         query,

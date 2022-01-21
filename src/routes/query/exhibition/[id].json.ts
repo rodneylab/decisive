@@ -1,11 +1,14 @@
-import type { Request } from '@sveltejs/kit';
+import type { RequestEvent } from '@sveltejs/kit';
 import type { ResponseHeaders } from '@sveltejs/kit/types/helper';
 
-export async function post(
-  request: Request & { params: { id: string } }
-): Promise<{ body: string; headers: ResponseHeaders } | { error: string; status: number }> {
+export async function post({
+  params,
+  request
+}: RequestEvent & { params: { id: string } }): Promise<
+  { body: string; headers: ResponseHeaders } | { error: string; status: number }
+> {
   try {
-    const { id } = request.params;
+    const { id } = params;
     const query = `
     query Exhibitions($exhibitionId: String!) {
         exhibition(id: $exhibitionId) {
@@ -44,7 +47,7 @@ export async function post(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Cookie: request.headers.cookie
+        Cookie: request.headers.get('cookie')
       },
       body: JSON.stringify({
         query,

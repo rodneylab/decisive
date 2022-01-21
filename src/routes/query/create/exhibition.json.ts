@@ -1,12 +1,14 @@
 import type { CreateExhibitionInput } from '$lib/generated/graphql';
-import type { Request } from '@sveltejs/kit';
+import type { RequestEvent } from '@sveltejs/kit';
 import type { ResponseHeaders } from '@sveltejs/kit/types/helper';
 
-export async function post(
-  request: Request & { body: { data: CreateExhibitionInput } }
-): Promise<{ body: string; headers: ResponseHeaders } | { error: string; status: number }> {
+export async function post({
+  request
+}: RequestEvent & { body: { data: CreateExhibitionInput } }): Promise<
+  { body: string; headers: ResponseHeaders } | { error: string; status: number }
+> {
   try {
-    const { data: input } = request.body;
+    const { data: input } = await request.json();
     const query = `
       mutation CreateExhibition($createExhibitionInput: CreateExhibitionInput!) {
         createExhibition(input: $createExhibitionInput) {

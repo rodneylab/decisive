@@ -207,6 +207,9 @@
   placeholder="Exhibition summary"
   title="Exhibition summmary"
   error={errors.summaryText}
+  on:keydown={() => {
+    unsavedSummaryChanges = true;
+  }}
   on:update={(event) => {
     const { detail } = event;
     sessionStore('summary', detail);

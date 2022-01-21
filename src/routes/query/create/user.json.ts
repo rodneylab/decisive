@@ -1,12 +1,14 @@
 import type { UsernameEmailPasswordInput } from '$lib/generated/graphql';
-import type { Request } from '@sveltejs/kit';
+import type { RequestEvent } from '@sveltejs/kit';
 import type { ResponseHeaders } from '@sveltejs/kit/types/helper';
 
-export async function post(
-  request: Request & { body: { registerInput: UsernameEmailPasswordInput } }
-): Promise<{ body: string; headers: ResponseHeaders } | { error: string; status: number }> {
+export async function post({
+  request
+}: RequestEvent & { body: { registerInput: UsernameEmailPasswordInput } }): Promise<
+  { body: string; headers: ResponseHeaders } | { error: string; status: number }
+> {
   try {
-    const { registerInput } = request.body;
+    const { registerInput } = await request.json();
     const query = `
       mutation RegisterMutation($registerInput: UsernameEmailPasswordInput!) {
         register(registerInput: $registerInput) {

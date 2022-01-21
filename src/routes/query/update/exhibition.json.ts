@@ -1,12 +1,14 @@
 import type { UpdateExhibitionInput, UpdateGalleryInput } from '$lib/generated/graphql';
-import type { Request } from '@sveltejs/kit';
+import type { RequestEvent } from '@sveltejs/kit';
 import type { ResponseHeaders } from '@sveltejs/kit/types/helper';
 
-export async function post(
-  request: Request & { body: { input: UpdateExhibitionInput } }
-): Promise<{ body: string; headers: ResponseHeaders } | { error: string; status: number }> {
+export async function post({
+  request
+}: RequestEvent & { body: { input: UpdateExhibitionInput } }): Promise<
+  { body: string; headers: ResponseHeaders } | { error: string; status: number }
+> {
   try {
-    const { input } = request.body;
+    const { input } = await request.json();
     const query = `
     mutation UpdateExhibition($updateExhibitionInput: UpdateExhibitionInput!) {
         updateExhibition(input: $updateExhibitionInput) {
@@ -45,7 +47,7 @@ export async function post(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Cookie: request.headers.cookie
+        Cookie: request.headers.get('Cookie')
       },
       body: JSON.stringify({
         query,

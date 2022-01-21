@@ -1,12 +1,14 @@
 import type { CreateTubeStationInput } from '$lib/generated/graphql';
-import type { Request } from '@sveltejs/kit';
+import type { RequestEvent } from '@sveltejs/kit';
 import type { ResponseHeaders } from '@sveltejs/kit/types/helper';
 
-export async function post(
-  request: Request & { body: { input: CreateTubeStationInput } }
-): Promise<{ body: string; headers: ResponseHeaders } | { error: string; status: number }> {
+export async function post({
+  request
+}: RequestEvent & { body: { input: CreateTubeStationInput } }): Promise<
+  { body: string; headers: ResponseHeaders } | { error: string; status: number }
+> {
   try {
-    const { input } = request.body;
+    const { input } = await request.json();
     const query = `
       mutation CreateTubeStationMutation($createTubeStationInput: CreateTubeStationInput!) {
         createTubeStation(input: $createTubeStationInput) {

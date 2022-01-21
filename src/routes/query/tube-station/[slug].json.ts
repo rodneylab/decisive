@@ -1,11 +1,14 @@
-import type { Request } from '@sveltejs/kit';
+import type { RequestEvent } from '@sveltejs/kit';
 import type { ResponseHeaders } from '@sveltejs/kit/types/helper';
 
-export async function post(
-  request: Request & { params: { slug: string } }
-): Promise<{ body: string; headers: ResponseHeaders } | { error: string; status: number }> {
+export async function post({
+  params,
+  request
+}: RequestEvent & { params: { slug: string } }): Promise<
+  { body: string; headers: ResponseHeaders } | { error: string; status: number }
+> {
   try {
-    const { slug } = request.params;
+    const { slug } = params;
     const query = `
 			query Query($tubeStationSlug: String!) {
 				tubeStation(slug: $tubeStationSlug) {
@@ -27,7 +30,7 @@ export async function post(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Cookie: request.headers.cookie
+        Cookie: request.headers.get('Cookie')
       },
       body: JSON.stringify({
         query,

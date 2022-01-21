@@ -1,10 +1,13 @@
-import type { Request } from '@sveltejs/kit';
+import type { RequestEvent } from '@sveltejs/kit';
 
-export async function post(
-  request: Request & { body: { activationCode: string } }
-): Promise<{ body: string } | { error: string; status: number }> {
+export async function post({
+  request
+}: RequestEvent & { body: { activationCode: string } }): Promise<
+  { body: string } | { error: string; status: number }
+> {
   try {
-    const { activationCode } = request.body;
+    const { activationCode } = await request.json();
+
     const query = `
 		query Query($duoEnrollStatusActivationCode: String!) {
 			duoEnrollStatus(activationCode: $duoEnrollStatusActivationCode) {
@@ -24,7 +27,7 @@ export async function post(
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        Cookie: request.headers.cookie
+        Cookie: request.headers.get('Cookie')
       },
       body: JSON.stringify({
         query,

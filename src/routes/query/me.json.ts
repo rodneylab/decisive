@@ -1,9 +1,11 @@
-import type { Request } from '@sveltejs/kit';
+import type { RequestEvent } from '@sveltejs/kit';
 import type { ResponseHeaders } from '@sveltejs/kit/types/helper';
 
-export async function post(
-  request: Request
-): Promise<{ body: string; headers: ResponseHeaders } | { error: string; status: number }> {
+export async function post({
+  request
+}: RequestEvent): Promise<
+  { body: string; headers: ResponseHeaders } | { error: string; status: number }
+> {
   try {
     const query = `
       query MeQuery {
@@ -24,7 +26,7 @@ export async function post(
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        Cookie: request.headers.cookie
+        Cookie: request.headers.get('cookie')
       },
       body: JSON.stringify({
         query,

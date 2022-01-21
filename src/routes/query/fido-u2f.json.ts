@@ -1,8 +1,8 @@
-import type { Request } from '@sveltejs/kit';
+import type { RequestEvent } from '@sveltejs/kit';
 
-export async function get(
-  request: Request
-): Promise<{ body: string } | { error: string; status: number }> {
+export async function get({
+  request
+}: RequestEvent): Promise<{ body: string } | { error: string; status: number }> {
   try {
     const query = `
       query Query {
@@ -26,7 +26,7 @@ export async function get(
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        Cookie: request.headers.cookie
+        Cookie: request.headers.get('cookie')
       },
       body: JSON.stringify({
         query,

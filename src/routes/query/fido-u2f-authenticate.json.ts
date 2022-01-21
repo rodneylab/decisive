@@ -1,11 +1,13 @@
 import type { FidoU2fSignResponseInput } from '$lib/generated/graphql';
-import type { Request } from '@sveltejs/kit';
+import type { RequestEvent } from '@sveltejs/kit';
 
-export async function post(
-  request: Request & { body: { signData: FidoU2fSignResponseInput } }
-): Promise<{ body: string } | { error: string; status: number }> {
+export async function post({
+  request
+}: RequestEvent & { body: { signData: FidoU2fSignResponseInput } }): Promise<
+  { body: string } | { error: string; status: number }
+> {
   try {
-    const { signData } = request.body;
+    const { signData } = await request.json();
     const query = `
       mutation FidoU2fCompleteAuthenticationMutation($fidoU2FCompleteAuthenticationSignData: FidoU2fSignResponseInput!) {
         fidoU2fCompleteAuthentication(signData: $fidoU2FCompleteAuthenticationSignData)
@@ -21,7 +23,7 @@ export async function post(
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        Cookie: request.headers.cookie
+        Cookie: request.headers.get('cookie')
       },
       body: JSON.stringify({
         query,

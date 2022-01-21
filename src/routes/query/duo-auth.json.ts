@@ -1,10 +1,12 @@
-import type { Request } from '@sveltejs/kit';
+import type { RequestEvent } from '@sveltejs/kit';
 
-export async function post(
-  request: Request & { body: { device: string } }
-): Promise<{ body: string } | { error: string; status: number }> {
+export async function post({
+  request
+}: RequestEvent & { body: { device: string } }): Promise<
+  { body: string } | { error: string; status: number }
+> {
   try {
-    const { device } = request.body;
+    const { device } = await request.json();
     const query = `
       mutation DuoAuthMutation($duoAuthDevice: String!) {
         duoAuth(device: $duoAuthDevice)
@@ -20,7 +22,7 @@ export async function post(
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
-        Cookie: request.headers.cookie
+        Cookie: request.headers.get('cookie')
       },
       body: JSON.stringify({
         query,
