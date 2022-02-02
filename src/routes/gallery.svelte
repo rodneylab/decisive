@@ -155,8 +155,10 @@
         <a aria-label={`Open ${name} page`} sveltekit:prefetch href={`/gallery/${slug}`}>{name}</a>
       </h2>
       <dl>
-        <dt>Address</dt>
-        <dd>{address}</dd>
+        {#if address}
+          <dt>Address</dt>
+          <dd>{address}</dd>
+        {/if}
         {#if openingTimes}
           <dt>Opening times</dt>
           <dd>{openingTimes}</dd>
