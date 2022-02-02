@@ -44,7 +44,7 @@ export async function post({
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Cookie: request.headers.cookie
+        Cookie: request.headers.get('Cookie')
       },
       body: JSON.stringify({
         query,

@@ -1,11 +1,11 @@
 import type { FidoU2fRegisterInput } from '$lib/generated/graphql';
-import type { RequestEvent } from '@sveltejs/kit';
+import type { EndpointOutput, RequestEvent } from '@sveltejs/kit';
 
 export async function post({
   request
-}: RequestEvent & { body: { input: FidoU2fRegisterInput } }): Promise<
-  { body: string } | { error: string; status: number }
-> {
+}: RequestEvent & { body: { input: FidoU2fRegisterInput } }): Promise<EndpointOutput> {
+  // { body: string } | { error: string; status: number }
+  // > {
   try {
     const { input } = await request.json();
     const query = `
