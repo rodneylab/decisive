@@ -53,7 +53,6 @@
   import { stemmer } from 'stemmer';
   import { TextInputField } from '@rodneylab/sveltekit-components';
   import CreatePhotographer from '$lib/components/CreatePhotographer.svelte';
-  import slugify from 'slugify';
 
   export let data: { photographers: PaginatedPhotographers };
   export let me: User | null;
