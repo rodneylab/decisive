@@ -1,10 +1,11 @@
 <script lang="ts">
   import { browser } from '$app/env';
   import type { CreateExhibitionInput } from '$lib/generated/graphql';
-  import { ExhibitionFormErrors, mapErrorsToFields } from '$lib/utilities/form';
+  import photographers from '$lib/shared/stores/photographers';
+  import type { ExhibitionFormErrors } from '$lib/utilities/form';
+  import { mapErrorsToFields } from '$lib/utilities/form';
   import { TextArea, TextInputField } from '@rodneylab/sveltekit-components';
   import { Datepicker } from 'svelte-calendar';
-  import photographers from '$lib/shared/stores/photographers';
 
   export let gallerySlug: string;
 
@@ -33,7 +34,7 @@
   let start: Date;
   let end: Date;
   $: start = new Date();
-  $: end = new Date();
+  $: end = (end < start ? start : end) ?? start;
   $: freeEntry = false;
   $: online = false;
   $: inPerson = true;
