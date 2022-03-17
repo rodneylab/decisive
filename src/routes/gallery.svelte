@@ -1,7 +1,8 @@
 <script context="module" lang="ts">
-  import type { LoadInput } from '@sveltejs/kit';
+  import type { Load } from './gallery';
 
-  export const load = async ({ fetch, params, url }: LoadInput) => {
+  export const load = async (...[input]: Parameters<Load>) => {
+    const { fetch, params, url } = input;
     try {
       // check for valid user session
       const meResponse = await fetch('/query/me.json', {
@@ -26,10 +27,9 @@
         method: 'POST',
         credentials: 'include'
       });
-      const { slug } = params;
       return {
         props: {
-          data: { ...(await response.json()).data, slug, ...tubeStationsData.data },
+          data: { ...(await response.json()).data, ...tubeStationsData.data },
           ...data
         }
       };

@@ -6,7 +6,7 @@
   import { DAYS } from '$lib/constants/time';
   import type { CreateGalleryInput } from '$lib/generated/graphql';
   import galleries from '$lib/shared/stores/galleries';
-  import { GalleryFormErrors, mapErrorsToFields } from '$lib/utilities/form';
+  import type { GalleryFormErrors, mapErrorsToFields } from '$lib/utilities/form';
   import { TextInputField } from '@rodneylab/sveltekit-components';
   import slugify from 'slugify';
   import { tick } from 'svelte';
