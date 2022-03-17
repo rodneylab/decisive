@@ -1,16 +1,17 @@
 <script lang="ts">
   import { browser } from '$app/env';
+  import DayInputField from '$lib/components/DayInputField.svelte';
   import LessIcon from '$lib/components/Icons/Less.svelte';
   import MoreIcon from '$lib/components/Icons/More.svelte';
   import { PLACEHOLDER_TEXT, TITLE } from '$lib/constants/form';
   import { DAYS } from '$lib/constants/time';
   import type { CreateGalleryInput } from '$lib/generated/graphql';
   import galleries from '$lib/shared/stores/galleries';
-  import type { GalleryFormErrors, mapErrorsToFields } from '$lib/utilities/form';
+  import type { GalleryFormErrors } from '$lib/utilities/form';
+  import { mapErrorsToFields } from '$lib/utilities/form';
   import { TextInputField } from '@rodneylab/sveltekit-components';
   import slugify from 'slugify';
   import { tick } from 'svelte';
-  import DayInputField from '$lib/components/DayInputField.svelte';
 
   $: submitting = false;
 
