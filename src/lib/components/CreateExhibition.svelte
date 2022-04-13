@@ -112,7 +112,7 @@
     />
     <form on:submit|preventDefault={handleSubmit}>
       <TextInputField
-        value={name}
+        value={photographer}
         id="create-exhibition-photographer"
         placeholder="Photographer name"
         title="Photographer"
