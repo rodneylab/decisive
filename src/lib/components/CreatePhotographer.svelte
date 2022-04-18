@@ -1,7 +1,8 @@
 <script lang="ts">
   import { browser } from '$app/env';
   import type { CreatePhotographerInput } from '$lib/generated/graphql';
-  import { mapErrorsToFields, PhotographerFormErrors } from '$lib/utilities/form';
+  import { mapErrorsToFields } from '$lib/utilities/form';
+  import type { PhotographerFormErrors } from '$lib/utilities/form';
   import { TextInputField } from '@rodneylab/sveltekit-components';
   import slugify from 'slugify';
   import { beforeNavigate } from '$app/navigation';
@@ -63,7 +64,6 @@
         body: JSON.stringify({ data })
       });
       const responseData = await response.json();
-      console.log('responseData: ', { responseData });
       const { errors: formErrors, photographer } = responseData.data.createPhotographer;
       submitting = false;
       if (formErrors) {

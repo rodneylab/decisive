@@ -81,7 +81,6 @@
         body: JSON.stringify({ data })
       });
       const responseData = await response.json();
-      console.log('responseData: ', { responseData });
       const { errors: formErrors } = responseData.data.createExhibition;
       submitting = false;
       if (formErrors) {
