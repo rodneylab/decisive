@@ -2,7 +2,7 @@
   import Icon, { addCollection } from '@iconify/svelte/dist/OfflineIcon.svelte';
 
   export let colour: string = undefined;
-  export let label: string = 'litter bin icon';
+  export let label: string = 'edit icon';
   export let width: number = 16;
   export let height: number = width;
   export let ariaHidden: boolean = false;
