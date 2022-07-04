@@ -25,8 +25,8 @@
     "test": "uvu tests  -r tsm -r module-alias/register -r vite-register -r tests/setup/register -i setup"
   },
   "devDependencies": {
-    "@commitlint/cli": "^16.2.3",
-    "@commitlint/config-conventional": "^16.2.1",
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
     "@fontsource/lato": "^4.5.5",
     "@graphql-codegen/cli": "2.6.2",
     "@graphql-codegen/introspection": "2.1.1",
@@ -53,7 +53,7 @@
     "graphql-codegen-svelte-apollo": "^1.1.0",
     "husky": "^8.0.1",
     "js-search": "^2.0.0",
-    "jsdom": "^19.0.0",
+    "jsdom": "^20.0.0",
     "just-throttle": "^4.0.1",
     "leaflet": "^1.7.1",
     "marked": "^4.0.14",
