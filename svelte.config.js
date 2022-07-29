@@ -7,13 +7,7 @@ const config = {
   // for more information about preprocessors
   preprocess: preprocess(),
 
-  kit: {
-    vite: {
-      optimizeDeps: {
-        include: ['just-throttle', 'dayjs']
-      }
-    }
-  }
+  kit: {}
 };
 
 export default config;

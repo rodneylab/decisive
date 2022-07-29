@@ -1,14 +1,8 @@
-import type { LoginInput } from '$lib/generated/graphql';
-import type { RequestEvent } from '@sveltejs/kit';
-import type { ResponseHeaders } from '@sveltejs/kit/types/helper';
+import type { RequestHandler } from './__types/user.json';
 
-export async function post({
-  request
-}: RequestEvent & { body: { loginCredentials: LoginInput } }): Promise<
-  { body: string; headers: ResponseHeaders } | { error: string; status: number }
-> {
+export const POST: RequestHandler = async function post({ request }) {
   try {
-    const { loginCredentials }: { loginCredentials: LoginInput } = await request.json();
+    const { loginCredentials } = await request.json();
     const query = `
       mutation LoginMutation($loginCredentials: LoginInput!) {
         login(credentials: $loginCredentials) {
@@ -58,4 +52,4 @@ export async function post({
       error
     };
   }
-}
+};

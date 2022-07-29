@@ -1,11 +1,6 @@
-import type { FidoU2fSignResponseInput } from '$lib/generated/graphql';
-import type { RequestEvent } from '@sveltejs/kit';
+import type { RequestHandler } from './__types/fido-u2f-authenticate.json';
 
-export async function post({
-  request
-}: RequestEvent & { body: { signData: FidoU2fSignResponseInput } }): Promise<
-  { body: string } | { error: string; status: number }
-> {
+export const POST: RequestHandler = async function post({ request }) {
   try {
     const { signData } = await request.json();
     const query = `
@@ -44,4 +39,4 @@ export async function post({
       error
     };
   }
-}
+};

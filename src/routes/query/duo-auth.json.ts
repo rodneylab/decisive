@@ -1,10 +1,6 @@
-import type { RequestEvent } from '@sveltejs/kit';
+import type { RequestHandler } from './__types/duo-auth.json';
 
-export async function post({
-  request
-}: RequestEvent & { body: { device: string } }): Promise<
-  { body: string } | { error: string; status: number }
-> {
+export const POST: RequestHandler = async function post({ request }) {
   try {
     const { device } = await request.json();
     const query = `
@@ -43,4 +39,4 @@ export async function post({
       error
     };
   }
-}
+};

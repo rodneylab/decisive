@@ -1,8 +1,4 @@
-import client from 'undefined';
-import type {} from '@apollo/client';
-import { readable } from 'svelte/store';
-import type { Readable } from 'svelte/store';
-import gql from 'graphql-tag';
+// import type {} from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };

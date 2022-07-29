@@ -1,12 +1,6 @@
-import type { RequestEvent } from '@sveltejs/kit';
-import type { ResponseHeaders } from '@sveltejs/kit/types/helper';
+import type { RequestHandler } from './__types/[slug].json';
 
-export async function post({
-  params,
-  request
-}: RequestEvent & { params: { slug: string } }): Promise<
-  { body: string; headers: ResponseHeaders } | { error: string; status: number }
-> {
+export const POST: RequestHandler = async function post({ params, request }) {
   try {
     const { slug } = params;
     const query = `
@@ -61,4 +55,4 @@ export async function post({
       error
     };
   }
-}
+};

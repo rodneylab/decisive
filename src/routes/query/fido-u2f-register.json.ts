@@ -1,8 +1,6 @@
-import type { RequestEvent } from '@sveltejs/kit';
+import type { RequestHandler } from './__types/fido-u2f-register.json';
 
-export async function get({
-  request
-}: RequestEvent): Promise<{ body: string } | { error: string; status: number }> {
+export const GET: RequestHandler = async function get({ request }) {
   try {
     const query = `
       query Query {
@@ -42,4 +40,4 @@ export async function get({
       error
     };
   }
-}
+};

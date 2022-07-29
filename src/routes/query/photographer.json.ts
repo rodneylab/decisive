@@ -1,11 +1,6 @@
-import type { RequestEvent } from '@sveltejs/kit';
-import type { ResponseHeaders } from '@sveltejs/kit/types/helper';
+import type { RequestHandler } from './__types/photographer.json';
 
-export async function post({
-  request
-}: RequestEvent): Promise<
-  { body: string; headers: ResponseHeaders } | { error: string; status: number }
-> {
+export const POST: RequestHandler = async function post({ request }) {
   try {
     const query = `
     query Photographers {
@@ -52,4 +47,4 @@ export async function post({
       error
     };
   }
-}
+};

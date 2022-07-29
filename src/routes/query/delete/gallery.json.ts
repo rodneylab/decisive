@@ -1,10 +1,6 @@
-import type { RequestEvent } from '@sveltejs/kit';
+import type { RequestHandler } from './__types/gallery.json';
 
-export async function post({
-  request
-}: RequestEvent & { body: { id: string } }): Promise<
-  { body: string } | { error: string; status: number }
-> {
+export const POST: RequestHandler = async function post({ request }) {
   try {
     const { id } = await request.json();
     const query = `
@@ -41,4 +37,4 @@ export async function post({
       error
     };
   }
-}
+};

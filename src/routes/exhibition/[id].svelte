@@ -1,9 +1,9 @@
 <script context="module" lang="ts">
-  import type { LoadInput } from '@sveltejs/kit';
+  import type { Load } from './__types/[id]';
   import { TextArea } from '@rodneylab/sveltekit-components';
   import { browser } from '$app/env';
 
-  export const load = async ({ fetch, params, url }: LoadInput) => {
+  export const load: Load = async function load({ fetch, params, url }) {
     try {
       // check for valid user session
       const meResponse = await fetch('/query/me.json', {

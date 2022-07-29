@@ -1,12 +1,6 @@
-import type { CreatePhotographerInput } from '$lib/generated/graphql';
-import type { RequestEvent } from '@sveltejs/kit';
-import type { ResponseHeaders } from '@sveltejs/kit/types/helper';
+import type { RequestHandler } from './__types/photographer.json';
 
-export async function post({
-  request
-}: RequestEvent & { body: { data: CreatePhotographerInput } }): Promise<
-  { body: string; headers: ResponseHeaders } | { error: string; status: number }
-> {
+export const POST: RequestHandler = async function post({ request }) {
   try {
     const { data: input } = await request.json();
     const query = `
@@ -61,4 +55,4 @@ export async function post({
       error
     };
   }
-}
+};

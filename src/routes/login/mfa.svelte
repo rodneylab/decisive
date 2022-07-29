@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
-  import type { LoadInput } from '@sveltejs/kit';
+  import type { Load } from './__types/mfa';
 
-  export const load = async ({ fetch, url }: LoadInput) => {
+  export const load: Load = async function load({ fetch, url }) {
     try {
       // check for valid user session
       const meResponse = await fetch('/query/me.json', {

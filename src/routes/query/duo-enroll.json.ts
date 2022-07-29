@@ -1,10 +1,6 @@
-import type { RequestEvent } from '@sveltejs/kit';
+import type { RequestHandler } from './__types/duo-enroll.json';
 
-export async function post({
-  request
-}: RequestEvent & { body: { activationCode: string } }): Promise<
-  { body: string } | { error: string; status: number }
-> {
+export const POST: RequestHandler = async function post({ request }) {
   try {
     const { activationCode } = await request.json();
 
@@ -48,4 +44,4 @@ export async function post({
       error
     };
   }
-}
+};

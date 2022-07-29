@@ -1,8 +1,6 @@
-import type { RequestEvent } from '@sveltejs/kit';
+import type { RequestHandler } from './__types/logout.json';
 
-export async function post({
-  request
-}: RequestEvent): Promise<{ body: string } | { error: string; status: number }> {
+export const POST: RequestHandler = async function post({ request }) {
   try {
     const query = `
       mutation LogoutMutation {
@@ -38,4 +36,4 @@ export async function post({
       error
     };
   }
-}
+};

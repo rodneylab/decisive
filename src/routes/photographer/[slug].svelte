@@ -1,5 +1,7 @@
 <script context="module" lang="ts">
-  export const load = async ({ fetch, params, url }: LoadInput) => {
+  import type { Load } from './__types/[slug]';
+
+  export const load: Load = async function load({ fetch, params, url }) {
     try {
       // check for valid user session
       const meResponse = await fetch('/query/me.json', {

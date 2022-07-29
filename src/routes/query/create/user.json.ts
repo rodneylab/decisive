@@ -1,12 +1,6 @@
-import type { UsernameEmailPasswordInput } from '$lib/generated/graphql';
-import type { RequestEvent } from '@sveltejs/kit';
-import type { ResponseHeaders } from '@sveltejs/kit/types/helper';
+import type { RequestHandler } from './__types/user.json';
 
-export async function post({
-  request
-}: RequestEvent & { body: { registerInput: UsernameEmailPasswordInput } }): Promise<
-  { body: string; headers: ResponseHeaders } | { error: string; status: number }
-> {
+export const POST: RequestHandler = async function post({ request }) {
   try {
     const { registerInput } = await request.json();
     const query = `
@@ -58,4 +52,4 @@ export async function post({
       error
     };
   }
-}
+};

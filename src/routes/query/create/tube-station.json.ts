@@ -1,12 +1,6 @@
-import type { CreateTubeStationInput } from '$lib/generated/graphql';
-import type { RequestEvent } from '@sveltejs/kit';
-import type { ResponseHeaders } from '@sveltejs/kit/types/helper';
+import type { RequestHandler } from './__types/tube-station.json';
 
-export async function post({
-  request
-}: RequestEvent & { body: { input: CreateTubeStationInput } }): Promise<
-  { body: string; headers: ResponseHeaders } | { error: string; status: number }
-> {
+export const POST: RequestHandler = async function post({ request }) {
   try {
     const { input } = await request.json();
     const query = `
@@ -58,4 +52,4 @@ export async function post({
       error
     };
   }
-}
+};
