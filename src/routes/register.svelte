@@ -31,7 +31,7 @@
   } from '@rodneylab/sveltekit-components';
 
   export let data: { me: User } | undefined;
-  const { me } = data;
+  const { me } = data ?? {};
 
   if (me) {
     user.set({ ...me });

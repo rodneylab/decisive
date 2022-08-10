@@ -28,7 +28,7 @@
   import { PasswordInputField, TextInputField } from '@rodneylab/sveltekit-components';
 
   export let data: { me: User | null };
-  const { me } = data;
+  const { me } = data ?? {};
 
   async function checkForLoggedInUser() {
     if (browser && me) {

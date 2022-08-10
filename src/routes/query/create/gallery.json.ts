@@ -1,8 +1,9 @@
+import type { CreateGalleryInput } from '$lib/generated/graphql';
 import type { RequestHandler } from './__types/gallery.json';
 
 export const POST: RequestHandler = async function post({ request }) {
   try {
-    const { input } = await request.json();
+    const { input }: { input: CreateGalleryInput } = await request.json();
     const query = `
       mutation CreateGalleryMutation($createGalleryInput: CreateGalleryInput!) {
         createGallery(input: $createGalleryInput) {

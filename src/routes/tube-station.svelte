@@ -39,7 +39,8 @@
   import type { CreateTubeStationInput, Mutation, TubeStation, User } from '$lib/generated/graphql';
   import { tubeStations } from '$lib/shared/stores/tubeStations';
   import user from '$lib/shared/stores/user';
-  import { mapErrorsToFields, TubeStationFormErrors } from '$lib/utilities/form';
+  import { mapErrorsToFields } from '$lib/utilities/form';
+  import type { TubeStationFormErrors } from '$lib/utilities/form';
   import { TextInputField } from '@rodneylab/sveltekit-components';
   import slugify from 'slugify';
   import { onMount } from 'svelte';

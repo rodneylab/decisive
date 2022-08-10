@@ -83,7 +83,7 @@
       // todo(rodneylab): allow user to select which key to use when there are multiple ones available
       authenticate(signRequests[0]);
     } catch (error) {
-      console.error(`Error in duoAuhandleAuthenticate function in FidoU2f: ${error}`);
+      console.error(`Error in duoHandleAuthenticate function in FidoU2f: ${error}`);
     }
   }
 
