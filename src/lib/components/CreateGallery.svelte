@@ -17,8 +17,12 @@
 
   export let tubeStationsNames: string[];
 
-  let name = '';
-  let slug = '';
+  function sessionGet(field: string): string | null {
+    return browser ? window.sessionStorage.getItem(`create-gallery-${field}`) ?? '' : '';
+  }
+
+  let name = sessionGet('name');
+  let slug = sessionGet('slug');
   let streetAddress = '';
   let locality = '';
   let city = 'London';
@@ -31,6 +35,7 @@
   let errors: GalleryFormErrors = {};
 
   function clearFormFields() {
+    ['name', 'slug'].forEach((element) => sessionStorage.removeItem(`create-gallery-${element}}`));
     name = '';
     slug = '';
     streetAddress = '';
@@ -122,6 +127,10 @@
       console.error(`Error in handleSubmit function in CreateGallery: ${error}`);
     }
   }
+
+  function sessionStore(field: string, value: string) {
+    browser && window.sessionStorage.setItem(`create-gallery-${field}`, value);
+  }
 </script>
 
 <aside id="create-gallery">
@@ -135,6 +144,7 @@
       on:update={(event) => {
         const { detail } = event;
         name = detail;
+        sessionStore('name', detail);
         if (slug === '') {
           slug = slugify(detail, { remove: /[\.']/g, lower: true });
         }
@@ -147,7 +157,9 @@
       title="Slug"
       error={errors?.slug ?? null}
       on:update={(event) => {
-        slug = event.detail;
+        const { detail } = event;
+        slug = detail;
+        sessionStore('slug', detail);
       }}
     />
     <TextInputField
