@@ -18,7 +18,6 @@ export const GET: RequestHandler = async function get({ request }) {
     `;
 
     const variables = {};
-    console.log('London calling');
     const response = await fetch(process.env['GRAPHQL_ENDPOINT'], {
       method: 'POST',
       credentials: 'include',
@@ -31,9 +30,7 @@ export const GET: RequestHandler = async function get({ request }) {
         variables
       })
     });
-    console.log('received');
     const data = await response.json();
-    console.log('over and out: ', { ...data.errors });
     return {
       body: JSON.stringify({ ...data })
     };
