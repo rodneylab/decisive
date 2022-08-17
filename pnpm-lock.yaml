@@ -16,11 +16,11 @@ specifiers:
   '@testing-library/user-event': ^14.4.3
   '@types/js-search': ^1.4.0
   '@types/leaflet': ^1.7.11
-  '@types/marked': ^4.0.3
+  '@types/marked': ^4.0.4
   '@types/node': ^18.7.6
   '@typescript-eslint/eslint-plugin': ^5.33.1
   '@typescript-eslint/parser': ^5.33.1
-  '@vitejs/plugin-basic-ssl': ^0.1.1
+  '@vitejs/plugin-basic-ssl': ^0.1.2
   dayjs: ^1.11.5
   dotenv: ^16.0.1
   eslint: ^8.22.0
@@ -42,7 +42,7 @@ specifiers:
   stemmer: ^2.0.0
   svelte: ^3.49.0
   svelte-calendar: ^3.1.6
-  svelte-check: ^2.8.0
+  svelte-check: ^2.8.1
   svelte-preprocess: ^4.10.7
   tslib: ^2.4.0
   tsm: ^2.2.2
@@ -65,17 +65,17 @@ devDependencies:
   '@graphql-codegen/typescript-operations': 2.5.3_graphql@16.6.0
   '@iconify/svelte': 2.2.1
   '@rodneylab/sveltekit-components': link:../components/package
-  '@sveltejs/kit': 1.0.0-next.415_svelte@3.49.0+vite@3.0.8
+  '@sveltejs/kit': 1.0.0-next.418_svelte@3.49.0+vite@3.0.8
   '@testing-library/dom': 8.17.1
   '@testing-library/svelte': 3.1.3_svelte@3.49.0
   '@testing-library/user-event': 14.4.3_wl4iynrlixafokvgqnhzlvigei
   '@types/js-search': 1.4.0
   '@types/leaflet': 1.7.11
-  '@types/marked': 4.0.3
+  '@types/marked': 4.0.4
   '@types/node': 18.7.6
   '@typescript-eslint/eslint-plugin': 5.33.1_vsoshirnpb7xw6mr7xomgfas2i
   '@typescript-eslint/parser': 5.33.1_4rv7y5c6xz3vfxwhbrcxxi73bq
-  '@vitejs/plugin-basic-ssl': 0.1.1_vite@3.0.8
+  '@vitejs/plugin-basic-ssl': 0.1.2_vite@3.0.8
   dayjs: 1.11.5
   dotenv: 16.0.1
   eslint: 8.22.0
@@ -96,7 +96,7 @@ devDependencies:
   stemmer: 2.0.0
   svelte: 3.49.0
   svelte-calendar: 3.1.6
-  svelte-check: 2.8.0_svelte@3.49.0
+  svelte-check: 2.8.1_svelte@3.49.0
   svelte-preprocess: 4.10.7_uslzfc62di2n2otc2tvfklnwji
   tslib: 2.4.0
   tsm: 2.2.2
@@ -1514,14 +1514,14 @@ packages:
       picomatch: 2.3.1
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.415_svelte@3.49.0+vite@3.0.8:
-    resolution: {integrity: sha512-XtiiEW/LuhYeT0YdyLxNA+lCcu+1NMhLd4xM8ZYJ//x408eM9Oeckfh8qmzcBurksaZEZHd1cwHscSkOnJLOww==}
+  /@sveltejs/kit/1.0.0-next.418_svelte@3.49.0+vite@3.0.8:
+    resolution: {integrity: sha512-lR1iNXOln3e6gl4KxiylIF3fQNrLmD0KhWUD09IKRIkkL3DJ5e7kwaX/CEsYJqVt0tg7jwMxQVlpcvFNFnRRLQ==}
     engines: {node: '>=16.9'}
     hasBin: true
     requiresBuild: true
     peerDependencies:
       svelte: ^3.44.0
-      vite: ^3.0.0
+      vite: 3.0.2
     dependencies:
       '@sveltejs/vite-plugin-svelte': 1.0.1_svelte@3.49.0+vite@3.0.8
       chokidar: 3.5.3
@@ -1536,7 +1536,7 @@ packages:
       sirv: 2.0.2
       svelte: 3.49.0
       tiny-glob: 0.2.9
-      undici: 5.8.2
+      undici: 5.9.1
       vite: 3.0.8
     transitivePeerDependencies:
       - diff-match-patch
@@ -1656,8 +1656,8 @@ packages:
       '@types/geojson': 7946.0.10
     dev: true
 
-  /@types/marked/4.0.3:
-    resolution: {integrity: sha512-HnMWQkLJEf/PnxZIfbm0yGJRRZYYMhb++O9M36UCTA9z53uPvVoSlAwJr3XOpDEryb7Hwl1qAx/MV6YIW1RXxg==}
+  /@types/marked/4.0.4:
+    resolution: {integrity: sha512-5Yns/jBU+kxoWtTYsSqO0uWw5DGEVuIW10TdnChjzfbOsb4kjku95WB7oJr+ZbWh7dkrNDObFUfbX4KMlBeCGw==}
     dev: true
 
   /@types/minimist/1.2.2:
@@ -1818,8 +1818,8 @@ packages:
       eslint-visitor-keys: 3.3.0
     dev: true
 
-  /@vitejs/plugin-basic-ssl/0.1.1_vite@3.0.8:
-    resolution: {integrity: sha512-UhfGAZ8HgIMEPktKF8k58Y1LSwuYs1i1O4HY8E+yiOoYM+rkaPFBZo1SOkRsZN8DZTw90Q+ZznPej1o/mtTisg==}
+  /@vitejs/plugin-basic-ssl/0.1.2_vite@3.0.8:
+    resolution: {integrity: sha512-EdwCHnbkakR6YPupySZm1WoCDRPaw9c5jObAo2pCRv8Ja2TESFC6Sc8RUOcKuihfjARDfszbBf+YEQwHY9s9wg==}
     engines: {node: '>=14.6.0'}
     peerDependencies:
       vite: ^3.0.0-beta.0
@@ -1837,7 +1837,7 @@ packages:
       form-data-encoder: 1.7.2
       formdata-node: 4.3.3
       node-fetch: 2.6.7
-      undici: 5.8.2
+      undici: 5.9.1
       web-streams-polyfill: 3.2.1
     transitivePeerDependencies:
       - encoding
@@ -2139,7 +2139,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001377
+      caniuse-lite: 1.0.30001378
       electron-to-chromium: 1.4.222
       node-releases: 2.0.6
       update-browserslist-db: 1.0.5_browserslist@4.21.3
@@ -2206,8 +2206,8 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /caniuse-lite/1.0.30001377:
-    resolution: {integrity: sha512-I5XeHI1x/mRSGl96LFOaSk528LA/yZG3m3iQgImGujjO8gotd/DL8QaI1R1h1dg5ATeI2jqPblMpKq4Tr5iKfQ==}
+  /caniuse-lite/1.0.30001378:
+    resolution: {integrity: sha512-JVQnfoO7FK7WvU4ZkBRbPjaot4+YqxogSDosHv0Hv5mWpUESmN+UubMU6L/hGz8QlQ2aY5U0vR6MOs6j/CXpNA==}
     dev: true
 
   /capital-case/1.0.4:
@@ -5196,8 +5196,8 @@ packages:
       just-throttle: 2.3.1
     dev: true
 
-  /svelte-check/2.8.0_svelte@3.49.0:
-    resolution: {integrity: sha512-HRL66BxffMAZusqe5I5k26mRWQ+BobGd9Rxm3onh7ZVu0nTk8YTKJ9vu3LVPjUGLU9IX7zS+jmwPVhJYdXJ8vg==}
+  /svelte-check/2.8.1_svelte@3.49.0:
+    resolution: {integrity: sha512-cibyY1sgt3ONIDnQbSgV2X9AJFhwEslRHNo95lijrYfPzVEvTvbmL2ohsUyqB5L7j1GhLXtQbjCJ4lZZ/fwbeQ==}
     hasBin: true
     peerDependencies:
       svelte: ^3.24.0
@@ -5510,8 +5510,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /undici/5.8.2:
-    resolution: {integrity: sha512-3KLq3pXMS0Y4IELV045fTxqz04Nk9Ms7yfBBHum3yxsTR4XNn+ZCaUbf/mWitgYDAhsplQ0B1G4S5D345lMO3A==}
+  /undici/5.9.1:
+    resolution: {integrity: sha512-6fB3a+SNnWEm4CJbgo0/CWR8RGcOCQP68SF4X0mxtYTq2VNN8T88NYrWVBAeSX+zb7bny2dx2iYhP3XHi00omg==}
     engines: {node: '>=12.18'}
     dev: true
 
