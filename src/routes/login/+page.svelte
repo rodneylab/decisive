@@ -1,22 +1,3 @@
-<script context="module" lang="ts">
-  import type { Load } from './__types/login';
-
-  export const load: Load = async function load({ fetch, url }) {
-    try {
-      const response = await fetch('/query/me.json', {
-        method: 'POST',
-        credentials: 'include'
-      });
-      return {
-        props: { ...(await response.json()) }
-      };
-    } catch (error) {
-      const { pathname } = url;
-      console.error(`Error in load function for ${pathname}: ${error}`);
-    }
-  };
-</script>
-
 <script lang="ts">
   import { browser } from '$app/env';
   import { goto, prefetch } from '$app/navigation';

@@ -1,23 +1,3 @@
-<script context="module" lang="ts">
-  import type { Load } from './__types/mfa';
-
-  export const load: Load = async function load({ fetch, url }) {
-    try {
-      // check for valid user session
-      const meResponse = await fetch('/query/me.json', {
-        method: 'POST',
-        credentials: 'include'
-      });
-      return {
-        props: { ...(await meResponse.json()) }
-      };
-    } catch (error) {
-      const { pathname } = url;
-      console.error(`Error in load function for ${pathname}: ${error}`);
-    }
-  };
-</script>
-
 <script lang="ts">
   import { browser } from '$app/env';
   import { goto, prefetch } from '$app/navigation';
@@ -26,6 +6,7 @@
   import type { User } from '$lib/generated/graphql';
   import user from '$lib/shared/stores/user';
   import { onMount } from 'svelte';
+
   export let data: { me: User | null };
 
   const { me } = data;
