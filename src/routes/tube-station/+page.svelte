@@ -1,35 +1,3 @@
-<script context="module" lang="ts">
-  import type { Load } from './__types/tube-station';
-
-  export const load: Load = async function load({ fetch, url }) {
-    try {
-      // check for valid user session
-      const meResponse = await fetch('/query/me.json', {
-        method: 'POST',
-        credentials: 'include'
-      });
-      const { data } = await meResponse.json();
-      if (!data?.me) {
-        return {
-          status: 301,
-          redirect: '/login'
-        };
-      }
-
-      const response = await fetch('/query/tube-station.json', {
-        method: 'POST',
-        credentials: 'include'
-      });
-      return {
-        props: { ...(await response.json()), ...data }
-      };
-    } catch (error) {
-      const { pathname } = url;
-      console.error(`Error in load function for ${pathname}: ${error}`);
-    }
-  };
-</script>
-
 <script lang="ts">
   import { browser } from '$app/env';
   import { goto, prefetch } from '$app/navigation';
@@ -47,7 +15,7 @@
 
   export let data: { tubeStations: TubeStation[] };
   export let me: User | null;
-  // export let slug: string;
+
   $: submitting = false;
 
   async function checkForLoggedInUser() {

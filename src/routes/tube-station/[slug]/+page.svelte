@@ -1,35 +1,3 @@
-<script context="module" lang="ts">
-  import type { Load } from './__types/[slug]';
-
-  export const load: Load = async function load({ fetch, params, url }) {
-    try {
-      // check for valid user session
-      const meResponse = await fetch('/query/me.json', {
-        method: 'POST',
-        credentials: 'include'
-      });
-      const { slug } = params;
-      const { data } = await meResponse.json();
-      if (!data?.me) {
-        return {
-          status: 301,
-          redirect: `/login?next=tube-station/${slug}`
-        };
-      }
-      const response = await fetch(`/query/tube-station/${slug}.json`, {
-        method: 'POST',
-        credentials: 'include'
-      });
-      return {
-        props: { ...(await response.json()), ...data, slug }
-      };
-    } catch (error) {
-      const { pathname } = url;
-      console.error(`Error in load function for ${pathname}: ${error}`);
-    }
-  };
-</script>
-
 <script lang="ts">
   import { browser } from '$app/env';
   import { goto, prefetch } from '$app/navigation';
@@ -47,10 +15,9 @@
   import { mapErrorsToFields } from '$lib/utilities/form';
   import { afterUpdate, onMount } from 'svelte';
 
-  export let slug: string;
-  export let data: { tubeStation: TubeStationQueryResponse };
+  export let data: { slug: string; tubeStation: TubeStationQueryResponse };
   export let me: User | null;
-
+  const { slug } = data;
   async function checkForLoggedInUser() {
     if (!$user && browser) {
       if (me) {
