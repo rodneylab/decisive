@@ -1,41 +1,12 @@
-<script context="module" lang="ts">
-  import type { Load } from './__types/[slug]';
-
-  export const load: Load = async function load({ fetch, params, url }) {
-    try {
-      // check for valid user session
-      const meResponse = await fetch('/query/me.json', {
-        method: 'POST',
-        credentials: 'include'
-      });
-      const { data } = await meResponse.json();
-      if (!data?.me) {
-        return {
-          status: 301,
-          redirect: '/login'
-        };
-      }
-      const { slug } = params;
-      const response = await fetch(`/query/gallery/${slug}.json`, {
-        method: 'POST',
-        credentials: 'include'
-      });
-      return {
-        props: { ...(await response.json()), ...data, slug }
-      };
-    } catch (error) {
-      const { pathname } = url;
-      console.error(`Error in load function for ${pathname}: ${error}`);
-    }
-  };
-</script>
-
 <script lang="ts">
   import { browser } from '$app/env';
   import { goto, prefetch } from '$app/navigation';
   import CreateExhibition from '$lib/components/CreateExhibition.svelte';
   import EditableText from '$lib/components/EditableText.svelte';
+  import EditOpeningHours from '$lib/components/EditOpeningHours.svelte';
   import LessIcon from '$lib/components/Icons/Less.svelte';
+  import Map from '$lib/components/Map.svelte';
+  import { N_DASH_ENTITY } from '$lib/constants/entities';
   import { PLACEHOLDER_TEXT, TITLE } from '$lib/constants/form';
   import type {
     Gallery,
@@ -48,14 +19,12 @@
   import user from '$lib/shared/stores/user';
   import type { GalleryFormErrors } from '$lib/utilities/form';
   import { mapErrorsToFields } from '$lib/utilities/form';
-  import Map from '$lib/components/Map.svelte';
-  import { afterUpdate, onMount } from 'svelte';
   import dayjs from 'dayjs';
-  import { N_DASH_ENTITY } from '$lib/constants/entities';
+  import { afterUpdate, onMount } from 'svelte';
 
-  export let slug: string;
-  export let data: { gallery: GalleryQueryResponse };
-  export let me: User | null;
+  export let data: { gallery: GalleryQueryResponse; me: User | null; slug: string };
+
+  const { me, slug } = data;
 
   async function checkForLoggedInUser() {
     if (!$user && browser) {
@@ -76,7 +45,7 @@
     checkForLoggedInUser();
   });
 
-  const index = $galleries.findIndex((element) => element.slug === slug);
+  const index = $galleries.findIndex((element) => element?.slug === slug);
   if (index >= 0) {
     galleries.set([
       ...$galleries.slice(0, index),
@@ -108,7 +77,6 @@
   $: country = gallery.postalAddress.country;
   $: nearestTubes = gallery.nearestTubes.map((element) => element.name);
   $: exhibitions = gallery.exhibitions;
-  import EditOpeningHours from '$lib/components/EditOpeningHours.svelte';
 
   let newNearestTube: string = '';
 
