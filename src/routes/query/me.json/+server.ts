@@ -1,10 +1,10 @@
-import type { RequestHandler } from './$types';
-import { error } from '@sveltejs/kit';
 import { GRAPHQL_ENDPOINT } from '$env/static/private';
+import { error } from '@sveltejs/kit';
+import type { RequestHandler } from './$types';
 
 // todo(rodneylab): deprecate this endpoint
 
-export const POST: RequestHandler = async function post({ request, setHeaders, url }) {
+export const POST: RequestHandler = async function post({ request }) {
   try {
     const query = `
       query MeQuery {
@@ -31,13 +31,7 @@ export const POST: RequestHandler = async function post({ request, setHeaders, u
         variables
       })
     });
-    const { headers } = response;
     const data = await response.json();
-
-    setHeaders({
-      'Set-Cookie': headers.get('Set-Cookie'),
-      'Content-Type': 'application/json'
-    });
 
     return new Response(JSON.stringify({ ...data }));
   } catch (err: unknown) {

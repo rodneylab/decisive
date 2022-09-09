@@ -3,7 +3,7 @@ import { graphqlQuery } from '$lib/utilities/graphql';
 import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
-export const POST: RequestHandler = async function post({ request, setHeaders }) {
+export const POST: RequestHandler = async function post({ cookies, request }) {
   try {
     const { device: duoAuthDevice } = await request.json();
     const response = await graphqlQuery(
@@ -13,13 +13,9 @@ export const POST: RequestHandler = async function post({ request, setHeaders })
       },
       request
     );
-    // const { headers } = response;
     const data = await response.json();
 
-    setHeaders({
-      // 'Set-Cookie': headers.get('Set-Cookie'),
-      'Content-Type': 'application/json'
-    });
+    // cookies.set('set-cookie', cookies.get('Set-Cookie'));
 
     return new Response(JSON.stringify({ ...data }));
   } catch (err: unknown) {

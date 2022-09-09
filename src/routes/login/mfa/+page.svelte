@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { browser } from '$app/env';
+  import { browser } from '$app/environment';
   import { goto, prefetch } from '$app/navigation';
   import Duo from '$lib/components/Login/Duo.svelte';
   import FidoU2f from '$lib/components/Login/FidoU2f.svelte';
-  import type { User } from '$lib/generated/graphql';
   import user from '$lib/shared/stores/user';
   import { onMount } from 'svelte';
+  import type { PageData } from './$types';
 
-  export let data: { me: User | null };
+  export let data: PageData;
 
   const { me } = data;
 

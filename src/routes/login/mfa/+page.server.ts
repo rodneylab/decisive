@@ -3,15 +3,11 @@ import { graphqlQuery } from '$lib/utilities/graphql';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async function load({ request, url }) {
+export const load: PageServerLoad = async function load({ cookies, request, url }) {
   try {
     const response = await graphqlQuery(meQuery, {}, request);
     const { headers } = response;
     const { data } = await response.json();
-
-    // setHeaders({
-    //   'Set-Cookie': headers.get('Set-Cookie')
-    // });
 
     return { ...data };
   } catch (err: unknown) {
