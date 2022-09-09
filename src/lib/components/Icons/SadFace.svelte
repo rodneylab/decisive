@@ -1,5 +1,6 @@
 <script lang="ts">
-  import Icon, { addCollection } from '@iconify/svelte/dist/OfflineIcon.svelte';
+  import 'iconify-icon';
+  import { addCollection } from 'iconify-icon';
 
   export let colour: string = undefined;
   export let label: string = 'sad face icon';
@@ -24,12 +25,13 @@
   // https://api.iconify.design/fa-regular.json?icons=sad-tear
 </script>
 
-<Icon
+<iconify-icon
+  style:color={colour}
+  role="img"
   {id}
   aria-label={label}
   {ariaHidden}
   icon="fa-regular:sad-tear"
   {width}
   {height}
-  color={colour}
 />

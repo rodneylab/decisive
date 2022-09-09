@@ -1,5 +1,6 @@
 <script lang="ts">
-  import Icon, { addCollection } from '@iconify/svelte/dist/OfflineIcon.svelte';
+  import 'iconify-icon';
+  import { addCollection } from 'iconify-icon';
 
   export let colour: string = undefined;
   export let label: string = 'more icon';
@@ -23,12 +24,13 @@
   // https://api.iconify.design/fa-solid.json?icons=plus-circle
 </script>
 
-<Icon
+<iconify-icon
+  style:color={colour}
+  role="img"
   {id}
   aria-label={label}
   {ariaHidden}
   icon="fa-solid:plus-circle"
   {width}
   {height}
-  color={colour}
 />
