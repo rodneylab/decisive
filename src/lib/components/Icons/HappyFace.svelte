@@ -25,12 +25,13 @@
   // https://api.iconify.design/fa-regular.json?icons=smile
 </script>
 
-ify-icon style:color={colour}
-role="img"
-{id}
-aria-label={label}
-{ariaHidden}
-icon="fa-regular:smile"
-{width}
-{height}
+<iconify-icon
+  style:color={colour}
+  role="img"
+  {id}
+  aria-label={label}
+  {ariaHidden}
+  icon="fa-regular:smile"
+  {width}
+  {height}
 />
