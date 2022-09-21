@@ -1,60 +1,21 @@
-<script context="module" lang="ts">
-  import type { Load } from './__types/[id]';
-  import { TextArea } from '@rodneylab/sveltekit-components';
-  import { browser } from '$app/env';
-
-  export const load: Load = async function load({ fetch, params, url }) {
-    try {
-      // check for valid user session
-      const meResponse = await fetch('/query/me.json', {
-        method: 'POST',
-        credentials: 'include'
-      });
-      const { data } = await meResponse.json();
-      if (!data?.me) {
-        return {
-          status: 301,
-          redirect: '/login'
-        };
-      }
-      const { id } = params;
-      const response = await fetch(`/query/exhibition/${id}.json`, {
-        method: 'POST',
-        credentials: 'include'
-      });
-
-      const photographerResponse = await fetch('/query/photographer.json', {
-        method: 'POST',
-        credentials: 'same-origin'
-      });
-      const photographerData = await photographerResponse.json();
-
-      return {
-        props: { data: { ...(await response.json()).data, ...photographerData.data }, ...data, id }
-      };
-    } catch (error) {
-      const { pathname } = url;
-      console.error(`Error in load function for ${pathname}: ${error}`);
-    }
-  };
-</script>
-
 <script lang="ts">
-  import dayjs from 'dayjs';
+  import { browser } from '$app/environment';
+  import EditableText from '$lib/components/EditableText.svelte';
+  import LessIcon from '$lib/components/Icons/Less.svelte';
+  import SaveIcon from '$lib/components/Icons/Save.svelte';
+  import SaveIconOutline from '$lib/components/Icons/SaveOutline.svelte';
+  import { PLACEHOLDER_TEXT, TITLE } from '$lib/constants/form';
   import type {
     ExhibitionQueryResponse,
     Mutation,
     PaginatedPhotographers,
     UpdateExhibitionInput
   } from '$lib/generated/graphql';
-  import { parse } from 'marked';
-  import SaveIcon from '$lib/components/Icons/Save.svelte';
-  import SaveIconOutline from '$lib/components/Icons/SaveOutline.svelte';
   import photographersStore from '$lib/shared/stores/photographers';
-  import LessIcon from '$lib/components/Icons/Less.svelte';
-  import EditableText from '$lib/components/EditableText.svelte';
-  import { PLACEHOLDER_TEXT, TITLE } from '$lib/constants/form';
   import type { ExhibitionFormErrors } from '$lib/utilities/form';
+  import { TextArea } from '@rodneylab/sveltekit-components';
+  import dayjs from 'dayjs';
+  import { parse } from 'marked';
 
   export let data: { exhibition: ExhibitionQueryResponse; photographers: PaginatedPhotographers };
   export let id: string;
