@@ -1,41 +1,5 @@
-<script context="module" lang="ts">
-  import type { Load } from './__types/photographer';
-
-  export const load: Load = async function load({ fetch, url }) {
-    try {
-      // check for valid user session
-      const meResponse = await fetch('/query/me.json', {
-        method: 'POST',
-        credentials: 'include'
-      });
-      const { data } = await meResponse.json();
-      if (!data?.me) {
-        return {
-          status: 301,
-          redirect: '/login'
-        };
-      }
-
-      const response = await fetch('/query/photographer.json', {
-        method: 'POST',
-        credentials: 'include'
-      });
-
-      return {
-        props: {
-          data: { ...(await response.json()).data },
-          ...data
-        }
-      };
-    } catch (error) {
-      const { pathname } = url;
-      console.error(`Error in load function for ${pathname}: ${error}`);
-    }
-  };
-</script>
-
 <script lang="ts">
-  import { browser } from '$app/env';
+  import { browser } from '$app/environment';
   import { goto, prefetch } from '$app/navigation';
   import SEO from '$lib/components/SEO/index.svelte';
   import type { PaginatedPhotographers, Photographer, User } from '$lib/generated/graphql';
@@ -53,10 +17,10 @@
   import { stemmer } from 'stemmer';
   import { TextInputField } from '@rodneylab/sveltekit-components';
   import CreatePhotographer from '$lib/components/CreatePhotographer.svelte';
+  import type { PageData } from './$types';
 
-  export let data: { photographers: PaginatedPhotographers };
-  export let me: User | null;
-  export let slug: string;
+  export let data: PageData;
+  const { me, slug } = data;
 
   async function checkForLoggedInUser() {
     if (!user && browser) {
@@ -116,7 +80,7 @@ Showing {searchResults.length} photographer{searchResults.length !== 1 ? 's' : '
   {#each searchResults as { name, slug, website, websiteUrl }}
     <li>
       <h2>
-        <a aria-label={`Open ${name} page`} sveltekit:prefetch href={`/photographer/${slug}`}
+        <a aria-label={`Open ${name} page`} data-sveltekit-prefetch href={`/photographer/${slug}`}
           >{name}</a
         >
       </h2>
