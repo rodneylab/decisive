@@ -9,5 +9,5 @@ test.before(ENV.setup);
 test.before.each(ENV.reset);
 
 test('it return empty object given empty input array', () => {
-  assert(Object.entries(mapErrorsToFields([])).length === 0);
+	assert(Object.entries(mapErrorsToFields([])).length === 0);
 });

@@ -1,13 +1,13 @@
 <script lang="ts">
-  import SEO from '$lib/components/SEO/index.svelte';
-  import { page } from '$app/stores';
+	import SEO from '$lib/components/SEO/index.svelte';
+	import { page } from '$app/stores';
 
-  const {
-    error: { message },
-    status
-  } = $page;
+	const {
+		error: { message },
+		status
+	} = $page;
 
-  const title = 'Page not found';
+	const title = 'Page not found';
 </script>
 
 <SEO metadescription="Page not found" slug="" {title} />

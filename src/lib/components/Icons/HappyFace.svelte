@@ -1,37 +1,37 @@
 <script lang="ts">
-  import 'iconify-icon';
-  import { addCollection } from 'iconify-icon';
+	import 'iconify-icon';
+	import { addCollection } from 'iconify-icon';
 
-  export let colour: string = undefined;
-  export let label: string = 'happy face icon';
-  export let width: number = 16;
-  export let height: number = width;
-  export let ariaHidden: boolean = false;
+	export let colour: string = undefined;
+	export let label: string = 'happy face icon';
+	export let width: number = 16;
+	export let height: number = width;
+	export let ariaHidden: boolean = false;
 
-  const id = Date.now().toString(16) + ((Math.random() * 0x1000000) | 0).toString(16);
+	const id = Date.now().toString(16) + ((Math.random() * 0x1000000) | 0).toString(16);
 
-  addCollection({
-    prefix: 'fa-regular',
-    icons: {
-      smile: {
-        body: '<path fill="currentColor" d="M248 8C111 8 0 119 0 256s111 248 248 248s248-111 248-248S385 8 248 8zm0 448c-110.3 0-200-89.7-200-200S137.7 56 248 56s200 89.7 200 200s-89.7 200-200 200zm-80-216c17.7 0 32-14.3 32-32s-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32zm160 0c17.7 0 32-14.3 32-32s-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32zm4 72.6c-20.8 25-51.5 39.4-84 39.4s-63.2-14.3-84-39.4c-8.5-10.2-23.7-11.5-33.8-3.1c-10.2 8.5-11.5 23.6-3.1 33.8c30 36 74.1 56.6 120.9 56.6s90.9-20.6 120.9-56.6c8.5-10.2 7.1-25.3-3.1-33.8c-10.1-8.4-25.3-7.1-33.8 3.1z"/>',
-        width: 496
-      }
-    },
-    width: 512,
-    height: 512
-  });
+	addCollection({
+		prefix: 'fa-regular',
+		icons: {
+			smile: {
+				body: '<path fill="currentColor" d="M248 8C111 8 0 119 0 256s111 248 248 248s248-111 248-248S385 8 248 8zm0 448c-110.3 0-200-89.7-200-200S137.7 56 248 56s200 89.7 200 200s-89.7 200-200 200zm-80-216c17.7 0 32-14.3 32-32s-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32zm160 0c17.7 0 32-14.3 32-32s-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32zm4 72.6c-20.8 25-51.5 39.4-84 39.4s-63.2-14.3-84-39.4c-8.5-10.2-23.7-11.5-33.8-3.1c-10.2 8.5-11.5 23.6-3.1 33.8c30 36 74.1 56.6 120.9 56.6s90.9-20.6 120.9-56.6c8.5-10.2 7.1-25.3-3.1-33.8c-10.1-8.4-25.3-7.1-33.8 3.1z"/>',
+				width: 496
+			}
+		},
+		width: 512,
+		height: 512
+	});
 
-  // https://api.iconify.design/fa-regular.json?icons=smile
+	// https://api.iconify.design/fa-regular.json?icons=smile
 </script>
 
 <iconify-icon
-  style:color={colour}
-  role="img"
-  {id}
-  aria-label={label}
-  {ariaHidden}
-  icon="fa-regular:smile"
-  {width}
-  {height}
+	style:color={colour}
+	role="img"
+	{id}
+	aria-label={label}
+	{ariaHidden}
+	icon="fa-regular:smile"
+	{width}
+	{height}
 />
