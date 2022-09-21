@@ -2,7 +2,7 @@
  * @type {import('$app/env').browser}
  */
 const browser = !import.meta.env.SSR;
-// const browser = true;
+
 /**
  * @type {import('$app/env').dev}
  */

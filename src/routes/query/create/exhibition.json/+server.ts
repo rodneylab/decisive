@@ -16,8 +16,7 @@ export const POST: RequestHandler = async function post({ cookies, request }) {
     );
     const { headers } = response;
     const data = (await response.json()) as CreateExhibitionResponse;
-    // console.log('Cook: ', headers.get('Set-Cookie'));
-    // cookies.set('set-cookie', headers.get('Set-Cookie'));
+
     return new Response(JSON.stringify({ ...data }));
   } catch (err: unknown) {
     const message = `Error in /query/create/exhibition.json.ts: ${err as string}`;

@@ -8,8 +8,6 @@ export const load: LayoutServerLoad = async function load({ cookies, request, ur
     const response = await graphqlQuery(meQuery, {}, request);
     const data = await response.json();
 
-    // cookies.set('set-cookie', cookies.get('Set-Cookie'));
-
     return {
       ...data,
       pathname

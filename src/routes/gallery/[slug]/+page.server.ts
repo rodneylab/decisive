@@ -1,9 +1,8 @@
-import type { PageServerLoad } from './$types';
 import galleryQuery from '$lib/graphql/queries/gallery';
 import meQuery from '$lib/graphql/queries/me';
-
 import { graphqlQuery } from '$lib/utilities/graphql';
 import { error } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async function load({ params, request, url }) {
   try {
