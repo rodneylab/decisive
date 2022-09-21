@@ -1,5 +1,6 @@
 <script lang="ts">
-  import Icon, { addCollection } from '@iconify/svelte/dist/OfflineIcon.svelte';
+  import 'iconify-icon';
+  import { addCollection } from 'iconify-icon';
 
   export let colour: string = undefined;
   export let label: string = 'save icon';
@@ -24,4 +25,13 @@
   // https://api.iconify.design/fa-solid.json?icons=save
 </script>
 
-<Icon {id} aria-label={label} {ariaHidden} icon="fa-solid:save" {width} {height} color={colour} />
+<iconify-icon
+  style:color={colour}
+  role="img"
+  {id}
+  aria-label={label}
+  {ariaHidden}
+  icon="fa-solid:save"
+  {width}
+  {height}
+/>

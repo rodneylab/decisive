@@ -1,5 +1,6 @@
 <script lang="ts">
-  import Icon, { addCollection } from '@iconify/svelte/dist/OfflineIcon.svelte';
+  import 'iconify-icon';
+  import { addCollection } from 'iconify-icon';
 
   export let colour: string = undefined;
   export let label: string = 'unsaved changes icon';
@@ -24,4 +25,13 @@
   // https://api.iconify.design/fa-regular.json?icons=save
 </script>
 
-<Icon {id} aria-label={label} {ariaHidden} icon="fa-regular:save" {width} {height} color={colour} />
+<iconify-icon
+  style:color={colour}
+  role="img"
+  {id}
+  aria-label={label}
+  {ariaHidden}
+  icon="fa-regular:save"
+  {width}
+  {height}
+/>

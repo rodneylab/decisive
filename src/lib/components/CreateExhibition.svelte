@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { browser } from '$app/env';
+  import { browser } from '$app/environment';
   import type { CreateExhibitionInput } from '$lib/generated/graphql';
   import photographers from '$lib/shared/stores/photographers';
   import type { ExhibitionFormErrors } from '$lib/utilities/form';

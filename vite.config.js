@@ -6,7 +6,15 @@ const config = {
   optimizeDeps: {
     include: ['just-throttle', 'dayjs']
   },
-  plugins: [basicSsl(), sveltekit()]
+  plugins: [basicSsl(), sveltekit()],
+  server: {
+    port: 5173,
+    strictPort: false
+  },
+  preview: {
+    port: 4173,
+    strictPort: false
+  }
 };
 
 export default config;
