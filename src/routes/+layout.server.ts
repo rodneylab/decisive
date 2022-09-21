@@ -2,18 +2,13 @@ import meQuery from '$lib/graphql/queries/me';
 import { graphqlQuery } from '$lib/utilities/graphql';
 import type { LayoutServerLoad } from '../../.svelte-kit/types/src/routes/$types';
 
-export const load: LayoutServerLoad = async function load({ request, url, setHeaders }) {
+export const load: LayoutServerLoad = async function load({ cookies, request, url }) {
   try {
     const { pathname } = url;
     const response = await graphqlQuery(meQuery, {}, request);
-    const { headers } = response;
     const data = await response.json();
 
-    if (!request.headers.has('Set-Cookie')) {
-      setHeaders({
-        'Set-Cookie': headers.get('Set-Cookie')
-      });
-    }
+    // cookies.set('set-cookie', cookies.get('Set-Cookie'));
 
     return {
       ...data,

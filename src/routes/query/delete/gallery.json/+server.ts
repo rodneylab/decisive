@@ -3,7 +3,7 @@ import { graphqlQuery } from '$lib/utilities/graphql';
 import { error } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 
-export const POST: RequestHandler = async function post({ request, setHeaders }) {
+export const POST: RequestHandler = async function post({ cookies, request }) {
   try {
     const { id: deleteGalleryId } = await request.json();
 
@@ -16,11 +16,6 @@ export const POST: RequestHandler = async function post({ request, setHeaders })
     );
 
     const data = await response.json();
-
-    setHeaders({
-      // 'Set-Cookie': headers.get('Set-Cookie'),
-      'Content-Type': 'application/json'
-    });
 
     return new Response(JSON.stringify({ data }));
   } catch (err: unknown) {
