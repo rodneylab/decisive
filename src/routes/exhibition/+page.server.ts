@@ -4,7 +4,7 @@ import { graphqlQuery } from '$lib/utilities/graphql';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async function load({ cookies, params, request, url }) {
+export const load: PageServerLoad = async function load({ request, url }) {
   try {
     const meResponse = await graphqlQuery(meQuery, {}, request);
     const { data: meData } = await meResponse.json();
@@ -17,15 +17,12 @@ export const load: PageServerLoad = async function load({ cookies, params, reque
 
     const exhitibionsResponse = await graphqlQuery(exhibitionsQuery, {}, request);
     const { data: exhibibitionsData } = await exhitibionsResponse.json();
-    const { slug } = params;
-
-    const { headers } = meResponse;
-    // cookies.set('set-cookie', headers.get('Set-Cookie'));
+    const { pathname } = url;
 
     return {
       ...meData,
       ...exhibibitionsData,
-      slug
+      slug: pathname
     };
   } catch (err: unknown) {
     const { pathname } = url;
