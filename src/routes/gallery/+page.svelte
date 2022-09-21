@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { browser } from '$app/env';
+  import { browser } from '$app/environment';
   import { goto, prefetch } from '$app/navigation';
   import CreateGallery from '$lib/components/CreateGallery.svelte';
   import DeleteIcon from '$lib/components/Icons/Delete.svelte';
@@ -110,7 +110,9 @@
   {#each searchResults as { byAppointmentOpeningTimes, id, name, address, openingTimes, slug, website, websiteUrl }}
     <li>
       <h2>
-        <a aria-label={`Open ${name} page`} sveltekit:prefetch href={`/gallery/${slug}`}>{name}</a>
+        <a aria-label={`Open ${name} page`} data-sveltekit-prefetch href={`/gallery/${slug}`}
+          >{name}</a
+        >
       </h2>
       <dl>
         {#if address}

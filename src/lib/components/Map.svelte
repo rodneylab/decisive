@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { browser } from '$app/env';
+  import { browser } from '$app/environment';
   import website from '$lib/config/website';
   import { onMount } from 'svelte';
   import 'leaflet/dist/leaflet.css';

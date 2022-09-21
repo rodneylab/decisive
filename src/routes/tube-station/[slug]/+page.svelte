@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { browser } from '$app/env';
+  import { browser } from '$app/environment';
   import { goto, prefetch } from '$app/navigation';
   import EditableText from '$lib/components/EditableText.svelte';
   import { PLACEHOLDER_TEXT, TITLE } from '$lib/constants/form';
@@ -84,7 +84,7 @@
 </script>
 
 <nav aria-label="All tube stations">
-  <a aria-label="See all tube stations" href="/tube-station" sveltekit:prefetch rel="external"
+  <a aria-label="See all tube stations" href="/tube-station" data-sveltekit-prefetch rel="external"
     >See all tube stations</a
   >
 </nav>

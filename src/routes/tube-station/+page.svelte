@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { browser } from '$app/env';
+  import { browser } from '$app/environment';
   import { goto, prefetch } from '$app/navigation';
   import DeleteIcon from '$lib/components/Icons/Delete.svelte';
   import EditIcon from '$lib/components/Icons/Edit.svelte';
@@ -104,8 +104,10 @@
   {#each [...$tubeStations] as { id, name, slug }}
     <li>
       <h3>
-        <a aria-label={`Edit ${name} station`} sveltekit:prefetch href={`/tube-station/${slug}/`}
-          >{name}</a
+        <a
+          aria-label={`Edit ${name} station`}
+          data-sveltekit-prefetch
+          href={`/tube-station/${slug}/`}>{name}</a
         >
       </h3>
       <button aria-label="Edit station" type="button" on:click={() => handleEdit(slug)}

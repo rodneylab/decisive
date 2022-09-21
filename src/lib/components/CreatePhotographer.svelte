@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { browser } from '$app/env';
+  import { browser } from '$app/environment';
   import type { CreatePhotographerInput } from '$lib/generated/graphql';
   import { mapErrorsToFields } from '$lib/utilities/form';
   import type { PhotographerFormErrors } from '$lib/utilities/form';

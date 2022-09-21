@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { browser } from '$app/env';
+  import { browser } from '$app/environment';
   import DayInputField from '$lib/components/DayInputField.svelte';
   import EditIcon from '$lib/components/Icons/Edit.svelte';
   import LessIcon from '$lib/components/Icons/Less.svelte';
@@ -14,7 +14,8 @@
     UpdateGalleryInput
   } from '$lib/generated/graphql';
   import galleries from '$lib/shared/stores/galleries';
-  import type { GalleryFormErrors, mapErrorsToFields } from '$lib/utilities/form';
+  import type { GalleryFormErrors } from '$lib/utilities/form';
+  import { mapErrorsToFields } from '$lib/utilities/form';
   import { TextInputField } from '@rodneylab/sveltekit-components';
   import { tick } from 'svelte';
 
