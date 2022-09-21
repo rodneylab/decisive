@@ -1,12 +1,12 @@
 <script lang="ts">
-  import { browser } from '$app/env';
+  import { browser } from '$app/environment';
   import { goto, prefetch } from '$app/navigation';
   import CreateExhibition from '$lib/components/CreateExhibition.svelte';
   import EditableText from '$lib/components/EditableText.svelte';
   import EditOpeningHours from '$lib/components/EditOpeningHours.svelte';
   import LessIcon from '$lib/components/Icons/Less.svelte';
   import Map from '$lib/components/Map.svelte';
-  import { N_DASH_ENTITY } from '$lib/constants/entities';
+  import { N_DASH_ENTITY, THIN_SPACE_ENTITY } from '$lib/constants/entities';
   import { PLACEHOLDER_TEXT, TITLE } from '$lib/constants/form';
   import type {
     Gallery,
@@ -137,7 +137,7 @@
 </script>
 
 <nav aria-label="All galleries">
-  <a aria-label="See all galleries" href="/gallery" sveltekit:prefetch>See all galleries</a>
+  <a aria-label="See all galleries" href="/gallery" data-sveltekit-prefetch>See all galleries</a>
 </nav>
 {#if updating}
   <div>Updating...</div>
@@ -319,13 +319,17 @@
       <h3>
         <a
           aria-label={`Open the ${name} exhibition page`}
-          sveltekit:prefetch
+          data-sveltekit-prefetch
           href={`/exhibition/${id}`}>{name}</a
         >
       </h3>
       <dl>
         <dt>Runs</dt>
-        <dd>{dayjs(start).format(dateFormat)}{N_DASH_ENTITY}{dayjs(end).format(dateFormat)}</dd>
+        <dd>
+          {dayjs(start).format(
+            dateFormat
+          )}{THIN_SPACE_ENTITY}{N_DASH_ENTITY}{THIN_SPACE_ENTITY}{dayjs(end).format(dateFormat)}
+        </dd>
       </dl>
     </li>
   {/each}
