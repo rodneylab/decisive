@@ -29,7 +29,7 @@
 <header>
   <div>Decisive</div>
   {#if isGuest}
-    <a sveltekit:prefetch rel="external" aria-label="Log in" href="/login">Login</a>
+    <a data-sveltekit-prefetch rel="external" aria-label="Log in" href="/login">Login</a>
     <a aria-label="Register" href="/register">Register</a>
   {:else}
     <HeaderNavLink label="Open Exhibitions" href="/exhibition" text="Exhibitions" {pathname} />
